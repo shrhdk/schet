@@ -1,0 +1,89 @@
+/* Layout */
+
+body {
+    padding: 1em;
+}
+
+#app-name {
+    font-size: 4em;
+}
+
+/* Title and Description */
+
+#title {
+    font-size: 1.6em;
+    min-height: 1em;
+}
+
+#description {
+    white-space: pre;
+    padding: 0.5em;
+    min-height: 5em;
+    background-color: #f1f1f1;
+}
+
+/* Record Table */
+
+select {
+    background-color: transparent;
+    text-align: -webkit-center;
+    margin: 0 auto;
+}
+
+select.existing {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: none;
+    margin: 0 auto;
+    display: table-cell;
+}
+
+table.record {
+    border: 1px solid black;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+table.record th, table.record td {
+    padding: 0.3em;
+    border: 1px solid black;
+}
+
+.fixed-term-row {
+    background-color: #88f193;
+}
+
+/* Terms */
+
+.term-row {
+    text-align: left;
+}
+
+#new-term-field {
+    width: 36ex;
+    text-align: center;
+}
+
+/* Participants */
+
+#new-participant-name {
+    width: 5em;
+}
+
+/* Comments */
+
+#comments {
+    padding: 0;
+    width: 800px;
+}
+
+#comments li.comment {
+    list-style-type: none;
+    padding: 0.2em;
+    margin: 0.2em;
+}
+
+.comment > * {
+    display: inline-block;
+}
