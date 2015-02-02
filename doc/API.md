@@ -41,5 +41,5 @@ Examples
 ## Error Format
 
 ```js
-{ "reason": "Human readable message." }
+{ "error": ErrorType }
 ```
