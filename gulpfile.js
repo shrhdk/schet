@@ -11,7 +11,7 @@ gulp.task('lint', function () {
         .pipe(eslint.failOnError());
 });
 
-gulp.task('clean', function () {
+gulp.task('clean', function (done) {
     gulp.src([
         'bower_components',
         'public/lib'

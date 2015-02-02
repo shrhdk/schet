@@ -1,19 +1,8 @@
-#!/usr/bin/env node
+#!/bin/sh
 
-var settings = require('../settings');
-
-if (process.argv[2] === 'init') {
-    console.log('Initializing DB...');
-
-    var mongo = require('../lib/models/mongo');
-    mongo.init({counters: [
-        {id: 'events', seq: 0}
-    ]});
-
-    return;
-}
-
-console.log('Starting Server...');
-
-var app = require('../lib/app');
-app.listen(settings.app.port);
+case $1 in
+"stop" ) $(npm bin)/forever stop bin/schet.js ;;
+"start" ) $(npm bin)/forever start bin/schet.js ;;
+"init" ) $(npm bin)/gulp init ;;
+* ) echo "schet init|start|stop" ;;
+esac
