@@ -1,5 +1,7 @@
 # Schet
 
+[![Build Status](https://travis-ci.org/shrhdk/schet.svg?branch=fix-%239)](https://travis-ci.org/shrhdk/schet)
+
 Schet is a web application for schedule coordination.
 
 ## Requirements
