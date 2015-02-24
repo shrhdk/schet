@@ -6,6 +6,72 @@ window.addEventListener('load', function () {
     var dateFormat = 'YYYY/MM/DD HH:mm';
     var rangeSeparator = ' - ';
 
+    // Localize and Simplify the Date and Time
+
+    var isRange = function (dateString) {
+        return dateString.match(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}Z\/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}Z$/)
+            || dateString.match(/^\d{4}-\d{2}-\d{2}\/\d{4}-\d{2}-\d{2}$/);
+    };
+
+    var isDateOnly = function (dateString) {
+        return dateString.match(/^\d{4}-\d{2}-\d{2}$/);
+    };
+
+    var simplifyDateRange = function (start, end) {
+        var start = moment.utc(start);
+        var end = moment.utc(end);
+
+        var endStr = '';
+
+        if (start.year() !== end.year()) {
+            return start.format('YYYY/MM/DD') + ' - ' + end.format('YYYY/MM/DD');
+        }
+
+        return start.format('YYYY/MM/DD') + ' - ' + end.format('MM/DD');
+    };
+
+    var simplifyDateTimeRange = function (start, end, offset) {
+        var start = moment.utc(start).add(offset, 'minutes');
+        var end = moment.utc(end).add(offset, 'minutes');
+
+        if (start.year() !== end.year()) {
+            return start.format('YYYY/MM/DD HH:mm') + ' - ' + end.format('YYYY/MM/DD HH:mm');
+        }
+
+        if (start.month() !== end.month()) {
+            return start.format('YYYY/MM/DD HH:mm') + ' - ' + end.format('MM/DD HH:mm');
+        }
+
+        if (start.date() !== end.date()) {
+            return start.format('YYYY/MM/DD HH:mm') + ' - ' + end.format('MM/DD HH:mm');
+        }
+
+        return start.format('YYYY/MM/DD HH:mm') + ' - ' + end.format('HH:mm');
+    };
+
+    var simplify = function (dateString, offset) {
+        if (!isRange(dateString)) {
+            if (isDateOnly(dateString)) {
+                return moment.utc(dateString).format('YYYY/MM/DD');
+            } else {
+                return moment.utc(dateString).format('YYYY/MM/DD HH:mm');
+            }
+        }
+
+        var start = dateString.split('/')[0];
+        var end = dateString.split('/')[1];
+
+        if (isDateOnly(start)) {
+            return simplifyDateRange(start, end);
+        } else {
+            return simplifyDateTimeRange(start, end, offset);
+        }
+    };
+
+    [].forEach.call(document.querySelectorAll('.term'), function (term) {
+        term.innerText = simplify(term.innerText.trim(), moment().utcOffset());
+    });
+
     // Make Content Editable
     var makeContentEditable = function (element, multiline, cb) {
         var currentText = element.innerText;
@@ -103,7 +169,7 @@ window.addEventListener('load', function () {
 
     // Add Participant
     var _newParticipantButton = document.querySelector('#new-participant-button');
-    if(_newParticipantButton) {
+    if (_newParticipantButton) {
         _newParticipantButton.addEventListener('click', function () {
             var _newParticipantName = document.querySelector('#new-participant-name');
             var _newRecords = document.querySelectorAll('.new-record');
@@ -160,7 +226,7 @@ window.addEventListener('load', function () {
 
     // Add Term
     var _newTermButton = document.querySelector('#new-term-button');
-    if(_newTermButton) {
+    if (_newTermButton) {
         _newTermButton.addEventListener('click', function () {
             var _newTermField = document.querySelector('#new-term-field');
             var newTermString = _newTermField.value;
