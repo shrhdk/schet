@@ -207,7 +207,9 @@ window.addEventListener('load', function () {
         var participantID = _participantName.getAttribute('participant-id');
 
         makeContentEditable(_participantName, false, function (text) {
-            schet.updateParticipant(participantID, {name: text});
+            schet.updateParticipant(participantID, {name: text}).catch(function(err) {
+                location.reload();
+            });
         });
     });
 
@@ -281,6 +283,20 @@ window.addEventListener('load', function () {
             schet.deleteTerm(termID).then(function (event) {
                 location.reload();
             }).catch(function (err) {
+                location.reload();
+            });
+        });
+    });
+
+    // Edit Record
+    var _records = document.querySelectorAll('.record');
+    [].forEach.call(_records, function (_record) {
+        var participantID = _record.getAttribute('participant-id');
+        var termID = _record.getAttribute('term-id');
+        _record.addEventListener('change', function () {
+            data = {};
+            data[termID] = _record.value;
+            schet.updateParticipant(participantID, data).catch(function(err) {
                 location.reload();
             });
         });
