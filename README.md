@@ -1,5 +1,7 @@
 # Schet
 
+[![Build Status](https://travis-ci.org/shrhdk/schet.svg?branch=fix-%239)](https://travis-ci.org/shrhdk/schet)
+
 Schet is a web application for schedule coordination.
 
 ## Requirements
@@ -22,12 +24,14 @@ $ mongod
 $ apt-get install nodejs
 ```
 
-(3) Install Schet and start
+(3) Usage
 
 ```
 $ npm install schet -g
 $ schet init
-$ schet
+$ schet start
+...
+$ schet stop
 ```
 
 See [http://127.0.0.1:3000/](http://127.0.0.1:3000/).
