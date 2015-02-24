@@ -42,7 +42,13 @@ describe('Participant', function () {
                         4: 'dave',
                         5: 'ellen'
                     },
-                    record: {},
+                    record: {
+                        1: {},
+                        2: {},
+                        // 3 charlie was deleted
+                        4: {},
+                        5: {}
+                    },
                     comments: {counter: 0}
                 },
                 {
@@ -57,7 +63,13 @@ describe('Participant', function () {
                         4: 'dave',
                         5: 'ellen'
                     },
-                    record: {},
+                    record: {
+                        1: {},
+                        2: {},
+                        // 3 charlie was deleted
+                        4: {},
+                        5: {}
+                    },
                     comments: {counter: 0}
                 }
             ]
@@ -146,7 +158,9 @@ describe('Participant', function () {
                         participants: {
                             1: '1'
                         },
-                        record: {},
+                        record: {
+                            1: {}
+                        },
                         comments: {}
                     }, done);
             });
@@ -159,7 +173,9 @@ describe('Participant', function () {
                         participants: {
                             1: dummyString(255)
                         },
-                        record: {},
+                        record: {
+                            1: {}
+                        },
                         comments: {}
                     }, done);
             });
@@ -176,7 +192,9 @@ describe('Participant', function () {
                                 participants: {
                                     1: 'alice'
                                 },
-                                record: {},
+                                record: {
+                                    1: {}
+                                },
                                 comments: {}
                             }, next);
                     },
@@ -189,7 +207,10 @@ describe('Participant', function () {
                                     1: 'alice',
                                     2: 'bob'
                                 },
-                                record: {},
+                                record: {
+                                    1: {},
+                                    2: {}
+                                },
                                 comments: {}
                             }, next);
                     },
@@ -203,7 +224,11 @@ describe('Participant', function () {
                                     2: 'bob',
                                     3: 'charlie'
                                 },
-                                record: {},
+                                record: {
+                                    1: {},
+                                    2: {},
+                                    3: {}
+                                },
                                 comments: {}
                             }, next);
                     }
@@ -223,7 +248,14 @@ describe('Participant', function () {
                             5: 'ellen',
                             6: 'frank'
                         },
-                        record: {},
+                        record: {
+                            1: {},
+                            2: {},
+                            // 3 charlie was deleted
+                            4: {},
+                            5: {},
+                            6: {}
+                        },
                         comments: {}
                     }, done);
             });
@@ -323,7 +355,13 @@ describe('Participant', function () {
                             4: 'dave',
                             5: 'ellen'
                         },
-                        record: {},
+                        record: {
+                            1: {},
+                            2: {},
+                            // 3 charlie was deleted
+                            4: {},
+                            5: {}
+                        },
                         comments: {}
                     }, done);
             });
@@ -340,7 +378,13 @@ describe('Participant', function () {
                             4: 'dave',
                             5: 'ellen'
                         },
-                        record: {},
+                        record: {
+                            1: {},
+                            2: {},
+                            // 3 charlie was deleted
+                            4: {},
+                            5: {}
+                        },
                         comments: {}
                     }, done);
             });
@@ -357,7 +401,13 @@ describe('Participant', function () {
                             4: 'dave',
                             5: 'ellen'
                         },
-                        record: {},
+                        record: {
+                            1: {},
+                            2: {},
+                            // 3 charlie was deleted
+                            4: {},
+                            5: {}
+                        },
                         comments: {}
                     }, done);
             });
@@ -374,7 +424,13 @@ describe('Participant', function () {
                             4: 'dave',
                             5: 'ellen'
                         },
-                        record: {},
+                        record: {
+                            1: {},
+                            2: {},
+                            // 3 charlie was deleted
+                            4: {},
+                            5: {}
+                        },
                         comments: {}
                     }, done);
             });
@@ -391,7 +447,13 @@ describe('Participant', function () {
                             4: 'dave',
                             5: 'ellen'
                         },
-                        record: {},
+                        record: {
+                            1: {},
+                            2: {},
+                            // 3 charlie was deleted
+                            4: {},
+                            5: {}
+                        },
                         comments: {}
                     }, done);
             });
@@ -450,7 +512,13 @@ describe('Participant', function () {
                             4: 'dave',
                             5: 'ellen'
                         },
-                        record: {},
+                        record: {
+                            1: {},
+                            2: {},
+                            // 3 charlie was deleted
+                            4: {},
+                            5: {}
+                        },
                         comments: {}
                     }, done);
             });
@@ -466,7 +534,12 @@ describe('Participant', function () {
                             4: 'dave',
                             5: 'ellen'
                         },
-                        record: {},
+                        record: {
+                            2: {},
+                            // 3 charlie was deleted
+                            4: {},
+                            5: {}
+                        },
                         comments: {}
                     }, done);
             });
