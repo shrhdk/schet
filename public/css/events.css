@@ -50,7 +50,7 @@ table.record th, table.record td {
     border: 1px solid black;
 }
 
-.fixed-term-row {
+tr.is-fixed {
     background-color: #88f193;
 }
 
