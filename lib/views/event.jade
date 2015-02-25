@@ -47,8 +47,8 @@ html
               td
                 select.record(participant-id=id, term-id=term.id)
                   option(value='presence', selected=(event.record[id][term.id] === 'presence')) ○
-                  option(value='uncertain', selected=(event.record[id][term.id] === 'presence')) △
-                  option(value='absence', selected=(event.record[id][term.id] === 'presence')) ×
+                  option(value='uncertain', selected=(event.record[id][term.id] === 'uncertain')) △
+                  option(value='absence', selected=(event.record[id][term.id] === 'absence')) ×
       unless event.fixed
         tr
           td

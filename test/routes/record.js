@@ -201,6 +201,32 @@ describe('Record', function () {
                 }, done);
         });
 
+        it('Update Participant without name', function (done) {
+            req('PUT', '/1/participants/1', {1: 'uncertain'})
+                .expect(200, {
+                    id: 1, title: 'first', description: 'first_desc',
+                    terms: {
+                        1: term1,
+                        2: term2
+                    },
+                    participants: {
+                        1: 'alice',
+                        2: 'bob'
+                    },
+                    record: {
+                        1: {
+                            1: 'uncertain',
+                            2: 'absence'
+                        },
+                        2: {
+                            1: 'presence',
+                            2: 'uncertain'
+                        }
+                    },
+                    comments: {}
+                }, done);
+        });
+
         it('Update Participant with all Term ID', function (done) {
             req('PUT', '/1/participants/1', {name: 'modified', 1: 'uncertain', 2: 'presence'})
                 .expect(200, {
