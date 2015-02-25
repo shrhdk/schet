@@ -1,7 +1,6 @@
 // Copyrights Hideki Shiro
 
 var settings = require('../settings');
-require('util-is');
 var util = require('util');
 var request = require('request');
 var assert = require('power-assert').customize({
