@@ -289,7 +289,7 @@ window.addEventListener('load', function () {
     });
 
     // Edit Record
-    var _records = document.querySelectorAll('.record');
+    var _records = document.querySelectorAll('select.record');
     [].forEach.call(_records, function (_record) {
         var participantID = _record.getAttribute('participant-id');
         var termID = _record.getAttribute('term-id');
