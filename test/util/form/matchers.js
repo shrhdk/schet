@@ -1,4 +1,4 @@
-/*eslint strict:0*/
+'use strict';
 
 var assert = require('power-assert');
 
@@ -8,7 +8,7 @@ var matchers = require('../../../lib/util/form/matchers');
 describe('matchers', function () {
   describe('str', function () {
     it('("foo") should return true when value is "foo"', function () {
-      var m = matchers.str('foo');
+      let m = matchers.str('foo');
 
       assert(m('foo') === true);
       assert(m('bar') === false);
@@ -17,7 +17,7 @@ describe('matchers', function () {
 
   describe('re', function () {
     it('(/^\d+$/) should return true when value is "foo"', function () {
-      var m = matchers.re(/^\d+$/);
+      let m = matchers.re(/^\d+$/);
 
       assert(m('1') === true);
       assert(m('12') === true);
@@ -30,7 +30,7 @@ describe('matchers', function () {
 
   describe('ge', function () {
     it('(-1) should return true when value is greater than or equal to -1.', function () {
-      var m = matchers.ge(-1);
+      let m = matchers.ge(-1);
 
       assert(m(-2) === false);
       assert(m(-1) === true);
@@ -39,7 +39,7 @@ describe('matchers', function () {
     });
 
     it('(0) should return true when value is greater than or equal to 0.', function () {
-      var m = matchers.ge(0);
+      let m = matchers.ge(0);
 
       assert(m(-1) === false);
       assert(m(+0) === true);
@@ -47,7 +47,7 @@ describe('matchers', function () {
     });
 
     it('(1) should return true when value is greater than or equal to 1.', function () {
-      var m = matchers.ge(1);
+      let m = matchers.ge(1);
 
       assert(m(-1) === false);
       assert(m(+0) === false);

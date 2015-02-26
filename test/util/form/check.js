@@ -1,4 +1,4 @@
-/*eslint strict:0*/
+'use strict';
 
 var assert = require('power-assert');
 
@@ -40,14 +40,14 @@ describe('check', function () {
   });
 
   it('skips sanitize when the sanitizer is undefined.', function () {
-    var given = {
+    let given = {
       1: 'foo',
       2: 'bar'
     };
 
-    var expected = given;
+    let expected = given;
 
-    var actual = check(given, [
+    let actual = check(given, [
       def(/^\d+$/, 1)
     ]);
 
@@ -55,14 +55,14 @@ describe('check', function () {
   });
 
   it('skips validation when the validator is undefined.', function () {
-    var given = {
+    let given = {
       1: '   foo   ',
       2: '   bar   '
     };
 
-    var expected = given;
+    let expected = given;
 
-    var actual = check(given, [
+    let actual = check(given, [
       def(/^\d+$/, 1)
     ]);
 
@@ -70,7 +70,7 @@ describe('check', function () {
   });
 
   it('throws Error when the validator returned false.', function () {
-    var given = {
+    let given = {
       1: 'foo',
       2: whitespace
     };
@@ -83,7 +83,7 @@ describe('check', function () {
   });
 
   it('throws Error when a parameter does not match to any definition.', function () {
-    var given = {
+    let given = {
       foo: 1,
       bar: 2
     };
@@ -96,7 +96,7 @@ describe('check', function () {
   });
 
   it('throws Error when def(*, true, *, *) matched twice and more', function () {
-    var given = {
+    let given = {
       1: 'foo',
       2: 'bar'
     };
@@ -109,17 +109,17 @@ describe('check', function () {
   });
 
   it('does not throws Error when def(*, false, *, *) matched no times', function () {
-    var given = {
+    let given = {
       foo: 1,
       bar: 2
     };
 
-    var expected = {
+    let expected = {
       foo: 1,
       bar: 2
     };
 
-    var actual = check(given, [
+    let actual = check(given, [
       def('foo', true),
       def('bar', true),
       def(/^\d+$/, false)    // this def will not match.
@@ -129,7 +129,7 @@ describe('check', function () {
   });
 
   it('throws Error when def(*, 2, *, *) matched only once.', function () {
-    var given = {
+    let given = {
       1: 'foo'
     };
 
