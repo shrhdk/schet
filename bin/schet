@@ -2,7 +2,7 @@
 
 case $1 in
 "stop" ) $(npm bin)/forever stop bin/schet.js ;;
-"start" ) $(npm bin)/forever start bin/schet.js ;;
+"start" ) $(npm bin)/forever start -c "node --harmony" bin/schet.js ;;
 "init" ) $(npm bin)/gulp init ;;
 * ) echo "schet init|start|stop" ;;
 esac

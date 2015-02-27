@@ -134,5 +134,9 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 
+### nodemon ###
+
+nodemon.json
+
 ### My App ###
 .db/
