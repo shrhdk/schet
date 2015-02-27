@@ -1,7 +1,7 @@
 /*eslint strict:0*/
 
-var errors = require('../../lib/errors');
 var async = require('async');
+var ERRORS = require('../../lib/errors');
 var mongo = require('../../lib/models/mongo');
 var testHelper = require('./../test-helper');
 var req = testHelper.req;
@@ -82,70 +82,68 @@ describe('Participant', function () {
     context('400 InvalidParameterError', function () {
       it('/1/participants with no params.', function (done) {
         req('POST', '/1/participants', {})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1/participants with empty name.', function (done) {
         req('POST', '/1/participants', {name: ''})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1/participants with name consists of whitespace.', function (done) {
         req('POST', '/1/participants', {name: ' '})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1/participants with name contains \\r.', function (done) {
         req('POST', '/1/participants', {name: 'hello\rworld'})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1/participants with name contains \\n.', function (done) {
         req('POST', '/1/participants', {name: 'hello\nworld'})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1/participants with name contains \\r\\n.', function (done) {
         req('POST', '/1/participants', {name: 'hello\r\nworld'})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1/participants with too long name.', function (done) {
         req('POST', '/1/participants', {name: dummyString(256)})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
     });
 
     context('404 NotFoundError', function () {
       it('/0/participants', function (done) {
         req('POST', '/0/participants', {name: 'alice'})
-          .expect(404, {error: 'NotFoundError'}, done);
+          .expect(404, ERRORS.NOT_FOUND_ERROR.json, done);
+      });
+
+      it('/3/participants', function (done) {
+        req('POST', '/3/participants', {name: 'alice'})
+          .expect(404, ERRORS.NOT_FOUND_ERROR.json, done);
       });
 
       it('/6/participants', function (done) {
         req('POST', '/6/participants', {name: 'alice'})
-          .expect(404, {error: 'NotFoundError'}, done);
-      });
-    });
-
-    context('410 NotFoundError', function () {
-      it('/3/participants', function (done) {
-        req('POST', '/3/participants', {name: 'alice'})
-          .expect(410, {error: 'NotFoundError'}, done);
+          .expect(404, ERRORS.NOT_FOUND_ERROR.json, done);
       });
     });
 
     context('409 FixedEventError', function () {
       it('/5/participants', function (done) {
         req('POST', '/5/participants', {name: 'frank'})
-          .expect(409, {error: 'FixedEventError'}, done);
+          .expect(409, ERRORS.FIXED_EVENT_ERROR.json, done);
       });
     });
 
     context('409 DuplicatedParticipantError', function () {
       it('/4/participants with existing name.', function (done) {
         req('POST', '/4/participants', {name: 'alice'})
-          .expect(409, {error: 'DuplicatedParticipantError'}, done);
+          .expect(409, ERRORS.DUPLICATED_PARTICIPANT_ERROR.json, done);
       });
     });
 
@@ -266,79 +264,75 @@ describe('Participant', function () {
     context('400 InvalidParameterError', function () {
       it('/4/participants/1 with empty name.', function (done) {
         req('PUT', '/4/participants/1', {name: ''})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/4/participants/1 with name consists of whitespace.', function (done) {
         req('PUT', '/4/participants/1', {name: ' '})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/4/participants/1 with name contains \\r.', function (done) {
         req('PUT', '/4/participants/1', {name: 'hello\rworld'})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/4/participants/1 with name contains \\n.', function (done) {
         req('PUT', '/4/participants/1', {name: 'hello\nworld'})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/4/participants/1 with name contains \\r\\n.', function (done) {
         req('PUT', '/4/participants/1', {name: 'hello\r\nworld'})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/4/participants/1 with too long name.', function (done) {
         req('PUT', '/4/participants/1', {name: dummyString(256)})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
     });
 
     context('404 NotFoundError', function () {
       it('/0/participants/1', function (done) {
         req('PUT', '/0/participants/1', {name: 'alice'})
-          .expect(404, {error: 'NotFoundError'}, done);
+          .expect(404, ERRORS.NOT_FOUND_ERROR.json, done);
+      });
+
+      it('/3/participants/1', function (done) {
+        req('PUT', '/3/participants/1', {name: 'alice'})
+          .expect(404, ERRORS.NOT_FOUND_ERROR.json, done);
       });
 
       it('/6/participants/1', function (done) {
         req('PUT', '/6/participants/1', {name: 'alice'})
-          .expect(404, {error: 'NotFoundError'}, done);
-      });
-    });
-
-    context('410 NotFoundError', function () {
-      it('/3/participants/1', function (done) {
-        req('PUT', '/3/participants/1', {name: 'alice'})
-          .expect(410, {error: 'NotFoundError'}, done);
+          .expect(404, ERRORS.NOT_FOUND_ERROR.json, done);
       });
     });
 
     context('409 409 FixedEventError', function () {
       it('/5/participants/1', function (done) {
         req('PUT', '/5/participants/1', {name: 'alice'})
-          .expect(409, {error: 'FixedEventError'}, done);
+          .expect(409, ERRORS.FIXED_EVENT_ERROR.json, done);
       });
     });
 
     context('404 ParticipantNotFoundError', function () {
-      it('/4/participants/6', function (done) {
-        req('PUT', '/4/participants/6', {name: 'alice'})
-          .expect(404, {error: 'ParticipantNotFoundError'}, done);
-      });
-    });
-
-    context('410 ParticipantNotFoundError', function () {
       it('/4/participants/3', function (done) {
         req('PUT', '/4/participants/3', {name: 'alice'})
-          .expect(410, {error: 'ParticipantNotFoundError'}, done);
+          .expect(404, ERRORS.PARTICIPANT_NOT_FOUND_ERROR.json, done);
+      });
+
+      it('/4/participants/6', function (done) {
+        req('PUT', '/4/participants/6', {name: 'alice'})
+          .expect(404, ERRORS.PARTICIPANT_NOT_FOUND_ERROR.json, done);
       });
     });
 
     context('409 DuplicatedParticipantError', function () {
       it('/4/participants/1 with existing name.', function (done) {
         req('PUT', '/4/participants/1', {name: 'bob'})
-          .expect(409, {error: 'DuplicatedParticipantError'}, done);
+          .expect(409, ERRORS.DUPLICATED_PARTICIPANT_ERROR.json, done);
       });
     });
 
@@ -464,38 +458,36 @@ describe('Participant', function () {
     context('404 NotFoundError', function () {
       it('/0/participants/1', function (done) {
         req('DELETE', '/0/participants/1', {})
-          .expect(404, {error: 'NotFoundError'}, done);
+          .expect(404, ERRORS.NOT_FOUND_ERROR.json, done);
+      });
+
+      it('/3/participants/1', function (done) {
+        req('DELETE', '/3/participants/1', {})
+          .expect(404, ERRORS.NOT_FOUND_ERROR.json, done);
       });
 
       it('/6/participants/1', function (done) {
         req('DELETE', '/6/participants/1', {})
-          .expect(404, {error: 'NotFoundError'}, done);
-      });
-    });
-
-    context('410 NotFoundError', function () {
-      it('/3/participants/1', function (done) {
-        req('DELETE', '/3/participants/1', {})
-          .expect(410, {error: 'NotFoundError'}, done);
+          .expect(404, ERRORS.NOT_FOUND_ERROR.json, done);
       });
     });
 
     context('409 FixedEventError', function () {
       it('/5/participants/1', function (done) {
         req('DELETE', '/5/participants/1', {})
-          .expect(409, {error: 'FixedEventError'}, done);
+          .expect(409, ERRORS.FIXED_EVENT_ERROR.json, done);
       });
     });
 
     context('404 ParticipantNotFoundError', function () {
       it('/4/participants/0', function (done) {
         req('DELETE', '/4/participants/0', {})
-          .expect(404, {error: 'ParticipantNotFoundError'}, done);
+          .expect(404, ERRORS.PARTICIPANT_NOT_FOUND_ERROR.json, done);
       });
 
       it('/4/participants/6', function (done) {
         req('DELETE', '/4/participants/6', {})
-          .expect(404, {error: 'ParticipantNotFoundError'}, done);
+          .expect(404, ERRORS.PARTICIPANT_NOT_FOUND_ERROR.json, done);
       });
     });
 

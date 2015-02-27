@@ -1,7 +1,7 @@
 /*eslint strict:0*/
 
-var errors = require('../../lib/errors');
 var async = require('async');
+var ERRORS = require('../../lib/errors');
 var mongo = require('../../lib/models/mongo');
 var testHelper = require('./../test-helper');
 var req = testHelper.req;
@@ -74,76 +74,74 @@ describe('Comment', function () {
     context('400 InvalidParameterError', function () {
       it('/1/comments with no params.', function (done) {
         req('POST', '/1/comments', {})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1/comments without name.', function (done) {
         req('POST', '/1/comments', {body: 'body'})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1/comments with name consists of whitespace.', function (done) {
         req('POST', '/1/comments', {name: ' ', body: 'body'})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1/comments with name contains \\r.', function (done) {
         req('POST', '/1/comments', {name: 'hello\rworld', body: 'body'})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1/comments with name contains \\n.', function (done) {
         req('POST', '/1/comments', {name: 'hello\nworld', body: 'body'})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1/comments with name contains \\r\\n.', function (done) {
         req('POST', '/1/comments', {name: 'hello\r\nworld', body: 'body'})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1/comments with too long name.', function (done) {
         req('POST', '/1/comments', {name: dummyString(256), body: 'body'})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1/comments without body.', function (done) {
         req('POST', '/1/comments', {name: 'name'})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1/comments with body consists of whitespace.', function (done) {
         req('POST', '/1/comments', {name: 'name', body: ' '})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1/comments with body consists of whitespace.', function (done) {
         req('POST', '/1/comments', {name: 'name', body: ' '})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1/comments with too long name.', function (done) {
         req('POST', '/1/comments', {name: 'name', body: dummyString(2049)})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
     });
 
     context('404 NotFoundError', function () {
       it('/0/comments.', function (done) {
         req('POST', '/0/comments', ALICE_COMMENT)
-          .expect(404, {error: 'NotFoundError'}, done);
+          .expect(404, ERRORS.NOT_FOUND_ERROR.json, done);
+      });
+
+      it('/3/comments.', function (done) {
+        req('POST', '/3/comments', ALICE_COMMENT)
+          .expect(404, ERRORS.NOT_FOUND_ERROR.json, done);
       });
 
       it('/6/comments', function (done) {
         req('POST', '/6/comments', ALICE_COMMENT)
-          .expect(404, {error: 'NotFoundError'}, done);
-      });
-    });
-
-    context('410 NotFoundError', function () {
-      it('/3/comments.', function (done) {
-        req('POST', '/3/comments', ALICE_COMMENT)
-          .expect(410, {error: 'NotFoundError'}, done);
+          .expect(404, ERRORS.NOT_FOUND_ERROR.json, done);
       });
     });
 
@@ -284,75 +282,71 @@ describe('Comment', function () {
     context('400 InvalidParameterError', function () {
       it('/4/comments/1 with name consists of whitespace.', function (done) {
         req('PUT', '/4/comments/1', {name: ' '})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/4/comments/1 with name contains \\r.', function (done) {
         req('PUT', '/4/comments/1', {name: 'hello\rworld'})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/4/comments/1 with name contains \\n.', function (done) {
         req('PUT', '/4/comments/1', {name: 'hello\nworld'})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/4/comments/1 with name contains \\r\\n.', function (done) {
         req('PUT', '/4/comments/1', {name: 'hello\r\nworld'})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/4/comments/1 with too long name.', function (done) {
         req('PUT', '/4/comments/1', {name: dummyString(256)})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/4/comments/1 with body consists of whitespace.', function (done) {
         req('PUT', '/4/comments/1', {body: ' '})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/4/comments/1 with too long name.', function (done) {
         req('PUT', '/4/comments/1', {body: dummyString(2049)})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
     });
 
     context('404 NotFoundError', function () {
       it('/0/comments/1', function (done) {
         req('PUT', '/0/comments/1', MODIFIED_COMMENT)
-          .expect(404, {error: 'NotFoundError'}, done);
+          .expect(404, ERRORS.NOT_FOUND_ERROR.json, done);
+      });
+
+      it('/3/comments/1', function (done) {
+        req('PUT', '/3/comments/1', MODIFIED_COMMENT)
+          .expect(404, ERRORS.NOT_FOUND_ERROR.json, done);
       });
 
       it('/6/comments/1', function (done) {
         req('PUT', '/6/comments/1', MODIFIED_COMMENT)
-          .expect(404, {error: 'NotFoundError'}, done);
-      });
-    });
-
-    context('410 NotFoundError', function () {
-      it('/3/comments/1', function (done) {
-        req('PUT', '/3/comments/1', MODIFIED_COMMENT)
-          .expect(410, {error: 'NotFoundError'}, done);
+          .expect(404, ERRORS.NOT_FOUND_ERROR.json, done);
       });
     });
 
     context('404 CommentNotFoundError', function () {
       it('/4/comments/0', function (done) {
         req('PUT', '/4/comments/0', MODIFIED_COMMENT)
-          .expect(404, {error: 'CommentNotFoundError'}, done);
+          .expect(404, ERRORS.COMMENT_NOT_FOUND_ERROR.json, done);
+      });
+
+      it('/4/comments/3', function (done) {
+        req('PUT', '/4/comments/3', MODIFIED_COMMENT)
+          .expect(404, ERRORS.COMMENT_NOT_FOUND_ERROR.json, done);
       });
 
       it('/4/comments/6', function (done) {
         req('PUT', '/4/comments/6', MODIFIED_COMMENT)
-          .expect(404, {error: 'CommentNotFoundError'}, done);
-      });
-    });
-
-    context('410 CommentNotFoundError', function () {
-      it('/4/comments/3', function (done) {
-        req('PUT', '/4/comments/3', MODIFIED_COMMENT)
-          .expect(410, {error: 'CommentNotFoundError'}, done);
+          .expect(404, ERRORS.COMMENT_NOT_FOUND_ERROR.json, done);
       });
     });
 
@@ -496,31 +490,29 @@ describe('Comment', function () {
     context('404 NotFoundError', function () {
       it('/0/comments/1', function (done) {
         req('DELETE', '/0/comments/1', {})
-          .expect(404, {error: 'NotFoundError'}, done);
+          .expect(404, ERRORS.NOT_FOUND_ERROR.json, done);
+      });
+
+      it('/3/comments/1', function (done) {
+        req('DELETE', '/3/comments/1', {})
+          .expect(404, ERRORS.NOT_FOUND_ERROR.json, done);
       });
 
       it('/6/comments/1', function (done) {
         req('DELETE', '/6/comments/1', {})
-          .expect(404, {error: 'NotFoundError'}, done);
-      });
-    });
-
-    context('410 NotFoundError', function () {
-      it('/3/comments/1', function (done) {
-        req('DELETE', '/3/comments/1', {})
-          .expect(410, {error: 'NotFoundError'}, done);
+          .expect(404, ERRORS.NOT_FOUND_ERROR.json, done);
       });
     });
 
     context('404 CommentNotFoundError', function () {
       it('/4/comments/0', function (done) {
         req('DELETE', '/4/comments/0', {})
-          .expect(404, {error: 'CommentNotFoundError'}, done);
+          .expect(404, ERRORS.COMMENT_NOT_FOUND_ERROR.json, done);
       });
 
       it('/4/comments/6', function (done) {
         req('DELETE', '/4/comments/6', {})
-          .expect(404, {error: 'CommentNotFoundError'}, done);
+          .expect(404, ERRORS.COMMENT_NOT_FOUND_ERROR.json, done);
       });
     });
 

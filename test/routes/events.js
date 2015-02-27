@@ -1,7 +1,7 @@
 /*eslint strict:0*/
 
-var errors = require('../../lib/errors');
 var async = require('async');
+var ERRORS = require('../../lib/errors');
 var mongo = require('../../lib/models/mongo');
 var testHelper = require('./../test-helper');
 var req = testHelper.req;
@@ -73,47 +73,47 @@ describe('Event', function () {
     context('400', function () {
       it('/ with no params.', function (done) {
         req('POST', '/', {})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/ without title.', function (done) {
         req('POST', '/', {description: 'foo'})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/ with empty title.', function (done) {
         req('POST', '/', {title: ''})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/ with title consists of white space characters.', function (done) {
         req('POST', '/', {title: form.whitespace})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/ with title contains \\r.', function (done) {
         req('POST', '/', {title: 'hello\rworld'})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/ with title contains \\n.', function (done) {
         req('POST', '/', {title: 'hello\nworld'})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/ with title contains \\r\\n.', function (done) {
         req('POST', '/', {title: 'hello\r\nworld'})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/ with too long title.', function (done) {
         req('POST', '/', {title: dummyString(256)})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/ with too long description.', function (done) {
         req('POST', '/', {title: 'title', description: dummyString(2049)})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
     });
 
@@ -331,17 +331,17 @@ describe('Event', function () {
     context('404', function () {
       it('/0', function (done) {
         req('GET', '/0', {})
-          .expect(404, {error: 'NotFoundError'}, done);
+          .expect(404, ERRORS.NOT_FOUND_ERROR.json, done);
       });
 
       it('/3', function (done) {
         req('GET', '/3', {})
-          .expect(410, {error: 'NotFoundError'}, done);
+          .expect(404, ERRORS.NOT_FOUND_ERROR.json, done);
       });
 
       it('/6', function (done) {
         req('GET', '/6', {})
-          .expect(404, {error: 'NotFoundError'}, done);
+          .expect(404, ERRORS.NOT_FOUND_ERROR.json, done);
       });
     });
 
@@ -374,54 +374,54 @@ describe('Event', function () {
     context('400', function () {
       it('/1 with empty title.', function (done) {
         req('PUT', '/1', {title: ''})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1 with title consists of white space characters.', function (done) {
         req('PUT', '/1', {title: form.whitespace})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1 with title contains \\r.', function (done) {
         req('PUT', '/1', {title: 'hello\rworld'})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1 with title contains \\n.', function (done) {
         req('PUT', '/1', {title: 'hello\nworld'})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1 with title contains \\r\\n.', function (done) {
         req('PUT', '/1', {title: 'hello\r\nworld'})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1 with too long title.', function (done) {
         req('PUT', '/1', {title: dummyString(256)})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1 with too long description.', function (done) {
         req('PUT', '/1', {description: dummyString(2049)})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
     });
 
     context('404', function () {
       it('/0', function (done) {
         req('PUT', '/0', {})
-          .expect(404, {error: 'NotFoundError'}, done);
+          .expect(404, ERRORS.NOT_FOUND_ERROR.json, done);
       });
 
       it('/3', function (done) {
         req('PUT', '/3', {})
-          .expect(410, {error: 'NotFoundError'}, done);
+          .expect(404, ERRORS.NOT_FOUND_ERROR.json, done);
       });
 
       it('/6', function (done) {
         req('PUT', '/6', {})
-          .expect(404, {error: 'NotFoundError'}, done);
+          .expect(404, ERRORS.NOT_FOUND_ERROR.json, done);
       });
     });
 
@@ -512,34 +512,34 @@ describe('Event', function () {
     context('400', function () {
       it('/5 with empty title.', function (done) {
         req('PUT', '/5', {title: ''})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/5 with title consists of white space characters.', function (done) {
         req('PUT', '/5', {title: form.whitespace})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
     });
 
     context('409', function () {
       it('/5 with no params.', function (done) {
         req('PUT', '/5', {})
-          .expect(409, {error: 'FixedEventError'}, done);
+          .expect(409, ERRORS.FIXED_EVENT_ERROR.json, done);
       });
 
       it('/5 with title.', function (done) {
         req('PUT', '/5', {title: 'modified'})
-          .expect(409, {error: 'FixedEventError'}, done);
+          .expect(409, ERRORS.FIXED_EVENT_ERROR.json, done);
       });
 
       it('/5 with description.', function (done) {
         req('PUT', '/5', {description: 'modified'})
-          .expect(409, {error: 'FixedEventError'}, done);
+          .expect(409, ERRORS.FIXED_EVENT_ERROR.json, done);
       });
 
       it('/5 with title and description.', function (done) {
         req('PUT', '/5', {title: 'modified_title', description: 'modified_desc'})
-          .expect(409, {error: 'FixedEventError'}, done);
+          .expect(409, ERRORS.FIXED_EVENT_ERROR.json, done);
       });
     });
   });
@@ -548,26 +548,26 @@ describe('Event', function () {
     context('400', function () {
       it('/4 with invalid TermID.', function (done) {
         req('PUT', '/4', {fixed: 0})
-          .expect(400, {error: 'InvalidParameterError'}, done);
+          .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
     });
 
     context('409', function () {
       it('/5 with valid TermID.', function (done) {
         req('PUT', '/5', {fixed: 1})
-          .expect(409, {error: 'FixedEventError'}, done);
+          .expect(409, ERRORS.FIXED_EVENT_ERROR.json, done);
       });
     });
 
     context('409', function () {
       it('/4 with deleted TermID.', function (done) {
         req('PUT', '/4', {fixed: 3})
-          .expect(409, {error: 'TermNotFoundError'}, done);
+          .expect(409, ERRORS.TERM_NOT_FOUND_ERROR.json, done);
       });
 
       it('/4 with future TermID.', function (done) {
         req('PUT', '/4', {fixed: 5})
-          .expect(409, {error: 'TermNotFoundError'}, done);
+          .expect(409, ERRORS.TERM_NOT_FOUND_ERROR.json, done);
       });
     });
 
@@ -614,12 +614,12 @@ describe('Event', function () {
     context('404', function () {
       it('/0', function (done) {
         req('DELETE', '/0', {})
-          .expect(404, {error: 'NotFoundError'}, done);
+          .expect(404, ERRORS.NOT_FOUND_ERROR.json, done);
       });
 
       it('/6', function (done) {
         req('DELETE', '/6', {})
-          .expect(404, {error: 'NotFoundError'}, done);
+          .expect(404, ERRORS.NOT_FOUND_ERROR.json, done);
       });
     });
 

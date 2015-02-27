@@ -1,7 +1,7 @@
 /*eslint strict:0*/
 
-var errors = require('../../lib/errors');
 var async = require('async');
+var ERRORS = require('../../lib/errors');
 var mongo = require('../../lib/models/mongo');
 var req = require('./../test-helper').req;
 
@@ -115,179 +115,177 @@ describe('Term', function () {
   describe('POST', function () {
     context('400 InvalidParameterError', function () {
       it('/1/terms with no params.', function (done) {
-        req('POST', '/1/terms', {}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('POST', '/1/terms', {}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1/terms with invalid term.', function (done) {
-        req('POST', '/1/terms', {term: INVALID_DATE}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('POST', '/1/terms', {term: INVALID_DATE}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1/terms with invalid term.', function (done) {
-        req('POST', '/1/terms', {term: INVALID_DATE_MONTH}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('POST', '/1/terms', {term: INVALID_DATE_MONTH}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1/terms with invalid term.', function (done) {
-        req('POST', '/1/terms', {term: INVALID_DATE_DAY}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('POST', '/1/terms', {term: INVALID_DATE_DAY}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1/terms with invalid term.', function (done) {
-        req('POST', '/1/terms', {term: DATE_RANGE_END_EQUALS_TO_START}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('POST', '/1/terms', {term: DATE_RANGE_END_EQUALS_TO_START}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1/terms with invalid term.', function (done) {
-        req('POST', '/1/terms', {term: DATE_RANGE_END_IS_EARLIER_THAN_START}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('POST', '/1/terms', {term: DATE_RANGE_END_IS_EARLIER_THAN_START}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1/terms with invalid term.', function (done) {
-        req('POST', '/1/terms', {term: INVALID_DATE_RANGE_START}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('POST', '/1/terms', {term: INVALID_DATE_RANGE_START}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1/terms with invalid term.', function (done) {
-        req('POST', '/1/terms', {term: INVALID_DATE_RANGE_START_MONTH}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('POST', '/1/terms', {term: INVALID_DATE_RANGE_START_MONTH}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1/terms with invalid term.', function (done) {
-        req('POST', '/1/terms', {term: INVALID_DATE_RANGE_START_DAY}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('POST', '/1/terms', {term: INVALID_DATE_RANGE_START_DAY}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1/terms with invalid term.', function (done) {
-        req('POST', '/1/terms', {term: INVALID_DATE_RANGE_END}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('POST', '/1/terms', {term: INVALID_DATE_RANGE_END}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1/terms with invalid term.', function (done) {
-        req('POST', '/1/terms', {term: INVALID_DATE_RANGE_END_MONTH}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('POST', '/1/terms', {term: INVALID_DATE_RANGE_END_MONTH}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1/terms with invalid term.', function (done) {
-        req('POST', '/1/terms', {term: INVALID_DATE_RANGE_END_DAY}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('POST', '/1/terms', {term: INVALID_DATE_RANGE_END_DAY}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1/terms with invalid term.', function (done) {
-        req('POST', '/1/terms', {term: INVALID_DATE_TIME_DATE}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('POST', '/1/terms', {term: INVALID_DATE_TIME_DATE}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1/terms with invalid term.', function (done) {
-        req('POST', '/1/terms', {term: INVALID_DATE_TIME_TIME}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('POST', '/1/terms', {term: INVALID_DATE_TIME_TIME}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1/terms with invalid term.', function (done) {
-        req('POST', '/1/terms', {term: INVALID_DATE_TIME_MONTH}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('POST', '/1/terms', {term: INVALID_DATE_TIME_MONTH}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1/terms with invalid term.', function (done) {
-        req('POST', '/1/terms', {term: INVALID_DATE_TIME_DAY}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('POST', '/1/terms', {term: INVALID_DATE_TIME_DAY}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1/terms with invalid term.', function (done) {
-        req('POST', '/1/terms', {term: INVALID_DATE_TIME_HOURS}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('POST', '/1/terms', {term: INVALID_DATE_TIME_HOURS}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1/terms with invalid term.', function (done) {
-        req('POST', '/1/terms', {term: INVALID_DATE_TIME_MINUTES}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('POST', '/1/terms', {term: INVALID_DATE_TIME_MINUTES}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1/terms with invalid term.', function (done) {
-        req('POST', '/1/terms', {term: DATE_TIME_RANGE_END_EQUALS_TO_START}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('POST', '/1/terms', {term: DATE_TIME_RANGE_END_EQUALS_TO_START}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1/terms with invalid term.', function (done) {
-        req('POST', '/1/terms', {term: DATE_TIME_RANGE_END_IS_EARLIER_THAN_START}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('POST', '/1/terms', {term: DATE_TIME_RANGE_END_IS_EARLIER_THAN_START}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1/terms with invalid term.', function (done) {
-        req('POST', '/1/terms', {term: INVALID_DATE_TIME_RANGE_START}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('POST', '/1/terms', {term: INVALID_DATE_TIME_RANGE_START}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1/terms with invalid term.', function (done) {
-        req('POST', '/1/terms', {term: INVALID_DATE_TIME_RANGE_START_MONTH}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('POST', '/1/terms', {term: INVALID_DATE_TIME_RANGE_START_MONTH}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1/terms with invalid term.', function (done) {
-        req('POST', '/1/terms', {term: INVALID_DATE_TIME_RANGE_START_DAY}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('POST', '/1/terms', {term: INVALID_DATE_TIME_RANGE_START_DAY}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1/terms with invalid term.', function (done) {
-        req('POST', '/1/terms', {term: INVALID_DATE_TIME_RANGE_START_TIME}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('POST', '/1/terms', {term: INVALID_DATE_TIME_RANGE_START_TIME}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1/terms with invalid term.', function (done) {
-        req('POST', '/1/terms', {term: INVALID_DATE_TIME_RANGE_START_HOURS}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('POST', '/1/terms', {term: INVALID_DATE_TIME_RANGE_START_HOURS}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1/terms with invalid term.', function (done) {
-        req('POST', '/1/terms', {term: INVALID_DATE_TIME_RANGE_START_MINUTES}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('POST', '/1/terms', {term: INVALID_DATE_TIME_RANGE_START_MINUTES}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1/terms with invalid term.', function (done) {
-        req('POST', '/1/terms', {term: INVALID_DATE_TIME_RANGE_END}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('POST', '/1/terms', {term: INVALID_DATE_TIME_RANGE_END}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1/terms with invalid term.', function (done) {
-        req('POST', '/1/terms', {term: INVALID_DATE_TIME_RANGE_END_TIME}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('POST', '/1/terms', {term: INVALID_DATE_TIME_RANGE_END_TIME}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1/terms with invalid term.', function (done) {
-        req('POST', '/1/terms', {term: INVALID_DATE_TIME_RANGE_END_MONTH}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('POST', '/1/terms', {term: INVALID_DATE_TIME_RANGE_END_MONTH}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1/terms with invalid term.', function (done) {
-        req('POST', '/1/terms', {term: INVALID_DATE_TIME_RANGE_END_DAY}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('POST', '/1/terms', {term: INVALID_DATE_TIME_RANGE_END_DAY}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1/terms with invalid term.', function (done) {
-        req('POST', '/1/terms', {term: INVALID_DATE_TIME_RANGE_END_HOURS}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('POST', '/1/terms', {term: INVALID_DATE_TIME_RANGE_END_HOURS}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/1/terms with invalid term.', function (done) {
-        req('POST', '/1/terms', {term: INVALID_DATE_TIME_RANGE_END_MINUTES}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('POST', '/1/terms', {term: INVALID_DATE_TIME_RANGE_END_MINUTES}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
     });
 
     context('404 NotFoundError', function () {
       it('/0/terms', function (done) {
         req('POST', '/0/terms', {term: DATE_2})
-          .expect(404, {error: 'NotFoundError'}, done);
+          .expect(404, ERRORS.NOT_FOUND_ERROR.json, done);
+      });
+
+      it('/3/terms', function (done) {
+        req('POST', '/3/terms', {term: DATE_2})
+          .expect(404, ERRORS.NOT_FOUND_ERROR.json, done);
       });
 
       it('/6/terms', function (done) {
         req('POST', '/6/terms', {term: DATE_2})
-          .expect(404, {error: 'NotFoundError'}, done);
-      });
-    });
-
-    context('410 NotFoundError', function () {
-      it('/3/terms', function (done) {
-        req('POST', '/3/terms', {term: DATE_2})
-          .expect(410, {error: 'NotFoundError'}, done);
+          .expect(404, ERRORS.NOT_FOUND_ERROR.json, done);
       });
     });
 
     context('409 FixedEventError', function () {
       it('/5/terms', function (done) {
         req('POST', '/5/terms', {term: DATE_2})
-          .expect(409, {error: 'FixedEventError'}, done);
+          .expect(409, ERRORS.FIXED_EVENT_ERROR.json, done);
       });
     });
 
     context('409 DuplicatedTermError', function () {
       it('/4/terms with existing term.', function (done) {
         req('POST', '/4/terms', {term: PRESET_TERM_1})
-          .expect(409, {error: 'DuplicatedTermError'}, done);
+          .expect(409, ERRORS.DUPLICATED_TERM_ERROR.json, done);
       });
 
       it('/4/terms with existing term.', function (done) {
         req('POST', '/4/terms', {term: PRESET_TERM_2})
-          .expect(409, {error: 'DuplicatedTermError'}, done);
+          .expect(409, ERRORS.DUPLICATED_TERM_ERROR.json, done);
       });
 
       it('/4/terms with existing term.', function (done) {
         req('POST', '/4/terms', {term: PRESET_TERM_4})
-          .expect(409, {error: 'DuplicatedTermError'}, done);
+          .expect(409, ERRORS.DUPLICATED_TERM_ERROR.json, done);
       });
 
       it('/4/terms with existing term.', function (done) {
         req('POST', '/4/terms', {term: PRESET_TERM_5})
-          .expect(409, {error: 'DuplicatedTermError'}, done);
+          .expect(409, ERRORS.DUPLICATED_TERM_ERROR.json, done);
       });
     });
 
@@ -454,178 +452,174 @@ describe('Term', function () {
   describe('PUT', function () {
     context('400 InvalidParameterError', function () {
       it('/4/terms/1 with no params.', function (done) {
-        req('PUT', '/4/terms/1', {}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('PUT', '/4/terms/1', {}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/4/terms/1 with invalid term.', function (done) {
-        req('PUT', '/4/terms/1', {term: INVALID_DATE}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('PUT', '/4/terms/1', {term: INVALID_DATE}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/4/terms/1 with invalid term.', function (done) {
-        req('PUT', '/4/terms/1', {term: INVALID_DATE_MONTH}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('PUT', '/4/terms/1', {term: INVALID_DATE_MONTH}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/4/terms/1 with invalid term.', function (done) {
-        req('PUT', '/4/terms/1', {term: INVALID_DATE_DAY}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('PUT', '/4/terms/1', {term: INVALID_DATE_DAY}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/4/terms/1 with invalid term.', function (done) {
-        req('PUT', '/4/terms/1', {term: DATE_RANGE_END_EQUALS_TO_START}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('PUT', '/4/terms/1', {term: DATE_RANGE_END_EQUALS_TO_START}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/4/terms/1 with invalid term.', function (done) {
-        req('PUT', '/4/terms/1', {term: DATE_RANGE_END_IS_EARLIER_THAN_START}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('PUT', '/4/terms/1', {term: DATE_RANGE_END_IS_EARLIER_THAN_START}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/4/terms/1 with invalid term.', function (done) {
-        req('PUT', '/4/terms/1', {term: INVALID_DATE_RANGE_START}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('PUT', '/4/terms/1', {term: INVALID_DATE_RANGE_START}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/4/terms/1 with invalid term.', function (done) {
-        req('PUT', '/4/terms/1', {term: INVALID_DATE_RANGE_START_MONTH}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('PUT', '/4/terms/1', {term: INVALID_DATE_RANGE_START_MONTH}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/4/terms/1 with invalid term.', function (done) {
-        req('PUT', '/4/terms/1', {term: INVALID_DATE_RANGE_START_DAY}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('PUT', '/4/terms/1', {term: INVALID_DATE_RANGE_START_DAY}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/4/terms/1 with invalid term.', function (done) {
-        req('PUT', '/4/terms/1', {term: INVALID_DATE_RANGE_END}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('PUT', '/4/terms/1', {term: INVALID_DATE_RANGE_END}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/4/terms/1 with invalid term.', function (done) {
-        req('PUT', '/4/terms/1', {term: INVALID_DATE_RANGE_END_MONTH}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('PUT', '/4/terms/1', {term: INVALID_DATE_RANGE_END_MONTH}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/4/terms/1 with invalid term.', function (done) {
-        req('PUT', '/4/terms/1', {term: INVALID_DATE_RANGE_END_DAY}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('PUT', '/4/terms/1', {term: INVALID_DATE_RANGE_END_DAY}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/4/terms/1 with invalid term.', function (done) {
-        req('PUT', '/4/terms/1', {term: INVALID_DATE_TIME_DATE}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('PUT', '/4/terms/1', {term: INVALID_DATE_TIME_DATE}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/4/terms/1 with invalid term.', function (done) {
-        req('PUT', '/4/terms/1', {term: INVALID_DATE_TIME_TIME}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('PUT', '/4/terms/1', {term: INVALID_DATE_TIME_TIME}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/4/terms/1 with invalid term.', function (done) {
-        req('PUT', '/4/terms/1', {term: INVALID_DATE_TIME_MONTH}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('PUT', '/4/terms/1', {term: INVALID_DATE_TIME_MONTH}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/4/terms/1 with invalid term.', function (done) {
-        req('PUT', '/4/terms/1', {term: INVALID_DATE_TIME_DAY}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('PUT', '/4/terms/1', {term: INVALID_DATE_TIME_DAY}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/4/terms/1 with invalid term.', function (done) {
-        req('PUT', '/4/terms/1', {term: INVALID_DATE_TIME_HOURS}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('PUT', '/4/terms/1', {term: INVALID_DATE_TIME_HOURS}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/4/terms/1 with invalid term.', function (done) {
-        req('PUT', '/4/terms/1', {term: INVALID_DATE_TIME_MINUTES}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('PUT', '/4/terms/1', {term: INVALID_DATE_TIME_MINUTES}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/4/terms/1 with invalid term.', function (done) {
-        req('PUT', '/4/terms/1', {term: DATE_TIME_RANGE_END_EQUALS_TO_START}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('PUT', '/4/terms/1', {term: DATE_TIME_RANGE_END_EQUALS_TO_START}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/4/terms/1 with invalid term.', function (done) {
-        req('PUT', '/4/terms/1', {term: DATE_TIME_RANGE_END_IS_EARLIER_THAN_START}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('PUT', '/4/terms/1', {term: DATE_TIME_RANGE_END_IS_EARLIER_THAN_START}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/4/terms/1 with invalid term.', function (done) {
-        req('PUT', '/4/terms/1', {term: INVALID_DATE_TIME_RANGE_START}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('PUT', '/4/terms/1', {term: INVALID_DATE_TIME_RANGE_START}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/4/terms/1 with invalid term.', function (done) {
-        req('PUT', '/4/terms/1', {term: INVALID_DATE_TIME_RANGE_START_MONTH}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('PUT', '/4/terms/1', {term: INVALID_DATE_TIME_RANGE_START_MONTH}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/4/terms/1 with invalid term.', function (done) {
-        req('PUT', '/4/terms/1', {term: INVALID_DATE_TIME_RANGE_START_DAY}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('PUT', '/4/terms/1', {term: INVALID_DATE_TIME_RANGE_START_DAY}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/4/terms/1 with invalid term.', function (done) {
-        req('PUT', '/4/terms/1', {term: INVALID_DATE_TIME_RANGE_START_TIME}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('PUT', '/4/terms/1', {term: INVALID_DATE_TIME_RANGE_START_TIME}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/4/terms/1 with invalid term.', function (done) {
-        req('PUT', '/4/terms/1', {term: INVALID_DATE_TIME_RANGE_START_HOURS}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('PUT', '/4/terms/1', {term: INVALID_DATE_TIME_RANGE_START_HOURS}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/4/terms/1 with invalid term.', function (done) {
-        req('PUT', '/4/terms/1', {term: INVALID_DATE_TIME_RANGE_START_MINUTES}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('PUT', '/4/terms/1', {term: INVALID_DATE_TIME_RANGE_START_MINUTES}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/4/terms/1 with invalid term.', function (done) {
-        req('PUT', '/4/terms/1', {term: INVALID_DATE_TIME_RANGE_END}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('PUT', '/4/terms/1', {term: INVALID_DATE_TIME_RANGE_END}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/4/terms/1 with invalid term.', function (done) {
-        req('PUT', '/4/terms/1', {term: INVALID_DATE_TIME_RANGE_END_TIME}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('PUT', '/4/terms/1', {term: INVALID_DATE_TIME_RANGE_END_TIME}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/4/terms/1 with invalid term.', function (done) {
-        req('PUT', '/4/terms/1', {term: INVALID_DATE_TIME_RANGE_END_MONTH}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('PUT', '/4/terms/1', {term: INVALID_DATE_TIME_RANGE_END_MONTH}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/4/terms/1 with invalid term.', function (done) {
-        req('PUT', '/4/terms/1', {term: INVALID_DATE_TIME_RANGE_END_DAY}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('PUT', '/4/terms/1', {term: INVALID_DATE_TIME_RANGE_END_DAY}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/4/terms/1 with invalid term.', function (done) {
-        req('PUT', '/4/terms/1', {term: INVALID_DATE_TIME_RANGE_END_HOURS}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('PUT', '/4/terms/1', {term: INVALID_DATE_TIME_RANGE_END_HOURS}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
       it('/4/terms/1 with invalid term.', function (done) {
-        req('PUT', '/4/terms/1', {term: INVALID_DATE_TIME_RANGE_END_MINUTES}).expect(400, {error: 'InvalidParameterError'}, done);
+        req('PUT', '/4/terms/1', {term: INVALID_DATE_TIME_RANGE_END_MINUTES}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
     });
 
     context('404 NotFoundError', function () {
       it('/0/terms/1', function (done) {
         req('PUT', '/0/terms/1', {term: DATE_2})
-          .expect(404, {error: 'NotFoundError'}, done);
+          .expect(404, ERRORS.NOT_FOUND_ERROR.json, done);
+      });
+
+      it('/3/terms/1', function (done) {
+        req('PUT', '/3/terms/1', {term: DATE_2})
+          .expect(404, ERRORS.NOT_FOUND_ERROR.json, done);
       });
 
       it('/6/terms/1', function (done) {
         req('PUT', '/6/terms/1', {term: DATE_2})
-          .expect(404, {error: 'NotFoundError'}, done);
-      });
-    });
-
-    context('410 NotFoundError', function () {
-      it('/3/terms/1', function (done) {
-        req('PUT', '/3/terms/1', {term: DATE_2})
-          .expect(410, {error: 'NotFoundError'}, done);
+          .expect(404, ERRORS.NOT_FOUND_ERROR.json, done);
       });
     });
 
     context('409 FixedEventError', function () {
       it('/5/terms/1', function (done) {
         req('PUT', '/5/terms/1', {term: DATE_2})
-          .expect(409, {error: 'FixedEventError'}, done);
+          .expect(409, ERRORS.FIXED_EVENT_ERROR.json, done);
       });
     });
 
     context('404 TermNotFoundError', function () {
-      it('/4/terms/5', function (done) {
-        req('PUT', '/4/terms/6', {term: DATE_2})
-          .expect(404, {error: 'TermNotFoundError'}, done);
-      });
-    });
-
-    context('410 TermNotFoundError', function () {
       it('/4/terms/3', function (done) {
         req('PUT', '/4/terms/3', {term: DATE_2})
-          .expect(410, {error: 'TermNotFoundError'}, done);
+          .expect(404, ERRORS.TERM_NOT_FOUND_ERROR.json, done);
+      });
+
+      it('/4/terms/5', function (done) {
+        req('PUT', '/4/terms/6', {term: DATE_2})
+          .expect(404, ERRORS.TERM_NOT_FOUND_ERROR.json, done);
       });
     });
 
     context('409 DuplicatedTermError', function () {
       it('/4/terms/1 with existing term.', function (done) {
         req('PUT', '/4/terms/1', {term: PRESET_TERM_2})
-          .expect(409, {error: 'DuplicatedTermError'}, done);
+          .expect(409, ERRORS.DUPLICATED_TERM_ERROR.json, done);
       });
     });
 
@@ -696,38 +690,36 @@ describe('Term', function () {
     context('404 NotFoundError', function () {
       it('/0/terms/1', function (done) {
         req('DELETE', '/0/terms/1', {})
-          .expect(404, {error: 'NotFoundError'}, done);
+          .expect(404, ERRORS.NOT_FOUND_ERROR.json, done);
+      });
+
+      it('/3/terms/1', function (done) {
+        req('DELETE', '/3/terms/1', {})
+          .expect(404, ERRORS.NOT_FOUND_ERROR.json, done);
       });
 
       it('/6/terms/1', function (done) {
         req('DELETE', '/6/terms/1', {})
-          .expect(404, {error: 'NotFoundError'}, done);
-      });
-    });
-
-    context('410 NotFoundError', function () {
-      it('/3/terms/1', function (done) {
-        req('DELETE', '/3/terms/1', {})
-          .expect(410, {error: 'NotFoundError'}, done);
+          .expect(404, ERRORS.NOT_FOUND_ERROR.json, done);
       });
     });
 
     context('409 FixedEventError', function () {
       it('/5/terms/1', function (done) {
         req('DELETE', '/5/terms/1', {})
-          .expect(409, {error: 'FixedEventError'}, done);
+          .expect(409, ERRORS.FIXED_EVENT_ERROR.json, done);
       });
     });
 
     context('409 TermNotFoundError', function () {
       it('/4/terms/0', function (done) {
         req('DELETE', '/4/terms/0', {})
-          .expect(404, {error: 'TermNotFoundError'}, done);
+          .expect(404, ERRORS.TERM_NOT_FOUND_ERROR.json, done);
       });
 
       it('/4/terms/6', function (done) {
         req('DELETE', '/4/terms/6', {})
-          .expect(404, {error: 'TermNotFoundError'}, done);
+          .expect(404, ERRORS.TERM_NOT_FOUND_ERROR.json, done);
       });
     });
 
