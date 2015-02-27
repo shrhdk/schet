@@ -683,6 +683,21 @@ describe('Term', function () {
             participants: {}, record: {}, comments: {}
           }, done);
       });
+
+      it('/4/terms/1 with unmodified term.', function (done) {
+        req('PUT', '/4/terms/1', {term: PRESET_TERM_1})
+          .expect(200, {
+            id: 4, title: 'forth', description: 'forth_desc',
+            terms: {
+              1: PRESET_TERM_1,
+              2: PRESET_TERM_2,
+              // third acts as deleted Term
+              4: PRESET_TERM_4,
+              5: PRESET_TERM_5
+            },
+            participants: {}, record: {}, comments: {}
+          }, done);
+      });
     });
   });
 
