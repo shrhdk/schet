@@ -1,6 +1,6 @@
 'use strict';
 
-var settings = require('../settings');
+var settings = require('../src/settings');
 var util = require('util');
 var request = require('request');
 var assert = require('power-assert').customize({

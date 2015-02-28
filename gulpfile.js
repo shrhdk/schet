@@ -15,8 +15,8 @@ gulp.task('lint', function () {
 });
 
 gulp.task('build:settings', function () {
-  return gulp.src('./settings.json')
-    .pipe(gulp.dest('build/'));
+  return gulp.src('src/**/*.json')
+    .pipe(gulp.dest('build/src/'));
 });
 
 gulp.task('build:test', function () {

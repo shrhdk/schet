@@ -2,7 +2,7 @@
 
 'use strict';
 
-var settings = require('../../settings');
+var settings = require('../settings');
 var ERRORS = require('../errors');
 var async = require('async');
 var mongodb = require('mongodb');

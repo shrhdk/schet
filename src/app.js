@@ -5,7 +5,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 
-var settings = require('../settings');
+var settings = require('./settings');
 
 var app = express();
 
