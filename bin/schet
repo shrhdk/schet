@@ -1,8 +1,8 @@
 #!/bin/sh
 
 case $1 in
-"stop" ) $(npm bin)/forever stop bin/schet.js ;;
-"start" ) $(npm bin)/forever start -c "node --harmony" bin/schet.js ;;
+"stop" ) $(npm bin)/forever stop build/lib/app.js ;;
+"start" ) $(npm bin)/forever start -c "node --harmony" build/lib/app.js ;;
 "init" ) $(npm bin)/gulp init ;;
 * ) echo "schet init|start|stop" ;;
 esac

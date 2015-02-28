@@ -14,13 +14,18 @@ gulp.task('lint', function () {
     .pipe(eslint.failOnError());
 });
 
+gulp.task('build:settings', function () {
+  return gulp.src('./settings.json')
+    .pipe(gulp.dest('build/'));
+});
+
 gulp.task('build:test', function () {
   return gulp.src('test/**/*.js')
     .pipe(babel())
     .pipe(gulp.dest('build/test/'));
 });
 
-gulp.task('build', ['build:server', 'build:client', 'build:test']);
+gulp.task('build', ['build:settings', 'build:server', 'build:client', 'build:test']);
 
 gulp.task('test', ['build:test'], function (done) {
   gulp.src('build/test/**/*.js')
