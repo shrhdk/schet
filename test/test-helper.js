@@ -33,7 +33,7 @@ class Req {
       json: true
     }, (err, res, resBody) => {
       if (err) {
-        done();
+        done(err);
       }
 
       assert(res.statusCode === statusCode);
