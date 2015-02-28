@@ -2,8 +2,8 @@
 
 var assert = require('power-assert');
 
-var whitespace = require('../../../lib/util/form/constants').whitespace;
-var matchers = require('../../../lib/util/form/matchers');
+var whitespace = require('../../../src/util/form/constants').whitespace;
+var matchers = require('../../../src/util/form/matchers');
 
 describe('matchers', function () {
   describe('str', function () {

@@ -2,8 +2,8 @@
 
 var assert = require('power-assert');
 
-var whitespace = require('../../../lib/util/form/constants').whitespace;
-var sanitizers = require('../../../lib/util/form/sanitizers');
+var whitespace = require('../../../src/util/form/constants').whitespace;
+var sanitizers = require('../../../src/util/form/sanitizers');
 
 describe('sanitizers', function () {
   describe('strip', function () {

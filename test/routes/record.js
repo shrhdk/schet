@@ -1,6 +1,6 @@
 /*eslint strict:0*/
 
-var mongo = require('../../lib/models/mongo');
+var mongo = require('../../src/models/mongo');
 var req = require('./../test-helper').req;
 
 var term1 = '2014-01-01/2014-01-02';

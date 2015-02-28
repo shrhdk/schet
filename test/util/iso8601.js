@@ -2,7 +2,7 @@
 
 var assert = require('power-assert');
 
-var iso8601 = require('../../lib/util/iso8601.js');
+var iso8601 = require('../../src/util/iso8601.js');
 
 describe('sort', function () {
   it('terms', function () {

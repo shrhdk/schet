@@ -2,8 +2,8 @@
 
 var assert = require('power-assert');
 
-var whitespace = require('../../../lib/util/form/constants').whitespace;
-var validators = require('../../../lib/util/form/validators');
+var whitespace = require('../../../src/util/form/constants').whitespace;
+var validators = require('../../../src/util/form/validators');
 
 describe('validators', function () {
   describe('isNotWhitespace', function () {

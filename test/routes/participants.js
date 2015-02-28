@@ -1,8 +1,8 @@
 /*eslint strict:0*/
 
 var async = require('async');
-var ERRORS = require('../../lib/errors');
-var mongo = require('../../lib/models/mongo');
+var ERRORS = require('../../src/errors');
+var mongo = require('../../src/models/mongo');
 var testHelper = require('./../test-helper');
 var req = testHelper.req;
 var dummyString = testHelper.dummyString;

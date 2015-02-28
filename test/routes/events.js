@@ -1,12 +1,12 @@
 /*eslint strict:0*/
 
 var async = require('async');
-var ERRORS = require('../../lib/errors');
-var mongo = require('../../lib/models/mongo');
+var ERRORS = require('../../src/errors');
+var mongo = require('../../src/models/mongo');
 var testHelper = require('./../test-helper');
 var req = testHelper.req;
 var dummyString = testHelper.dummyString;
-var form = require('../../lib/util/form');
+var form = require('../../src/util/form');
 
 var term1 = '2014-01-01/2014-01-02';
 var term2 = '2014-02-01/2014-02-02';

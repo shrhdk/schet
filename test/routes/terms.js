@@ -1,8 +1,8 @@
 /*eslint strict:0*/
 
 var async = require('async');
-var ERRORS = require('../../lib/errors');
-var mongo = require('../../lib/models/mongo');
+var ERRORS = require('../../src/errors');
+var mongo = require('../../src/models/mongo');
 var req = require('./../test-helper').req;
 
 var DATE_1 = '2014-01-01';

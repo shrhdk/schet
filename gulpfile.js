@@ -8,7 +8,7 @@ var babel = require('gulp-babel');
 // Common
 
 gulp.task('lint', function () {
-  return gulp.src(['*.js', 'lib/**/*.js', 'test/**/*.js'])
+  return gulp.src(['*.js', 'src/**/*.js', 'test/**/*.js'])
     .pipe(eslint())
     .pipe(eslint.format())
     .pipe(eslint.failOnError());
@@ -36,7 +36,7 @@ gulp.task('test', ['build:test'], function (done) {
 });
 
 gulp.task('init', function (done) {
-  var mongo = require('./lib/models/mongo');
+  var mongo = require('./src/models/mongo');
   mongo.init({
     counters: [
       {id: 'events', seq: 0}
@@ -51,9 +51,9 @@ gulp.task('clean:server', function (done) {
 });
 
 gulp.task('build:server', function () {
-  return gulp.src('lib/**/*.js')
+  return gulp.src('src/**/*.js')
     .pipe(babel())
-    .pipe(gulp.dest('build/lib/'));
+    .pipe(gulp.dest('build/src/'));
 });
 
 // Client
@@ -82,6 +82,6 @@ gulp.task('build:client', function () {
 // Debug
 
 gulp.task('debug:db', function (done) {
-  var mongo = require('./build/lib/models/mongo');
+  var mongo = require('./build/src/models/mongo');
   mongo.init(require('./debug/dummy-db'), done);
 });

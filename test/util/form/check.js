@@ -2,11 +2,11 @@
 
 var assert = require('power-assert');
 
-var whitespace = require('../../../lib/util/form/constants').whitespace;
-var sanitizers = require('../../../lib/util/form/sanitizers');
-var validators = require('../../../lib/util/form/validators');
-var def = require('../../../lib/util/form/def');
-var check = require('../../../lib/util/form/check');
+var whitespace = require('../../../src/util/form/constants').whitespace;
+var sanitizers = require('../../../src/util/form/sanitizers');
+var validators = require('../../../src/util/form/validators');
+var def = require('../../../src/util/form/def');
+var check = require('../../../src/util/form/check');
 
 describe('check', function () {
   it('return object sanitized by sanitizer', function () {

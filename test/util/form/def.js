@@ -2,8 +2,8 @@
 
 var assert = require('power-assert');
 
-var whitespace = require('../../../lib/util/form/constants').whitespace;
-var def = require('../../../lib/util/form/def');
+var whitespace = require('../../../src/util/form/constants').whitespace;
+var def = require('../../../src/util/form/def');
 
 describe('def', function () {
   it('("foo", *, *, *) make matcher by string', function () {
