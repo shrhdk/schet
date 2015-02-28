@@ -11,49 +11,47 @@ var assert = require('power-assert').customize({
 
 var url = 'http://' + settings.app.host + ':' + settings.app.port;
 
-/**
- *
- * @param {string} method
- * @param {string} path
- * @param {!Object}params
- * @returns {{expect: Function}}
- */
-module.exports.req = function (method, path, params) {
-  return {
-    /**
-     *
-     * @param {number} statusCode
-     * @param {Object} body
-     * @param {Function} done
-     */
-    expect: function (statusCode, body, done) {
-      request({
-        method: method,
-        url: url + path,
-        form: params,
-        json: true
-      }, function (err, res, resBody) {
-        if (err) {
-          done();
-        }
+class Req {
+  /**
+   *
+   * @param {string} method
+   * @param {string} path
+   * @param {!Object}params
+   * @returns {{expect: Function}}
+   */
+  constructor(method, path, params) {
+    this.method = method;
+    this.path = path;
+    this.params = params;
+  }
 
-        assert(res.statusCode === statusCode);
-        assert.deepEqual(resBody, body);
-
+  expect(statusCode, body, done) {
+    request({
+      method: this.method,
+      url: url + this.path,
+      form: this.params,
+      json: true
+    }, (err, res, resBody) => {
+      if (err) {
         done();
-      });
-    }
-  };
-};
+      }
+
+      assert(res.statusCode === statusCode);
+      assert.deepEqual(resBody, body);
+
+      done();
+    });
+  }
+}
+
+exports.req = (method, path, params) => new Req(method, path, params);
 
 /**
  *
  * @param {!number} length
  */
 module.exports.dummyString = function (length) {
-  if (!util.isNumber(length) || length < 0) {
-    throw new Error('Invalid length');
-  }
+  assert(1 <= length);
 
   let dummy = '';
   for (let i = 0; i < length; i++) {
