@@ -15,7 +15,7 @@ var ELLEN_COMMENT = Object.freeze({name: 'ellen', body: 'ellen_comment'});
 var FRANK_COMMENT = Object.freeze({name: 'frank', body: 'frank_comment'});
 var MODIFIED_COMMENT = Object.freeze({name: 'modified_name', body: 'modified_comment'});
 
-describe('Comment', function () {
+describe('Comment', () => {
   /* Initialize DB */
   beforeEach(function (done) {
     mongo.init({
@@ -65,13 +65,11 @@ describe('Comment', function () {
           }
         }
       ]
-    }, function () {
-      done();
-    });
+    }, done);
   });
 
-  describe('POST', function () {
-    context('400 InvalidParameterError', function () {
+  describe('POST', () => {
+    context('400 InvalidParameterError', () => {
       it('/1/comments with no params.', function (done) {
         req('POST', '/1/comments', {})
           .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
@@ -128,7 +126,7 @@ describe('Comment', function () {
       });
     });
 
-    context('404 NotFoundError', function () {
+    context('404 NotFoundError', () => {
       it('/0/comments.', function (done) {
         req('POST', '/0/comments', ALICE_COMMENT)
           .expect(404, ERRORS.NOT_FOUND_ERROR.json, done);
@@ -145,7 +143,7 @@ describe('Comment', function () {
       });
     });
 
-    context('201 Created', function () {
+    context('201 Created', () => {
       it('/1/comments with min length name.', function (done) {
         req('POST', '/1/comments', {name: '1', body: 'body'})
           .expect(201, {
@@ -213,7 +211,7 @@ describe('Comment', function () {
       });
     });
 
-    context('201 Created (Increment ID per creation)', function () {
+    context('201 Created (Increment ID per creation)', () => {
       it('/1/comments should return commentID=1,2,3,... per request', function (done) {
         async.series([
           function (next) {
@@ -278,8 +276,8 @@ describe('Comment', function () {
     });
   });
 
-  describe('PUT', function () {
-    context('400 InvalidParameterError', function () {
+  describe('PUT', () => {
+    context('400 InvalidParameterError', () => {
       it('/4/comments/1 with name consists of whitespace.', function (done) {
         req('PUT', '/4/comments/1', {name: ' '})
           .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
@@ -316,7 +314,7 @@ describe('Comment', function () {
       });
     });
 
-    context('404 NotFoundError', function () {
+    context('404 NotFoundError', () => {
       it('/0/comments/1', function (done) {
         req('PUT', '/0/comments/1', MODIFIED_COMMENT)
           .expect(404, ERRORS.NOT_FOUND_ERROR.json, done);
@@ -333,7 +331,7 @@ describe('Comment', function () {
       });
     });
 
-    context('404 CommentNotFoundError', function () {
+    context('404 CommentNotFoundError', () => {
       it('/4/comments/0', function (done) {
         req('PUT', '/4/comments/0', MODIFIED_COMMENT)
           .expect(404, ERRORS.COMMENT_NOT_FOUND_ERROR.json, done);
@@ -350,7 +348,7 @@ describe('Comment', function () {
       });
     });
 
-    context('200 OK', function () {
+    context('200 OK', () => {
       it('/4/comments/1 with no params', function (done) {
         req('PUT', '/4/comments/1', {})
           .expect(200, {
@@ -486,8 +484,8 @@ describe('Comment', function () {
     });
   });
 
-  describe('DELETE', function () {
-    context('404 NotFoundError', function () {
+  describe('DELETE', () => {
+    context('404 NotFoundError', () => {
       it('/0/comments/1', function (done) {
         req('DELETE', '/0/comments/1', {})
           .expect(404, ERRORS.NOT_FOUND_ERROR.json, done);
@@ -504,7 +502,7 @@ describe('Comment', function () {
       });
     });
 
-    context('404 CommentNotFoundError', function () {
+    context('404 CommentNotFoundError', () => {
       it('/4/comments/0', function (done) {
         req('DELETE', '/4/comments/0', {})
           .expect(404, ERRORS.COMMENT_NOT_FOUND_ERROR.json, done);
@@ -516,7 +514,7 @@ describe('Comment', function () {
       });
     });
 
-    context('200 OK', function () {
+    context('200 OK', () => {
       it('/5/comments/1', function (done) {
         req('DELETE', '/5/comments/1', {})
           .expect(200, {

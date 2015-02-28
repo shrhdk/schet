@@ -7,7 +7,7 @@ var testHelper = require('./../test-helper');
 var req = testHelper.req;
 var dummyString = testHelper.dummyString;
 
-describe('Participant', function () {
+describe('Participant', () => {
   /* Initialize DB */
   beforeEach(function (done) {
     mongo.init({
@@ -73,13 +73,11 @@ describe('Participant', function () {
           comments: {counter: 0}
         }
       ]
-    }, function () {
-      done();
-    });
+    }, done);
   });
 
-  describe('POST', function () {
-    context('400 InvalidParameterError', function () {
+  describe('POST', () => {
+    context('400 InvalidParameterError', () => {
       it('/1/participants with no params.', function (done) {
         req('POST', '/1/participants', {})
           .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
@@ -116,7 +114,7 @@ describe('Participant', function () {
       });
     });
 
-    context('404 NotFoundError', function () {
+    context('404 NotFoundError', () => {
       it('/0/participants', function (done) {
         req('POST', '/0/participants', {name: 'alice'})
           .expect(404, ERRORS.NOT_FOUND_ERROR.json, done);
@@ -133,21 +131,21 @@ describe('Participant', function () {
       });
     });
 
-    context('409 FixedEventError', function () {
+    context('409 FixedEventError', () => {
       it('/5/participants', function (done) {
         req('POST', '/5/participants', {name: 'frank'})
           .expect(409, ERRORS.FIXED_EVENT_ERROR.json, done);
       });
     });
 
-    context('409 DuplicatedParticipantError', function () {
+    context('409 DuplicatedParticipantError', () => {
       it('/4/participants with existing name.', function (done) {
         req('POST', '/4/participants', {name: 'alice'})
           .expect(409, ERRORS.DUPLICATED_PARTICIPANT_ERROR.json, done);
       });
     });
 
-    context('201 Created', function () {
+    context('201 Created', () => {
       it('/1/participants with min length name.', function (done) {
         req('POST', '/1/participants', {name: '1'})
           .expect(201, {
@@ -179,7 +177,7 @@ describe('Participant', function () {
       });
     });
 
-    context('201 Created (Increment ID per creation)', function () {
+    context('201 Created (Increment ID per creation)', () => {
       it('/1/participants should return participantID=1,2,3,... per request', function (done) {
         async.series([
           function (next) {
@@ -260,8 +258,8 @@ describe('Participant', function () {
     });
   });
 
-  describe('PUT', function () {
-    context('400 InvalidParameterError', function () {
+  describe('PUT', () => {
+    context('400 InvalidParameterError', () => {
       it('/4/participants/1 with empty name.', function (done) {
         req('PUT', '/4/participants/1', {name: ''})
           .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
@@ -293,7 +291,7 @@ describe('Participant', function () {
       });
     });
 
-    context('404 NotFoundError', function () {
+    context('404 NotFoundError', () => {
       it('/0/participants/1', function (done) {
         req('PUT', '/0/participants/1', {name: 'alice'})
           .expect(404, ERRORS.NOT_FOUND_ERROR.json, done);
@@ -310,14 +308,14 @@ describe('Participant', function () {
       });
     });
 
-    context('409 409 FixedEventError', function () {
+    context('409 409 FixedEventError', () => {
       it('/5/participants/1', function (done) {
         req('PUT', '/5/participants/1', {name: 'alice'})
           .expect(409, ERRORS.FIXED_EVENT_ERROR.json, done);
       });
     });
 
-    context('404 ParticipantNotFoundError', function () {
+    context('404 ParticipantNotFoundError', () => {
       it('/4/participants/3', function (done) {
         req('PUT', '/4/participants/3', {name: 'alice'})
           .expect(404, ERRORS.PARTICIPANT_NOT_FOUND_ERROR.json, done);
@@ -329,14 +327,14 @@ describe('Participant', function () {
       });
     });
 
-    context('409 DuplicatedParticipantError', function () {
+    context('409 DuplicatedParticipantError', () => {
       it('/4/participants/1 with existing name.', function (done) {
         req('PUT', '/4/participants/1', {name: 'bob'})
           .expect(409, ERRORS.DUPLICATED_PARTICIPANT_ERROR.json, done);
       });
     });
 
-    context('200 OK', function () {
+    context('200 OK', () => {
       it('/4/participants/1 with min length name.', function (done) {
         req('PUT', '/4/participants/1', {name: '1'})
           .expect(200, {
@@ -454,8 +452,8 @@ describe('Participant', function () {
     });
   });
 
-  describe('DELETE', function () {
-    context('404 NotFoundError', function () {
+  describe('DELETE', () => {
+    context('404 NotFoundError', () => {
       it('/0/participants/1', function (done) {
         req('DELETE', '/0/participants/1', {})
           .expect(404, ERRORS.NOT_FOUND_ERROR.json, done);
@@ -472,14 +470,14 @@ describe('Participant', function () {
       });
     });
 
-    context('409 FixedEventError', function () {
+    context('409 FixedEventError', () => {
       it('/5/participants/1', function (done) {
         req('DELETE', '/5/participants/1', {})
           .expect(409, ERRORS.FIXED_EVENT_ERROR.json, done);
       });
     });
 
-    context('404 ParticipantNotFoundError', function () {
+    context('404 ParticipantNotFoundError', () => {
       it('/4/participants/0', function (done) {
         req('DELETE', '/4/participants/0', {})
           .expect(404, ERRORS.PARTICIPANT_NOT_FOUND_ERROR.json, done);
@@ -491,7 +489,7 @@ describe('Participant', function () {
       });
     });
 
-    context('200 OK', function () {
+    context('200 OK', () => {
       it('/4/participants/3', function (done) {
         req('DELETE', '/4/participants/3', {})
           .expect(200, {

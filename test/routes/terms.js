@@ -53,7 +53,7 @@ var PRESET_TERM_2 = DATE_RANGE_1;
 var PRESET_TERM_4 = DATE_TIME_1;
 var PRESET_TERM_5 = DATE_TIME_RANGE_1;
 
-describe('Term', function () {
+describe('Term', () => {
   /* Initialize DB */
   beforeEach(function (done) {
     mongo.init({
@@ -107,13 +107,11 @@ describe('Term', function () {
           comments: {counter: 0}
         }
       ]
-    }, function () {
-      done();
-    });
+    }, done);
   });
 
-  describe('POST', function () {
-    context('400 InvalidParameterError', function () {
+  describe('POST', () => {
+    context('400 InvalidParameterError', () => {
       it('/1/terms with no params.', function (done) {
         req('POST', '/1/terms', {}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
@@ -243,7 +241,7 @@ describe('Term', function () {
       });
     });
 
-    context('404 NotFoundError', function () {
+    context('404 NotFoundError', () => {
       it('/0/terms', function (done) {
         req('POST', '/0/terms', {term: DATE_2})
           .expect(404, ERRORS.NOT_FOUND_ERROR.json, done);
@@ -260,14 +258,14 @@ describe('Term', function () {
       });
     });
 
-    context('409 FixedEventError', function () {
+    context('409 FixedEventError', () => {
       it('/5/terms', function (done) {
         req('POST', '/5/terms', {term: DATE_2})
           .expect(409, ERRORS.FIXED_EVENT_ERROR.json, done);
       });
     });
 
-    context('409 DuplicatedTermError', function () {
+    context('409 DuplicatedTermError', () => {
       it('/4/terms with existing term.', function (done) {
         req('POST', '/4/terms', {term: PRESET_TERM_1})
           .expect(409, ERRORS.DUPLICATED_TERM_ERROR.json, done);
@@ -289,7 +287,7 @@ describe('Term', function () {
       });
     });
 
-    context('201 Created', function () {
+    context('201 Created', () => {
       it('/1/terms with correct term.', function (done) {
         req('POST', '/1/terms', {term: DATE_1})
           .expect(201, {
@@ -379,7 +377,7 @@ describe('Term', function () {
       });
     });
 
-    context('201 Created (Increment ID per creation)', function () {
+    context('201 Created (Increment ID per creation)', () => {
       it('/1/terms with correct terms should return TermID=1,2,3,4,...', function (done) {
         async.series([
           function (next) {
@@ -449,8 +447,8 @@ describe('Term', function () {
     });
   });
 
-  describe('PUT', function () {
-    context('400 InvalidParameterError', function () {
+  describe('PUT', () => {
+    context('400 InvalidParameterError', () => {
       it('/4/terms/1 with no params.', function (done) {
         req('PUT', '/4/terms/1', {}).expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
@@ -580,7 +578,7 @@ describe('Term', function () {
       });
     });
 
-    context('404 NotFoundError', function () {
+    context('404 NotFoundError', () => {
       it('/0/terms/1', function (done) {
         req('PUT', '/0/terms/1', {term: DATE_2})
           .expect(404, ERRORS.NOT_FOUND_ERROR.json, done);
@@ -597,14 +595,14 @@ describe('Term', function () {
       });
     });
 
-    context('409 FixedEventError', function () {
+    context('409 FixedEventError', () => {
       it('/5/terms/1', function (done) {
         req('PUT', '/5/terms/1', {term: DATE_2})
           .expect(409, ERRORS.FIXED_EVENT_ERROR.json, done);
       });
     });
 
-    context('404 TermNotFoundError', function () {
+    context('404 TermNotFoundError', () => {
       it('/4/terms/3', function (done) {
         req('PUT', '/4/terms/3', {term: DATE_2})
           .expect(404, ERRORS.TERM_NOT_FOUND_ERROR.json, done);
@@ -616,14 +614,14 @@ describe('Term', function () {
       });
     });
 
-    context('409 DuplicatedTermError', function () {
+    context('409 DuplicatedTermError', () => {
       it('/4/terms/1 with existing term.', function (done) {
         req('PUT', '/4/terms/1', {term: PRESET_TERM_2})
           .expect(409, ERRORS.DUPLICATED_TERM_ERROR.json, done);
       });
     });
 
-    context('200 OK', function () {
+    context('200 OK', () => {
       it('/4/terms/1 with correct term.', function (done) {
         req('PUT', '/4/terms/1', {term: DATE_2})
           .expect(200, {
@@ -701,8 +699,8 @@ describe('Term', function () {
     });
   });
 
-  describe('DELETE', function () {
-    context('404 NotFoundError', function () {
+  describe('DELETE', () => {
+    context('404 NotFoundError', () => {
       it('/0/terms/1', function (done) {
         req('DELETE', '/0/terms/1', {})
           .expect(404, ERRORS.NOT_FOUND_ERROR.json, done);
@@ -719,14 +717,14 @@ describe('Term', function () {
       });
     });
 
-    context('409 FixedEventError', function () {
+    context('409 FixedEventError', () => {
       it('/5/terms/1', function (done) {
         req('DELETE', '/5/terms/1', {})
           .expect(409, ERRORS.FIXED_EVENT_ERROR.json, done);
       });
     });
 
-    context('409 TermNotFoundError', function () {
+    context('409 TermNotFoundError', () => {
       it('/4/terms/0', function (done) {
         req('DELETE', '/4/terms/0', {})
           .expect(404, ERRORS.TERM_NOT_FOUND_ERROR.json, done);
@@ -738,7 +736,7 @@ describe('Term', function () {
       });
     });
 
-    context('200 OK', function () {
+    context('200 OK', () => {
       it('/4/terms/3', function (done) {
         req('DELETE', '/4/terms/3', {})
           .expect(200, {

@@ -12,7 +12,7 @@ var term1 = '2014-01-01/2014-01-02';
 var term2 = '2014-02-01/2014-02-02';
 var term3 = '2014-01-01T00:00Z/2014-01-01T00:01Z';
 
-describe('Event', function () {
+describe('Event', () => {
   /* Initialize DB */
   beforeEach(function (done) {
     mongo.init({
@@ -64,13 +64,11 @@ describe('Event', function () {
           comments: {counter: 0}
         }
       ]
-    }, function () {
-      done();
-    });
+    }, done);
   });
 
-  describe('POST', function () {
-    context('400', function () {
+  describe('POST', () => {
+    context('400', () => {
       it('/ with no params.', function (done) {
         req('POST', '/', {})
           .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
@@ -117,7 +115,7 @@ describe('Event', function () {
       });
     });
 
-    context('201', function () {
+    context('201', () => {
       it('/ with min length title.', function (done) {
         async.series([
           function (next) {
@@ -263,7 +261,7 @@ describe('Event', function () {
       });
     });
 
-    context('201 (Increment ID per creation)', function () {
+    context('201 (Increment ID per creation)', () => {
       it('/ with title and description should return id=1,2,3,... per request from initial state.', function (done) {
         async.series([
           function (next) {
@@ -327,8 +325,8 @@ describe('Event', function () {
     });
   });
 
-  describe('GET', function () {
-    context('404', function () {
+  describe('GET', () => {
+    context('404', () => {
       it('/0', function (done) {
         req('GET', '/0', {})
           .expect(404, ERRORS.NOT_FOUND_ERROR.json, done);
@@ -345,7 +343,7 @@ describe('Event', function () {
       });
     });
 
-    context('200', function () {
+    context('200', () => {
       it('/1 should return first data.', function (done) {
         req('GET', '/1', {})
           .expect(200, {
@@ -370,8 +368,8 @@ describe('Event', function () {
     });
   });
 
-  describe('PUT', function () {
-    context('400', function () {
+  describe('PUT', () => {
+    context('400', () => {
       it('/1 with empty title.', function (done) {
         req('PUT', '/1', {title: ''})
           .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
@@ -408,7 +406,7 @@ describe('Event', function () {
       });
     });
 
-    context('404', function () {
+    context('404', () => {
       it('/0', function (done) {
         req('PUT', '/0', {})
           .expect(404, ERRORS.NOT_FOUND_ERROR.json, done);
@@ -425,7 +423,7 @@ describe('Event', function () {
       });
     });
 
-    context('200', function () {
+    context('200', () => {
       it('/1 with no params.', function (done) {
         req('PUT', '/1', {})
           .expect(200, {
@@ -507,9 +505,9 @@ describe('Event', function () {
     });
   });
 
-  describe('PUT (fixed event)', function () {
+  describe('PUT (fixed event)', () => {
 
-    context('400', function () {
+    context('400', () => {
       it('/5 with empty title.', function (done) {
         req('PUT', '/5', {title: ''})
           .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
@@ -521,7 +519,7 @@ describe('Event', function () {
       });
     });
 
-    context('409', function () {
+    context('409', () => {
       it('/5 with no params.', function (done) {
         req('PUT', '/5', {})
           .expect(409, ERRORS.FIXED_EVENT_ERROR.json, done);
@@ -544,22 +542,22 @@ describe('Event', function () {
     });
   });
 
-  describe('PUT (fix event)', function () {
-    context('400', function () {
+  describe('PUT (fix event)', () => {
+    context('400', () => {
       it('/4 with invalid TermID.', function (done) {
         req('PUT', '/4', {fixed: 0})
           .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
     });
 
-    context('409', function () {
+    context('409', () => {
       it('/5 with valid TermID.', function (done) {
         req('PUT', '/5', {fixed: 1})
           .expect(409, ERRORS.FIXED_EVENT_ERROR.json, done);
       });
     });
 
-    context('409', function () {
+    context('409', () => {
       it('/4 with deleted TermID.', function (done) {
         req('PUT', '/4', {fixed: 3})
           .expect(409, ERRORS.TERM_NOT_FOUND_ERROR.json, done);
@@ -571,7 +569,7 @@ describe('Event', function () {
       });
     });
 
-    context('200', function () {
+    context('200', () => {
       it('/4 with valid TermID.', function (done) {
         req('PUT', '/4', {fixed: 1})
           .expect(200, {
@@ -590,8 +588,8 @@ describe('Event', function () {
     });
   });
 
-  describe('PUT (unfix event)', function () {
-    context('200', function () {
+  describe('PUT (unfix event)', () => {
+    context('200', () => {
       it('/5 with empty TermID.', function (done) {
         req('PUT', '/5', {fixed: ''})
           .expect(200, {
@@ -610,8 +608,8 @@ describe('Event', function () {
     });
   });
 
-  describe('DELETE', function () {
-    context('404', function () {
+  describe('DELETE', () => {
+    context('404', () => {
       it('/0', function (done) {
         req('DELETE', '/0', {})
           .expect(404, ERRORS.NOT_FOUND_ERROR.json, done);
@@ -623,7 +621,7 @@ describe('Event', function () {
       });
     });
 
-    context('204 No Content', function () {
+    context('204 No Content', () => {
       it('/1', function (done) {
         req('DELETE', '/1', {})
           .expect(204, undefined, done);

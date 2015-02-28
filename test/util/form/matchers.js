@@ -5,9 +5,9 @@ var assert = require('power-assert');
 var whitespace = require('../../../src/util/form/constants').whitespace;
 var matchers = require('../../../src/util/form/matchers');
 
-describe('matchers', function () {
-  describe('str', function () {
-    it('("foo") should return true when value is "foo"', function () {
+describe('matchers', () => {
+  describe('str', () => {
+    it('("foo") should return true when value is "foo"', () => {
       let m = matchers.str('foo');
 
       assert(m('foo') === true);
@@ -15,8 +15,8 @@ describe('matchers', function () {
     });
   });
 
-  describe('re', function () {
-    it('(/^\d+$/) should return true when value is "foo"', function () {
+  describe('re', () => {
+    it('(/^\d+$/) should return true when value is "foo"', () => {
       let m = matchers.re(/^\d+$/);
 
       assert(m('1') === true);
@@ -28,8 +28,8 @@ describe('matchers', function () {
     });
   });
 
-  describe('ge', function () {
-    it('(-1) should return true when value is greater than or equal to -1.', function () {
+  describe('ge', () => {
+    it('(-1) should return true when value is greater than or equal to -1.', () => {
       let m = matchers.ge(-1);
 
       assert(m(-2) === false);
@@ -38,7 +38,7 @@ describe('matchers', function () {
       assert(m(+1) === true);
     });
 
-    it('(0) should return true when value is greater than or equal to 0.', function () {
+    it('(0) should return true when value is greater than or equal to 0.', () => {
       let m = matchers.ge(0);
 
       assert(m(-1) === false);
@@ -46,7 +46,7 @@ describe('matchers', function () {
       assert(m(+1) === true);
     });
 
-    it('(1) should return true when value is greater than or equal to 1.', function () {
+    it('(1) should return true when value is greater than or equal to 1.', () => {
       let m = matchers.ge(1);
 
       assert(m(-1) === false);

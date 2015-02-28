@@ -7,7 +7,7 @@ var term1 = '2014-01-01/2014-01-02';
 var term2 = '2014-02-01/2014-02-02';
 var term3 = '2014-01-01T00:00Z/2014-01-01T00:01Z';
 
-describe('Record', function () {
+describe('Record', () => {
   /* Initialize DB */
   beforeEach(function (done) {
     mongo.init({
@@ -40,12 +40,10 @@ describe('Record', function () {
           comments: {counter: 2}
         }
       ]
-    }, function () {
-      done();
-    });
+    }, done);
   });
 
-  describe('Add Participant', function () {
+  describe('Add Participant', () => {
     it('Add Participant with no Term ID', function (done) {
       req('POST', '/1/participants', {name: 'charlie'})
         .expect(201, {
@@ -174,7 +172,7 @@ describe('Record', function () {
     });
   });
 
-  describe('Update Participant', function () {
+  describe('Update Participant', () => {
     it('Update Participant with no Term ID', function (done) {
       req('PUT', '/1/participants/1', {name: 'modified'})
         .expect(200, {
@@ -307,7 +305,7 @@ describe('Record', function () {
     });
   });
 
-  describe('Delete Participant', function () {
+  describe('Delete Participant', () => {
     it('Delete Participant', function (done) {
       req('DELETE', '/1/participants/1', {})
         .expect(200, {
@@ -332,7 +330,7 @@ describe('Record', function () {
     });
   });
 
-  describe('Add Term', function () {
+  describe('Add Term', () => {
     it('Add Term', function (done) {
       req('POST', '/1/terms', {term: term3})
         .expect(201, {
@@ -363,7 +361,7 @@ describe('Record', function () {
     });
   });
 
-  describe('Delete Term', function () {
+  describe('Delete Term', () => {
     it('Delete Term', function (done) {
       req('DELETE', '/1/terms/1', {})
         .expect(200, {

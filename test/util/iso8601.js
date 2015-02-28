@@ -4,8 +4,8 @@ var assert = require('power-assert');
 
 var iso8601 = require('../../src/util/iso8601.js');
 
-describe('sort', function () {
-  it('terms', function () {
+describe('sort', () => {
+  it('terms', () => {
     let given = [
       '2015-01-03T01:00Z/2015-01-03T02:00Z',
       '2015-01-02T09:00Z',
