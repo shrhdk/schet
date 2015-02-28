@@ -9,9 +9,12 @@
     "test": "test/"
   },
   "scripts": {
+    "start": "bin/schet start",
+    "stop": "bin/schet stop",
     "lint": "gulp lint",
     "clean": "gulp clean",
-    "test": "gulp test"
+    "test": "gulp test",
+    "build": "gulp build"
   },
   "homepage": "http://github.com/shrhdk/schet",
   "bugs": {
