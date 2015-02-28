@@ -4,7 +4,7 @@ var settings = require('../settings');
 
 console.log('Starting Server...');
 
-var app = require('../lib/app');
+var app = require('../build/lib/app');
 
 var server = app.listen(settings.app.port, () => {
   let host = server.address().address;

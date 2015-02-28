@@ -11,7 +11,7 @@
   "scripts": {
     "lint": "gulp lint",
     "clean": "gulp clean",
-    "test": "mocha --harmony --recursive --require intelli-espower-loader"
+    "test": "gulp test"
   },
   "homepage": "http://github.com/shrhdk/schet",
   "bugs": {
@@ -36,12 +36,13 @@
   "devDependencies": {
     "bower": "1.3.12",
     "espower-loader": "^0.10.0",
-    "gulp": "3.8.10",
+    "gulp": "3.8.11",
     "gulp-eslint": "^0.2.0",
     "intelli-espower-loader": "^0.5.0",
     "mocha": "2.1.0",
     "power-assert": "^0.10.0",
     "request": "2.47.0",
-    "gulp-rimraf": "0.1.1"
+    "gulp-babel": "*",
+    "gulp-mocha": "*"
   }
 }
