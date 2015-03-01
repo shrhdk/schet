@@ -4,8 +4,8 @@ var assert = require('power-assert');
 
 var iso8601 = require('../../src/util/iso8601.js');
 
-describe('sort', () => {
-  it('terms', () => {
+describe('compare', () => {
+  it('sort terms', () => {
     let given = [
       '2015-01-03T01:00Z/2015-01-03T02:00Z',
       '2015-01-02T09:00Z',
@@ -34,4 +34,102 @@ describe('sort', () => {
 
     assert.deepEqual(actual, expected);
   });
+});
+
+describe('normalize', () => {
+  describe('date', () => {
+    it('correct', () => {
+
+    });
+
+    it('incorrect month', () => {
+
+    });
+
+    it('incorrect date', () => {
+
+    });
+  });
+
+  describe('date range', () => {
+    it('full', () => {
+
+    });
+
+    it('omit year', () => {
+
+    });
+
+    it('incorrect start month', () => {
+
+    });
+
+    it('incorrect start date', () => {
+
+    });
+
+    it('incorrect end month', () => {
+
+    });
+
+    it('incorrect end date', () => {
+
+    });
+
+    it('end earlier than start', () => {
+
+    });
+  });
+
+  describe('date time', () => {
+    it('correct', () => {
+
+    });
+
+    it('24:00', () => {
+
+    });
+
+    it('with offset', () => {
+
+    });
+
+    it('incorrect month', () => {
+
+    });
+
+    it('incorrect date', () => {
+
+    });
+
+    it('incorrect hour', () => {
+
+    });
+
+    it('incorrect minutes', () => {
+
+    });
+  });
+
+  describe('date time range', () => {
+    it('full', () => {
+
+    });
+
+    it('omit date', () => {
+
+    });
+
+    it('omit year', () => {
+
+    });
+
+    it('end earlier than start', () => {
+
+    });
+  });
+});
+
+describe('prettify', () => {
+
 });
