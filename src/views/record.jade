@@ -1,7 +1,9 @@
+include module/widget
+
 - var presences = {'presence': '○', 'uncertain': '△', 'absence': '×'}
 
 mixin record(event)
-  table.record
+  table
     if event.fixed
       tr
         th Fix
@@ -12,8 +14,8 @@ mixin record(event)
         tr(class="is-#{event.fixed == term.id ? 'fixed' : 'unfixed'}")
           td
             if event.fixed === term.id
-              input.fix-event-checkbox(type='checkbox', term-id=term.id, checked=true)
-          td.term-row
+              input.fix-event(type='checkbox', term-id=term.id, checked=true)
+          td.term-col
             span.term= term.term
           for name, id in event.participants
             td= presences[event.record[id][term.id]]
@@ -21,15 +23,15 @@ mixin record(event)
       tr
         th Fix
         th Term
-        th: input#new-participant-name(type='text', placeholder='Name')
+        th: input#participant-name(type='text', placeholder='Name')
         for name, id in event.participants
           th: span.participant-name(participant-id=id)= name
       for term in event.terms
         tr.is-unfixed
           td
-            input.fix-event-checkbox(type='checkbox', term-id=term.id)
-          td.term-row
-            button.delete-term(term-id=term.id, title='Delete Term') Del
+            input.fix-event(type='checkbox', term-id=term.id)
+          td.term-col
+            +icon_button.delete-term(img='delete', term-id=term.id, title='Delete Term')
             span.term= term.term
           td
             select.new-record(term-id=term.id)
@@ -45,10 +47,10 @@ mixin record(event)
       tr
         td
         td
-          input#new-term-field(type='text')
-          button#new-term-button(title='Add Term') Add
+          input#term-text(type='text')
+          +icon_button#add-term(img='add', title='Add Term')
           td
-            button#new-participant-button(title='Add Participant') Add
+            +icon_button#add-participant(img='add-participant', title='Add Participant')
           for name, id in event.participants
             td
-              button.delete-participant(participant-id=id, title='Delete this participant') Del
+              +icon_button.delete-participant(img='delete', participant-id=id, title='Delete this participant')

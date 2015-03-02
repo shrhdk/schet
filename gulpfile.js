@@ -7,6 +7,7 @@ var babel = require('gulp-babel');
 var del = require('del');
 var browserify = require('browserify');
 var source = require('vinyl-source-stream');
+var sass = require('gulp-sass');
 
 // Clean
 
@@ -18,12 +19,25 @@ gulp.task('clean:all', ['clean'], function (done) {
   return del(['node_modules', 'bower_components'], done);
 });
 
-// Build
+// Build Resources
 
-gulp.task('build:copy', function () {
-  return gulp.src(['src/**/*.json', 'src/**/*.jade', 'src/**/*.css'])
+gulp.task('build:img', function () {
+  return gulp.src(['src/img/*'])
+    .pipe(gulp.dest('build/src/public/img'));
+});
+
+gulp.task('build:sass', function () {
+  gulp.src('./src/sass/**/*.scss')
+    .pipe(sass())
+    .pipe(gulp.dest('./build/src/public/css'));
+});
+
+gulp.task('build:res', ['build:img', 'build:sass'], function () {
+  return gulp.src(['src/**/*.json', 'src/**/*.jade', 'src/**/*.svg'])
     .pipe(gulp.dest('build/src/'));
 });
+
+// Build JS
 
 gulp.task('build:babel', function () {
   return gulp.src('src/**/*.js')
@@ -49,7 +63,7 @@ gulp.task('build:test', function () {
     .pipe(gulp.dest('build/test/'));
 });
 
-gulp.task('build', ['build:copy', 'build:babel', 'build:browserify', 'build:test']);
+gulp.task('build', ['build:res', 'build:babel', 'build:browserify', 'build:test']);
 
 // Test
 

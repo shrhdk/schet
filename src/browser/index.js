@@ -3,10 +3,10 @@
 var $ = require('jquery');
 
 $(() => {
-  const $title = $('#new-event-title-field');
+  const $title = $('#event-title');
 
   const isEmpty = () => $title.val().trim() === '';
-  const update = () => $('#new-event-button').prop('disabled', isEmpty());
+  const update = () => $('#create-event').prop('disabled', isEmpty());
 
   $title
     .keypress((ev) => {
@@ -14,7 +14,7 @@ $(() => {
         return;
       }
 
-      $('#new-event-form').submit();
+      $('#create-event-form').submit();
     })
     .keydown(update)
     .keyup(update)

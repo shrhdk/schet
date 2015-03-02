@@ -58,24 +58,22 @@ $(() => {
 
   // Simplify Terms
 
-  $('.term').each((index, element) => {
-    element.innerText = iso8601.prettify(element.innerText.trim(), moment().utcOffset());
+  $('.term').each(function () {
+    this.innerText = iso8601.prettify(this.innerText.trim(), moment().utcOffset());
   });
 
   // Fix and Unfix Event
 
-  $('.fix-event-checkbox').each((index, element) => {
-    $(element).change(() => {
-      let termID = element.getAttribute('term-id');
+  $('.fix-event').change(function () {
+    let termID = this.getAttribute('term-id');
 
-      if (element.checked) {
-        schet.fix(termID).then(event => location.reload())
-          .catch(err => location.reload());
-      } else {
-        schet.unfix(termID).then(event => location.reload())
-          .catch(err => location.reload());
-      }
-    });
+    if (this.checked) {
+      schet.fix(termID).then(event => location.reload())
+        .catch(err => location.reload());
+    } else {
+      schet.unfix(termID).then(event => location.reload())
+        .catch(err => location.reload());
+    }
   });
 
   // Edit Event Title
@@ -97,13 +95,13 @@ $(() => {
   });
 
   // Add Participant
-  $('#new-participant-button').click(() => {
-    let name = $('#new-participant-name').val();
+  $('#add-participant').click(() => {
+    let name = $('#participant-name').val();
 
     let schedule = {};
-    $('.new-record').each((index, element) => {
-      let termID = element.getAttribute('term-id');
-      schedule[termID] = element.value;
+    $('.new-record').each(function () {
+      let termID = this.getAttribute('term-id');
+      schedule[termID] = this.value;
     });
 
     schet.addParticipant(name, schedule).then(() => location.reload())
@@ -133,21 +131,18 @@ $(() => {
       });
   });
 
-  $('.delete-participant').each((index, element) => {
-    let participantID = element.getAttribute('participant-id');
-
-    $(element).click(() => {
-      schet.deleteParticipant(participantID).then(() => location.reload())
-        .catch(() => location.reload());
-    });
+  $('.delete-participant').click(function () {
+    let participantID = this.getAttribute('participant-id');
+    schet.deleteParticipant(participantID).then(() => location.reload())
+      .catch(() => location.reload());
   });
 
   // Add Term
-  $('#new-term-button').click(() => {
+  $('#add-term').click(() => {
     let term;
     try {
       term = iso8601.normalize(
-        $('#new-term-field').val(),
+        $('#term-text').val(),
         moment().utcOffset()
       );
     } catch (e) {
@@ -175,32 +170,28 @@ $(() => {
   });
 
   // Delete Term
-  $('.delete-term').each((index, element) => {
-    let termID = element.getAttribute('term-id');
-
-    $(element).click(() => {
-      schet.deleteTerm(termID).then(() => location.reload())
-        .catch(() => location.reload());
-    });
+  $('.delete-term').click(function () {
+    let termID = this.getAttribute('term-id');
+    schet.deleteTerm(termID).then(() => location.reload())
+      .catch(() => location.reload());
   });
 
   // Edit Record
-  $('select.record').each((index, element) => {
-    let participantID = element.getAttribute('participant-id');
-    let termID = element.getAttribute('term-id');
+  $('.record').change(function () {
+    let participantID = this.getAttribute('participant-id');
+    let termID = this.getAttribute('term-id');
 
-    $(element).change(() => {
-      let data = {};
-      data[termID] = element.value;
-      schet.updateParticipant(participantID, data)
-        .catch(() => location.reload());
-    });
+    let data = {};
+    data[termID] = this.value;
+
+    schet.updateParticipant(participantID, data)
+      .catch(() => location.reload());
   });
 
   // Add Comment
   $('#comment-form').submit(() => {
-    let name = $('#comment-name-field').val();
-    let body = $('#comment-body-field').val();
+    let name = $('#comment-name').val();
+    let body = $('#comment-body').val();
 
     schet.addComment(name, body).then(() => location.reload())
       .catch(err => {

@@ -1,0 +1,52 @@
+@import "module/widget";
+
+// record
+
+select {
+  background-color: transparent;
+  text-align: center;
+  margin: 0 auto;
+  .existing {
+    appearance: none;
+    border: none;
+    margin: 0 auto;
+    display: table-cell;
+  }
+}
+
+tr.is-fixed {
+  background-color: #88f193;
+}
+
+// term
+
+.term-col {
+  text-align: left;
+}
+
+#term-text {
+  @extend .text-with-button;
+}
+
+#add-term {
+  @extend .icon-button;
+}
+
+.delete-term {
+  @extend .icon-button;
+}
+
+// participant
+
+#participant-name {
+  @extend .text;
+  width: 5em;
+}
+
+#add-participant {
+  @extend .icon-button;
+}
+
+.delete-participant {
+  @extend .icon-button;
+}

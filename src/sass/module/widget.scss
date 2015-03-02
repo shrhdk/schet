@@ -1,0 +1,42 @@
+$size: 30px;
+
+.widget {
+  border: solid silver 1px;
+  & {
+    vertical-align: middle;
+  }
+}
+
+// Basic Widgets
+
+.text {
+  @extend .widget;
+  height: $size - (1 + 1) * 2px;
+  font-size: 100%;
+}
+
+.button {
+  @extend .widget;
+  height: $size;
+  cursor: pointer;
+}
+
+// Special Widgets
+
+.text-with-button {
+  @extend .text;
+  border-right: none;
+}
+
+.icon-button {
+  @extend .button;
+  width: $size;
+  padding: 2px;
+  background-color: white;
+  img {
+    min-width: 100%;
+    min-height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+  }
+}

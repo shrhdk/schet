@@ -1,3 +1,5 @@
+include module/widget
+
 doctype html
 html
   head
@@ -8,9 +10,9 @@ html
     header
       h1#app-name Schet
     p#description Schet is a schedule coordination tool.
-    form#new-event-form(method='POST')
-      input#new-event-title-field.form-control(name='title', type='text', autofocus)
-      button#new-event-button(type='submit') Create
+    form#create-event-form(method='POST')
+      input#event-title.form-control(name='title', type='text', autofocus)
+      +icon_button#create-event(img = 'create', title = 'Create New Event')
     footer
       ul#link
         li: a(href='https://github.com/shrhdk/schet') GitHub

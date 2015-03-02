@@ -1,9 +1,15 @@
+include module/widget
+
 mixin comments(comments)
   ol#comments
     for comment, id in comments
       li.comment(comment-id=id)
         div
-          button.delete-comment(title='Delete this comment') Del
+          +icon_button.delete-comment(img='delete', title='Delete Comment')
         div.comment-name= comment.name
         div.comment-separator -
         div.comment-body= comment.body
+  form#comment-form(method='POST', action='/#{event.id}/comments')
+    input#comment-name(name='name', type='text', placeholder='Name')
+    input#comment-body(name='body', type='text', placeholder='Message')
+    +icon_button#add-comment(img='add-comment', type='submit', title='Add Comment')

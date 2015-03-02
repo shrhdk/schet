@@ -6,7 +6,7 @@ html
   head
     include header
     title= event.title
-    link(type='text/css', rel='stylesheet', href='/css/events.css')
+    link(type='text/css', rel='stylesheet', href='/css/event.css')
   body
     div#app-name: a(href='/') Schet
     h1#title= event.title
@@ -14,8 +14,4 @@ html
     +record(event)
     hr
     +comments(event.comments)
-    form#comment-form(method='POST', action='/#{event.id}/comments')
-      input#comment-name-field(name='name', type='text', placeholder='Name')
-      input#comment-body-field(name='body', type='text', placeholder='Message')
-      input#comment-submit(type='submit', value='Add Comment')
     script(type='text/javascript', src='/js/event.js')

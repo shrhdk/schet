@@ -1,0 +1,14 @@
+#app-name {
+  font-family: serif;
+  font-weight: bold;
+}
+
+table {
+  border: 1px solid black;
+  border-collapse: collapse;
+  text-align: center;
+  th, td {
+    padding: 0.3em;
+    border: 1px solid black;
+  }
+}
