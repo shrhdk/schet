@@ -1,0 +1,9 @@
+mixin comments(comments)
+  ol#comments
+    for comment, id in comments
+      li.comment(comment-id=id)
+        div
+          button.delete-comment(title='Delete this comment') Del
+        div.comment-name= comment.name
+        div.comment-separator -
+        div.comment-body= comment.body

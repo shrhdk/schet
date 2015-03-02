@@ -1,0 +1,54 @@
+- var presences = {'presence': '○', 'uncertain': '△', 'absence': '×'}
+
+mixin record(event)
+  table.record
+    if event.fixed
+      tr
+        th Fix
+        th Term
+        for name, id in event.participants
+          th: span.participant-name(participant-id=id)= name
+      for term in event.terms
+        tr(class="is-#{event.fixed == term.id ? 'fixed' : 'unfixed'}")
+          td
+            if event.fixed === term.id
+              input.fix-event-checkbox(type='checkbox', term-id=term.id, checked=true)
+          td.term-row
+            span.term= term.term
+          for name, id in event.participants
+            td= presences[event.record[id][term.id]]
+    else
+      tr
+        th Fix
+        th Term
+        th: input#new-participant-name(type='text', placeholder='Name')
+        for name, id in event.participants
+          th: span.participant-name(participant-id=id)= name
+      for term in event.terms
+        tr.is-unfixed
+          td
+            input.fix-event-checkbox(type='checkbox', term-id=term.id)
+          td.term-row
+            button.delete-term(term-id=term.id, title='Delete Term') Del
+            span.term= term.term
+          td
+            select.new-record(term-id=term.id)
+              option(value='presence') ○
+              option(value='uncertain') △
+              option(value='absence') ×
+          for name, id in event.participants
+            td
+              select.record(participant-id=id, term-id=term.id)
+                option(value='presence', selected=(event.record[id][term.id] === 'presence')) ○
+                option(value='uncertain', selected=(event.record[id][term.id] === 'uncertain')) △
+                option(value='absence', selected=(event.record[id][term.id] === 'absence')) ×
+      tr
+        td
+        td
+          input#new-term-field(type='text')
+          button#new-term-button(title='Add Term') Add
+          td
+            button#new-participant-button(title='Add Participant') Add
+          for name, id in event.participants
+            td
+              button.delete-participant(participant-id=id, title='Delete this participant') Del
