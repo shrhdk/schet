@@ -27,7 +27,7 @@ gulp.task('build:settings', function () {
 
 gulp.task('build:babel', function () {
   return gulp.src('src/**/*.js')
-    .pipe(babel({optional: ['runtime']}))
+    .pipe(babel())
     .pipe(gulp.dest('build/src/'));
 });
 
