@@ -1,74 +1,74 @@
 doctype html
 html
-    head
-        meta(charset='utf-8')
-        meta(http-equiv='X-UA-Compatible', content='IE=edge')
-        meta(name='viewport', content='width=device-width, initial-scale=1')
-        title= event.title
-        link(type='text/css', rel='stylesheet', href='/css/common.css')
-        link(type='text/css', rel='stylesheet', href='/css/events.css')
-    body
-        div#app-name: a(href='/') Schet
-        h1#title= event.title
-        p#description= event.description
-        table.record
-            tr
-                th Fix
-                th Term
-                unless event.fixed
-                    th: input#new-participant-name(type='text', placeholder='Name')
-                for name, id in event.participants
-                    th: span.participant-name(participant-id=id)= name
-            for term in event.terms
-                tr(class="is-#{event.fixed == term.id ? 'fixed' : 'unfixed'}")
-                    td
-                        if !event.fixed || event.fixed == term.id
-                            input.fix-event-checkbox(type='checkbox', term-id=term.id, checked=(event.fixed == term.id))
-                    td.term-row
-                        unless event.fixed
-                            button.delete-term(term-id=term.id, title='Delete this term') Del
-                        span.term= term.term
-                    unless event.fixed
-                        td
-                            select.new-record(term-id=term.id)
-                                option(value='presence') ○
-                                option(value='uncertain') △
-                                option(value='absence') ×
-                    for name, id in event.participants
-                        if event.fixed
-                            case event.record[id][term.id]
-                                when 'presence': td ○
-                                when 'uncertain': td △
-                                when 'absence': td ×
-                        else
-                            td
-                                select.record(participant-id=id, term-id=term.id)
-                                    option(value='presence', selected=(event.record[id][term.id] === 'presence')) ○
-                                    option(value='uncertain', selected=(event.record[id][term.id] === 'uncertain')) △
-                                    option(value='absence', selected=(event.record[id][term.id] === 'absence')) ×
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    title= event.title
+    link(type='text/css', rel='stylesheet', href='/css/common.css')
+    link(type='text/css', rel='stylesheet', href='/css/events.css')
+  body
+    div#app-name: a(href='/') Schet
+    h1#title= event.title
+    p#description= event.description
+    table.record
+      tr
+        th Fix
+        th Term
+        unless event.fixed
+          th: input#new-participant-name(type='text', placeholder='Name')
+        for name, id in event.participants
+          th: span.participant-name(participant-id=id)= name
+      for term in event.terms
+        tr(class="is-#{event.fixed == term.id ? 'fixed' : 'unfixed'}")
+          td
+            if !event.fixed || event.fixed == term.id
+              input.fix-event-checkbox(type='checkbox', term-id=term.id, checked=(event.fixed == term.id))
+          td.term-row
             unless event.fixed
-                tr
-                    td
-                    td
-                        input#new-term-field(type='text', name='daterange')
-                        button#new-term-button(title='Add a term') Add
-                        unless event.fixed
-                            td
-                                button#new-participant-button(title='Add a participant') Add
-                        for name, id in event.participants
-                            td
-                                button.delete-participant(participant-id=id, title='Delete this participant') Del
-        hr
-        ol#comments
-            for comment, id in event.comments
-                li.comment
-                    div
-                        button.delete-comment(comment-id=id, title='Delete this comment') Del
-                    div.comment-name= comment.name
-                    div.comment-separator -
-                    div.comment-body(comment-id=id)= comment.body
-        form#comment-form(method='POST', action='/#{event.id}/comments')
-            input#comment-name-field(name='name', type='text', placeholder='Name')
-            input#comment-body-field(name='body', type='text', placeholder='Message')
-            input#comment-submit(type='submit', value='Add Comment')
-        script(type='text/javascript', src='/js/event.js')
+              button.delete-term(term-id=term.id, title='Delete this term') Del
+            span.term= term.term
+          unless event.fixed
+            td
+              select.new-record(term-id=term.id)
+                option(value='presence') ○
+                option(value='uncertain') △
+                option(value='absence') ×
+          for name, id in event.participants
+            if event.fixed
+              case event.record[id][term.id]
+                when 'presence': td ○
+                when 'uncertain': td △
+                when 'absence': td ×
+            else
+              td
+                select.record(participant-id=id, term-id=term.id)
+                  option(value='presence', selected=(event.record[id][term.id] === 'presence')) ○
+                  option(value='uncertain', selected=(event.record[id][term.id] === 'uncertain')) △
+                  option(value='absence', selected=(event.record[id][term.id] === 'absence')) ×
+      unless event.fixed
+        tr
+          td
+          td
+            input#new-term-field(type='text', name='daterange')
+            button#new-term-button(title='Add a term') Add
+            unless event.fixed
+              td
+                button#new-participant-button(title='Add a participant') Add
+            for name, id in event.participants
+              td
+                button.delete-participant(participant-id=id, title='Delete this participant') Del
+    hr
+    ol#comments
+      for comment, id in event.comments
+        li.comment(comment-id=id)
+          div
+            button.delete-comment(title='Delete this comment') Del
+          div.comment-name= comment.name
+          div.comment-separator -
+          div.comment-body= comment.body
+    form#comment-form(method='POST', action='/#{event.id}/comments')
+      input#comment-name-field(name='name', type='text', placeholder='Name')
+      input#comment-body-field(name='body', type='text', placeholder='Message')
+      input#comment-submit(type='submit', value='Add Comment')
+    script(type='text/javascript', src='/js/event.js')
