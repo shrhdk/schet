@@ -1,6 +1,6 @@
 'use strict';
 
-var assert = require('power-assert');
+var assert = require('assert');
 
 var iso8601 = require('../../src/util/iso8601.js');
 
@@ -37,95 +37,164 @@ describe('compare', () => {
 });
 
 describe('normalize', () => {
+  let normalize = (str) => {
+    return () => {
+      assert.throws(() => iso8601.normalize(str));
+    };
+  };
+
+  let give = (given, offset = 0) => {
+    return {
+      expect(expected) {
+        return () => {
+          let actual = iso8601.normalize(given, offset);
+          assert.strictEqual(actual, expected);
+        };
+      }
+    }
+  };
+
   describe('date', () => {
-    it('correct', () => {
+    it('correct', give('2000/01/02').expect('2000-01-02'));
 
-    });
+    it('incorrect month', normalize('2000/13/01'));
 
-    it('incorrect month', () => {
-
-    });
-
-    it('incorrect date', () => {
-
-    });
+    it('incorrect date', normalize('2000/01/32'));
   });
 
   describe('date range', () => {
-    it('full', () => {
+    describe('full', () => {
+      it('correct', give('2000/01/01 - 2000/01/02').expect('2000-01-01/2000-01-02'));
 
+      it('start equals end', normalize('2000/01/01 - 2000/01/01'));
+
+      it('end is earlier than start', normalize('2000/01/02 - 2000/01/01'));
+
+      it('incorrect start month', normalize('2000/13/01 - 2002/01/01'));
+
+      it('incorrect start date', normalize('2000/01/32 - 2001/01/01'));
+
+      it('incorrect start date (02/30)', normalize('2000/02/30 - 2002/01/31'));
+
+      it('incorrect end month', normalize('2000/01/01 - 2000/13/01'));
+
+      it('incorrect end date', normalize('2000/01/01 - 2000/01/32'));
+
+      it('incorrect end date (02/30)', normalize('2000/01/01 - 2000/02/30'));
     });
 
-    it('omit year', () => {
+    describe('omit year', () => {
+      it('correct', give('2000/01/01 - 01/02').expect('2000-01-01/2000-01-02'));
 
-    });
+      it('start equals end', normalize('2000/01/01 - 01/01'));
 
-    it('incorrect start month', () => {
+      it('end is earlier than start', normalize('2000/01/02 - 01/01'));
 
-    });
+      it('incorrect start month', normalize('2000/13/01 - 01/01'));
 
-    it('incorrect start date', () => {
+      it('incorrect start date', normalize('2000/01/32 - 01/01'));
 
-    });
+      it('incorrect start date (02/30)', normalize('2000/02/30 - 01/31'));
 
-    it('incorrect end month', () => {
+      it('incorrect end month', normalize('2000/01/01 - 13/01'));
 
-    });
+      it('incorrect end date', normalize('2000/01/01 - 01/32'));
 
-    it('incorrect end date', () => {
-
-    });
-
-    it('end earlier than start', () => {
-
+      it('incorrect end date (02/30)', normalize('2000/01/01 - 02/30'));
     });
   });
 
   describe('date time', () => {
-    it('correct', () => {
+    it('correct', give('2000/01/01 09:30').expect('2000-01-01T09:30Z'));
 
-    });
+    it('with offset', give('2000/01/01 09:30', 9 * 60).expect('2000-01-01T00:30Z'));
 
-    it('24:00', () => {
+    it('incorrect month', normalize('2000/13/01 00:00'));
 
-    });
+    it('incorrect date', normalize('2000/01/32 00:00'));
 
-    it('with offset', () => {
+    it('incorrect hour', normalize('2000/01/01 25:00'));
 
-    });
-
-    it('incorrect month', () => {
-
-    });
-
-    it('incorrect date', () => {
-
-    });
-
-    it('incorrect hour', () => {
-
-    });
-
-    it('incorrect minutes', () => {
-
-    });
+    it('incorrect minutes', normalize('2000/01/01 00:60'));
   });
 
   describe('date time range', () => {
-    it('full', () => {
+    describe('full', () => {
+      it('correct', give('2000/01/01 00:00 - 2000/01/01 00:01').expect('2000-01-01T00:00Z/2000-01-01T00:01Z'));
 
+      it('start equals end', normalize('2000/01/01 00:00 - 2000/01/01 00:00'));
+
+      it('end is earlier than start', normalize('2000/01/01 00:01 - 2000/01/01 00:00'));
+
+      it('incorrect start month', normalize('2000/13/01 00:00 - 2002/01/01 00:00'));
+
+      it('incorrect start date', normalize('2000/01/32 00:00 - 2002/01/01 00:00'));
+
+      it('incorrect start date (02/30)', normalize('2000/02/30 00:00 - 2002/01/31 00:00'));
+
+      it('incorrect start hour', normalize('2000/01/01 25:00 - 2002/01/01 00:00'));
+
+      it('incorrect start minutes', normalize('2000/01/01 00:60 - 2002/01/01 00:00'));
+
+      it('incorrect end month', normalize('2000/01/01 00:00 - 2000/13/01 00:00'));
+
+      it('incorrect end date', normalize('2000/01/01 00:00 - 2000/01/32 00:00'));
+
+      it('incorrect end date (02/30)', normalize('2000/01/01 00:00 - 2000/02/30 00:00'));
+
+      it('incorrect end hour', normalize('2000/01/01 00:00 - 2000/01/01 25:00'));
+
+      it('incorrect end minutes', normalize('2000/01/01 00:00 - 2000/01/01 00:60'));
     });
 
-    it('omit date', () => {
+    describe('omit date', () => {
+      it('correct', give('2000/01/01 00:00 - 00:01').expect('2000-01-01T00:00Z/2000-01-01T00:01Z'));
 
+      it('start equals end', normalize('2000/01/01 00:00 - 00:00'));
+
+      it('end is earlier than start', normalize('2000/01/01 00:01 - 00:00'));
+
+      it('incorrect start month', normalize('2000/13/01 00:00 - 00:00'));
+
+      it('incorrect start date', normalize('2000/01/32 00:00 - 00:00'));
+
+      it('incorrect start date (02/30)', normalize('2000/02/30 00:00 - 00:00'));
+
+      it('incorrect start hour', normalize('2000/01/01 25:00 - 00:00'));
+
+      it('incorrect start minutes', normalize('2000/01/01 00:60 - 00:00'));
+
+      it('incorrect end hour', normalize('2000/01/01 00:00 - 25:00'));
+
+      it('incorrect end minutes', normalize('2000/01/01 00:00 - 00:60'));
     });
 
-    it('omit year', () => {
+    describe('omit year', () => {
+      it('correct', give('2000/01/01 00:00 - 01/01 00:01').expect('2000-01-01T00:00Z/2000-01-01T00:01Z'));
 
-    });
+      it('start equals end', normalize('2000/01/01 00:00 - 01/01 00:00'));
 
-    it('end earlier than start', () => {
+      it('end is earlier than start', normalize('2000/01/01 00:01 - 01/01 00:00'));
 
+      it('incorrect start month', normalize('2000/13/01 00:00 - 01/01 00:00'));
+
+      it('incorrect start date', normalize('2000/01/32 00:00 - 01/01 00:00'));
+
+      it('incorrect start date (02/30)', normalize('2000/02/30 00:00 - 01/31 00:00'));
+
+      it('incorrect start hour', normalize('2000/01/01 25:00 - 01/01 00:00'));
+
+      it('incorrect start minutes', normalize('2000/01/01 00:60 - 01/01 00:00'));
+
+      it('incorrect end month', normalize('2000/01/01 00:00 - 13/01 00:00'));
+
+      it('incorrect end date', normalize('2000/01/01 00:00 - 01/32 00:00'));
+
+      it('incorrect end date (02/30)', normalize('2000/01/01 00:00 - 02/30 00:00'));
+
+      it('incorrect end hour', normalize('2000/01/01 00:00 - 01/01 25:00'));
+
+      it('incorrect end minutes', normalize('2000/01/01 00:00 - 01/01 00:60'));
     });
   });
 });
