@@ -31,7 +31,7 @@ mixin record(event)
           td
             input.fix-event(type='checkbox', term-id=term.id)
           td.term-col
-            +icon_button.delete-term(img='delete', term-id=term.id, title='Delete Term')
+            +icon_button.delete-term(img='delete', term-id=term.id, title='Delete this term')
             span.term= term.term
           td
             select.new-record(term-id=term.id)
@@ -47,7 +47,7 @@ mixin record(event)
       tr
         td
         td
-          input#term-text(type='text')
+          input#term-text(type='text', placeholder='2000/01/01 09:00-17:30')
           +icon_button#add-term(img='add', title='Add Term')
           td
             +icon_button#add-participant(img='add-participant', title='Add Participant')

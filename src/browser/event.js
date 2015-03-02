@@ -87,7 +87,7 @@ $(() => {
 
   // Edit Event Description
   $('#description').editable(true, (elem, back) => {
-    schet.update({description: elem.text()})
+    schet.update({description: elem.get(0).innerText})  // innerText retains whitespaces
       .catch(err => {
         alert(err);
         back();

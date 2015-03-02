@@ -24,8 +24,14 @@ tr.is-fixed {
   text-align: left;
 }
 
+.term {
+  font-family: monospace;
+}
+
 #term-text {
   @extend .text-with-button;
+  min-width: 24ex;
+  font-family: monospace;
 }
 
 #add-term {
