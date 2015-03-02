@@ -20,8 +20,8 @@ gulp.task('clean:all', ['clean'], function (done) {
 
 // Build
 
-gulp.task('build:settings', function () {
-  return gulp.src('src/**/*.json')
+gulp.task('build:copy', function () {
+  return gulp.src(['src/**/*.json', 'src/**/*.jade', 'src/**/*.css'])
     .pipe(gulp.dest('build/src/'));
 });
 
@@ -31,16 +31,16 @@ gulp.task('build:babel', function () {
     .pipe(gulp.dest('build/src/'));
 });
 
-gulp.task('build:browser', ['build:babel'], function () {
+gulp.task('build:browserify', ['build:babel'], function () {
   browserify('./build/src/browser/index.js')
     .bundle()
     .pipe(source('index.js'))
-    .pipe(gulp.dest('build/public'));
+    .pipe(gulp.dest('build/src/public/js'));
 
   browserify('./build/src/browser/event.js')
     .bundle()
     .pipe(source('event.js'))
-    .pipe(gulp.dest('build/public'));
+    .pipe(gulp.dest('build/src/public/js'));
 });
 
 gulp.task('build:test', function () {
@@ -49,7 +49,7 @@ gulp.task('build:test', function () {
     .pipe(gulp.dest('build/test/'));
 });
 
-gulp.task('build', ['build:settings', 'build:babel', 'build:browser', 'build:test']);
+gulp.task('build', ['build:copy', 'build:babel', 'build:browserify', 'build:test']);
 
 // Test
 

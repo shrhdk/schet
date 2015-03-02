@@ -88,6 +88,8 @@ var compare = (a, b) => {
  */
 var normalize = (str, offset = 0) => {
   str = str.trim();
+  str = str.replace(/\s+/g, ' ');
+  str = str.replace(/(\d)-(\d)/, '$1 - $2');
 
   let start, end;
   if (str.indexOf(' - ') !== -1) {
@@ -243,7 +245,7 @@ var prettifyDateTimeRange = (str, offset = 0) => {
     return range.start.format(PRETTY_DATE_TIME) + ' - ' + range.end.format(PRETTY_DATE_TIME);
   }
 
-  if (width(range, 'months') || width(range, 'dates')) {
+  if (width(range, 'day')) {
     return range.start.format(PRETTY_DATE_TIME) + ' - ' + range.end.format(PRETTY_DATE_TIME_OMIT_YEAR);
   }
 

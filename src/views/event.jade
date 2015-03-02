@@ -7,8 +7,6 @@ html
         title= event.title
         link(type='text/css', rel='stylesheet', href='/css/common.css')
         link(type='text/css', rel='stylesheet', href='/css/events.css')
-        link(type='text/css', rel='stylesheet', href='/css/bootstrap.css')
-        link(type='text/css', rel='stylesheet', href='/css/daterangepicker-bs3.css')
     body
         div#app-name: a(href='/') Schet
         h1#title= event.title
@@ -28,8 +26,7 @@ html
                             input.fix-event-checkbox(type='checkbox', term-id=term.id, checked=(event.fixed == term.id))
                     td.term-row
                         unless event.fixed
-                            button.delete-term.btn.btn.default(term-id=term.id, title='Delete this term')
-                                span.glyphicon.glyphicon-minus
+                            button.delete-term(term-id=term.id, title='Delete this term') Del
                         span.term= term.term
                     unless event.fixed
                         td
@@ -52,35 +49,26 @@ html
             unless event.fixed
                 tr
                     td
-                    td.form-inline
-                        input#new-term-field.form-control(type='text', name='daterange', readonly)
-                        button#new-term-button.btn.btn-default(title='Add a term')
-                            span.glyphicons.glyphicon-plus
+                    td
+                        input#new-term-field(type='text', name='daterange')
+                        button#new-term-button(title='Add a term') Add
                         unless event.fixed
                             td
-                                button#new-participant-button.btn.btn-default(title='Add a participant')
-                                    span.glyphicons.glyphicon-plus
+                                button#new-participant-button(title='Add a participant') Add
                         for name, id in event.participants
                             td
-                                button.delete-participant.btn.btn-default(participant-id=id, title='Delete this participant')
-                                    span.glyphicon.glyphicon-minus
+                                button.delete-participant(participant-id=id, title='Delete this participant') Del
         hr
         ol#comments
             for comment, id in event.comments
                 li.comment
                     div
-                        button.delete-comment(comment-id=id, title='Delete this comment')
-                            span.glyphicon.glyphicon-minus
+                        button.delete-comment(comment-id=id, title='Delete this comment') Del
                     div.comment-name= comment.name
                     div.comment-separator -
                     div.comment-body(comment-id=id)= comment.body
-        form#comment-form.form-inline(method='POST', action='/#{event.id}/comments')
-            input#comment-name-field.form-control(name='name', type='text', placeholder='Name')
-            input#comment-body-field.form-control(name='body', type='text', placeholder='Message')
-            input#comment-submit.btn.btn-default(type='submit', value='Add Comment')
-        script(type='text/javascript', src='/js/jquery.js')
-        script(type='text/javascript', src='/js/bootstrap.js')
-        script(type='text/javascript', src='/js/moment.js')
-        script(type='text/javascript', src='/js/daterangepicker.js')
-        script(type='text/javascript', src='/js/schet.js')
-        script(type='text/javascript', src='/js/events.js')
+        form#comment-form(method='POST', action='/#{event.id}/comments')
+            input#comment-name-field(name='name', type='text', placeholder='Name')
+            input#comment-body-field(name='body', type='text', placeholder='Message')
+            input#comment-submit(type='submit', value='Add Comment')
+        script(type='text/javascript', src='/js/event.js')

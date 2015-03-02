@@ -26,11 +26,7 @@ app.use(methodOverride((req, res) => {
 }));
 
 // Static Files
-app.use(express.static(path.join(__dirname, '../public')));
-app.use(express.static(path.join(__dirname, '../public/lib/jquery')));
-app.use(express.static(path.join(__dirname, '../public/lib/bootstrap')));
-app.use(express.static(path.join(__dirname, '../public/lib/bootstrap-daterangepicker')));
-app.use(express.static(path.join(__dirname, '../public/lib/moment')));
+app.use(express.static(path.join(__dirname, './public')));
 
 // Router
 app.use('/', require('./routes/events'));

@@ -200,5 +200,16 @@ describe('normalize', () => {
 });
 
 describe('prettify', () => {
+  let give = (given, offset = 0) => {
+    return {
+      expect(expected) {
+        return () => {
+          let actual = iso8601.prettify(given, offset);
+          assert.strictEqual(actual, expected);
+        };
+      }
+    }
+  };
 
+  it('omit date', give('2015-01-01T00:00Z/2015-01-01T01:00Z').expect('2015/01/01 00:00 - 01:00'));
 });
