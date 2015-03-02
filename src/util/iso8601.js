@@ -208,7 +208,7 @@ var normalize = (str, offset = 0) => {
  * @param {String} str
  * @returns {String}
  */
-var simplifyDateRange = (str) => {
+var prettifyDateRange = (str) => {
   const range = split(str, '/');
 
   if (width(range, 'years')) {
@@ -233,7 +233,7 @@ var simplifyDateRange = (str) => {
  * @param {Number} offset
  * @returns {String}
  */
-var simplifyDateTimeRange = (str, offset = 0) => {
+var prettifyDateTimeRange = (str, offset = 0) => {
   const range = split(str, '/');
 
   range.start.add(offset, 'minutes');
@@ -272,7 +272,7 @@ var simplifyDateTimeRange = (str, offset = 0) => {
  * @param {Number} offset - offset in minutes
  * @returns {String}
  */
-var simplify = (str, offset = 0) => {
+var prettify = (str, offset = 0) => {
   str = str.trim();
 
   if (RE_ISO_DATE.test(str)) {
@@ -280,9 +280,9 @@ var simplify = (str, offset = 0) => {
   } else if (RE_ISO_DATE_TIME.test(str)) {
     return moment.utc(str).add(offset, 'minutes').format(PRETTY_DATE_TIME);
   } else if (RE_ISO_DATE_RANGE.test(str)) {
-    return simplifyDateRange(str);
+    return prettifyDateRange(str);
   } else if (RE_ISO_DATE_TIME_RANGE.test(str)) {
-    return simplifyDateTimeRange(str, offset);
+    return prettifyDateTimeRange(str, offset);
   } else {
     throw new Error();
   }
@@ -293,5 +293,5 @@ var simplify = (str, offset = 0) => {
 module.exports = {
   compare,
   normalize,
-  simplify
+  prettify
 };

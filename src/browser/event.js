@@ -63,7 +63,7 @@ $(() => {
   // Simplify Terms
 
   $('.term').each(() => {
-    this.innerText = iso8601.simplify(this.innerText.trim(), moment().utcOffset());
+    this.innerText = iso8601.prettifiy(this.innerText.trim(), moment().utcOffset());
   });
 
   // Set up Date Time Picker
