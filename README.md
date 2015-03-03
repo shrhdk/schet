@@ -1,12 +1,12 @@
 # Schet
 
-[![NPM version][npm-image]][npm-url] [![Build Status](travis-image)](travis-url)
+[![NPM version][npm-image]][npm-url] [![Build Status](https://travis-ci.org/shrhdk/schet.svg?branch=master)](travis-url)
 
 Schet is a web application for schedule coordination.
 
 ## Requirements
 
-- Node.js v0.10.33
+- Node.js v0.12.0
 - MongoDB v2.6.5
 
 ## Getting Started
@@ -49,6 +49,10 @@ $ schet stop
 
 Schet has a Web API. See [API Document](doc/API.md).
 
+## Credit
+
+This project uses the [Material Design Icons](https://github.com/google/material-design-icons) developed by Google under the `CC BY 4.0`.
+
 ## License
 
 MIT
@@ -56,4 +60,3 @@ MIT
 [npm-url]: https://npmjs.org/package/schet
 [npm-image]: https://badge.fury.io/js/schet.svg
 [travis-url]: https://travis-ci.org/shrhdk/schet
-[travis-image]: https://travis-ci.org/shrhdk/schet.svg?branch=master
