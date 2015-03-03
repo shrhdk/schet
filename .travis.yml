@@ -3,5 +3,7 @@ node_js:
   - "0.12"
 services:
   - mongodb
-before_script: ./bin/schet start
+before_script:
+  - npm run build
+  - ./bin/schet start
 after_script: ./bin/schet stop
