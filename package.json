@@ -1,6 +1,7 @@
 {
   "name": "schet",
-  "version": "0.0.5",
+  "description": "Schet is a schedule coordination tool.",
+  "version": "0.0.6",
   "main": "bin/schet",
   "bin": {
     "schet": "bin/schet"

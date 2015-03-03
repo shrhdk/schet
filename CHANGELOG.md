@@ -1,5 +1,14 @@
 # Change Log
 
+## 0.0.6
+
+### Feature
+
+ - Fix up design
+ - Material Design Icon
+ - Text based term editor
+ - Rewrote in ECMASript 6
+
 ## 0.0.5
 
 ### Feature
