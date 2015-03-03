@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.0.7
+
+### Bugfix
+
+ - fix boot script
+ - fix problem with multiline description
+
 ## 0.0.6
 
 ### Feature

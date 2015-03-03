@@ -34,16 +34,10 @@ $ schet init
 (4) Start Schet
 
 ```
-$ schet start
+$ schet
 ```
 
 See [http://127.0.0.1:3000/](http://127.0.0.1:3000/).
-
-(5) Stop Schet
-
-```
-$ schet stop
-```
 
 ## API
 

@@ -5,5 +5,6 @@ services:
   - mongodb
 before_script:
   - npm run build
-  - ./bin/schet start
-after_script: ./bin/schet stop
+  - $(npm bin)/forever start ./build/src/app.js
+after_script:
+  - $(npm bin)/forever stop ./build/src/app.js

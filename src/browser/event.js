@@ -1,6 +1,7 @@
 'use strict';
 
 var $ = require('jquery');
+var autosize = require('autosize');
 var moment = require('moment');
 var Schet = require('./schet').Schet;
 var iso8601 = require('../util/iso8601');
@@ -11,7 +12,7 @@ $(() => {
 
   // Helper
 
-  $.fn.editable = function (multiline, cb) {
+  $.fn.editable = function (cb) {
     let snapshot = this.text();
 
     // Back function for fall back
@@ -45,13 +46,11 @@ $(() => {
     });
 
     // Fix (by Enter)
-    if (!multiline) {
-      this.keypress(ev => {
-        if (ev.which === 13) {  // Enter
-          this.blur();
-        }
-      });
-    }
+    this.keypress(ev => {
+      if (ev.which === 13) {  // Enter
+        this.blur();
+      }
+    });
 
     return this;
   };
@@ -59,7 +58,7 @@ $(() => {
   // Simplify Terms
 
   $('.term').each(function () {
-    this.innerText = iso8601.prettify(this.innerText.trim(), moment().utcOffset());
+    this.textContent = iso8601.prettify(this.textContent.trim(), moment().utcOffset());
   });
 
   // Fix and Unfix Event
@@ -77,7 +76,7 @@ $(() => {
   });
 
   // Edit Event Title
-  $('#title').editable(false, (elem, back) => {
+  $('#title').editable((elem, back) => {
     let title = elem.text();
     schet.update({title}).then(event => {
       document.title = event.title;
@@ -89,13 +88,29 @@ $(() => {
   });
 
   // Edit Event Description
-  $('#description').editable(true, (elem, back) => {
-    let description = elem.get(0).innerText; // innerText retains whitespaces
-    schet.update({description}).then(event => {
-      elem.text(event.description);
-    }).catch(err => {
-      alert(err);
-      back();
+
+  autosize(document.getElementById('description'));
+  $('#description').focus(function () {
+    let snapshot = this.value;
+
+    // Cancel (by ESC)
+    $(this).keydown(ev => {
+      if (ev.which !== 27) {  // !== Esc
+        return;
+      }
+
+      this.value = snapshot;
+      this.blur();
+    });
+
+    // Fix (by Blur)
+    $(this).blur(() => {
+      let description = this.value;
+      schet.update({description}).then(event => {
+        this.value = event.description;
+      }).catch(err => {
+        alert(err);
+      });
     });
   });
 
@@ -129,7 +144,7 @@ $(() => {
   // Edit Participant Name
   $('.participant-name').each(function () {
     let participantID = this.getAttribute('participant-id');
-    $(this).editable(false, (elem, back) => {
+    $(this).editable((elem, back) => {
       let name = elem.text();
       schet.updateParticipant(participantID, {name}).then(event => {
         elem.text(event.participants[participantID]);
@@ -231,7 +246,7 @@ $(() => {
     let commentID = this.getAttribute('comment-id');
 
     // Edit Comment Name
-    $(this).find('.comment-name').editable(false, (elem, back)=> {
+    $(this).find('.comment-name').editable((elem, back)=> {
       let name = elem.text();
       schet.updateComment(commentID, {name}).then(event => {
         elem.text(event.comments[commentID].name);
@@ -242,7 +257,7 @@ $(() => {
     });
 
     // Edit Comment Body
-    $(this).find('.comment-body').editable(false, (elem, back) => {
+    $(this).find('.comment-body').editable((elem, back) => {
       let body = elem.text();
       schet.updateComment(commentID, {body}).then(event => {
         elem.text(event.comments[commentID].body);

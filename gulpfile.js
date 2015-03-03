@@ -92,7 +92,7 @@ gulp.task('debug:db', function (done) {
 // Deploy
 
 gulp.task('init', function (done) {
-  var mongo = require('./src/models/mongo');
+  var mongo = require('./build/src/models/mongo');
   mongo.init({
     counters: [
       {id: 'events', seq: 0}

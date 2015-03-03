@@ -1,8 +1,19 @@
-#!/bin/sh
+#!/usr/bin/env node
 
-case $1 in
-"stop" ) $(npm bin)/forever stop build/src/app.js ;;
-"start" ) $(npm bin)/forever start -c "node --harmony" build/src/app.js ;;
-"init" ) $(npm bin)/gulp init ;;
-* ) echo "schet init|start|stop" ;;
-esac
+var command = process.argv[2] || 'start';
+
+switch(command) {
+  case 'start':
+    require('../build/src/app');
+    break;
+  case 'init':
+    var mongo = require('../build/src/models/mongo');
+    mongo.init({
+      counters: [
+        {id: 'events', seq: 0}
+      ]
+    });
+    break;
+  default:
+    console.log('schet init|start');
+}
