@@ -1,17 +1,31 @@
 'use strict';
 
 var settings = require('../src/settings');
+
+var assert = require('assert');
 var util = require('util');
 var request = require('request');
-var assert = require('power-assert').customize({
-  output: {
-    maxDepth: 3
+
+const URL = `http://${settings.app.host}:${settings.app.port}`;
+
+export class GiveAndExpect {
+  constructor(fn) {
+    this.fn = fn;
   }
-});
 
-var url = 'http://' + settings.app.host + ':' + settings.app.port;
+  give(given) {
+    return {
+      expect(expected) {
+        return () => {
+          let actual = fn(given);
+          assert.strictEqual(actual, expected);
+        };
+      }
+    }
+  }
+}
 
-class Req {
+export class Req {
   /**
    *
    * @param {string} method
@@ -28,23 +42,25 @@ class Req {
   expect(statusCode, body, done) {
     request({
       method: this.method,
-      url: url + this.path,
+      url: URL + this.path,
       form: this.params,
       json: true
     }, (err, res, resBody) => {
       if (err) {
-        done(err);
+        return done(err);
       }
 
-      assert(res.statusCode === statusCode);
+      assert.strictEqual(res.statusCode, statusCode);
       assert.deepEqual(resBody, body);
 
-      done();
+      return done();
     });
   }
 }
 
-exports.req = (method, path, params) => new Req(method, path, params);
+exports.req = function (method, path, params) {
+  return new Req(method, path, params);
+};
 
 /**
  *

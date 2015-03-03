@@ -48,25 +48,20 @@ var isValidTime = (hours, minutes) => {
   return true;
 };
 
-exports.isEmpty = (value) => {
-  return value === '';
-};
+exports.isEmpty = value => (value === '');
 
-exports.isNotWhitespace = (value) => {
+exports.isNotWhitespace = value => {
   return !whitespaceRegExp.test(value);
 };
 
-exports.isOneLine = (str) => {
+exports.isOneLine = str => {
   return (str.indexOf('\r') === -1 && str.indexOf('\n') === -1);
 };
 
-/**
- * @param {...*}
- */
 exports.list = (...args) => {
   assert(1 <= args.length);
 
-  return (value) => {
+  return value => {
     for (let i = 0; i < args.length; i++) {
       if (args[i] === value) {
         return true;
@@ -76,16 +71,12 @@ exports.list = (...args) => {
   };
 };
 
-exports.ge = (th) => {
-  'use strict';
-
+exports.ge = th => {
   if (!util.isNumber(th)) {
     throw new Error();
   }
 
-  return (value) => {
-    return th <= value;
-  };
+  return value => (th <= value);
 };
 
 /**
@@ -103,9 +94,7 @@ exports.range = (ge, le) => {
     throw new Error();
   }
 
-  return (value) => {
-    return ge <= value && value <= le;
-  };
+  return value => (ge <= value && value <= le);
 };
 
 exports.length = (ge, le) => {
@@ -117,7 +106,7 @@ exports.length = (ge, le) => {
     throw new Error();
   }
 
-  return (str) => {
+  return str => {
     if (!util.isString(str)) {
       return false;
     }
@@ -131,7 +120,7 @@ exports.length = (ge, le) => {
  * @param {!string} str
  * @returns {boolean}
  */
-exports.isDate = (str) => {
+exports.isDate = str => {
   if (!DATE.test(str)) {
     return false;
   }
@@ -150,26 +139,28 @@ exports.isDate = (str) => {
  * @param {!string} str
  * @returns {boolean}
  */
-exports.isDateRange = (str) => {
+exports.isDateRange = str => {
   if (!DATE_RANGE.test(str)) {
     return false;
   }
 
   let m = DATE_RANGE.exec(str);
 
-  let s = {};
-  s.year = Number(m[1]);
-  s.month = Number(m[2]);
-  s.date = Number(m[3]);
+  let s = {
+    year: Number(m[1]),
+    month: Number(m[2]),
+    date: Number(m[3])
+  };
 
   if (!isValidDate(s.year, s.month, s.date)) {
     return false;
   }
 
-  let e = {};
-  e.year = Number(m[4]);
-  e.month = Number(m[5]);
-  e.date = Number(m[6]);
+  let e = {
+    year: Number(m[4]),
+    month: Number(m[5]),
+    date: Number(m[6])
+  };
 
   if (!isValidDate(e.year, e.month, e.date)) {
     return false;
@@ -183,7 +174,7 @@ exports.isDateRange = (str) => {
  * @param {!string} str
  * @returns {boolean}
  */
-exports.isDateTime = (str) => {
+exports.isDateTime = str => {
   if (!DATE_TIME.test(str)) {
     return false;
   }
@@ -203,30 +194,32 @@ exports.isDateTime = (str) => {
  * @param {!string} str
  * @returns {boolean}
  */
-exports.isDateTimeRange = (str) => {
+exports.isDateTimeRange = str => {
   if (!DATE_TIME_RANGE.test(str)) {
     return false;
   }
 
   let m = DATE_TIME_RANGE.exec(str);
 
-  let s = {};
-  s.year = Number(m[1]);
-  s.month = Number(m[2]);
-  s.date = Number(m[3]);
-  s.hours = Number(m[4]);
-  s.minutes = Number(m[5]);
+  let s = {
+    year: Number(m[1]),
+    month: Number(m[2]),
+    date: Number(m[3]),
+    hours: Number(m[4]),
+    minutes: Number(m[5])
+  };
 
   if (!isValidDate(s.year, s.month, s.date) || !isValidTime(s.hours, s.minutes)) {
     return false;
   }
 
-  let e = {};
-  e.year = Number(m[6]);
-  e.month = Number(m[7]);
-  e.date = Number(m[8]);
-  e.hours = Number(m[9]);
-  e.minutes = Number(m[10]);
+  let e = {
+    year: Number(m[6]),
+    month: Number(m[7]),
+    date: Number(m[8]),
+    hours: Number(m[9]),
+    minutes: Number(m[10])
+  };
 
   if (!isValidDate(e.year, e.month, e.date) || !isValidTime(e.hours, e.minutes)) {
     return false;
@@ -235,7 +228,7 @@ exports.isDateTimeRange = (str) => {
   return s.year < e.year || s.month < e.month || s.date < e.date || s.hours < e.hours || s.minutes < e.minutes;
 };
 
-exports.isDateString = (str) => {
+exports.isDateString = str => {
   if (DATE.test(str)) {
     return exports.isDate(str);
   } else if (DATE_RANGE.test(str)) {

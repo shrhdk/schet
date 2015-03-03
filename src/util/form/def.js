@@ -30,9 +30,7 @@ class Def {
 
     // Normalize sanitizer
     if (util.isUndefined(sanitizer)) {
-      this.sanitizer = (value) => {
-        return value;
-      };
+      this.sanitizer = value => value;
     } else if (util.isFunction(sanitizer)) {
       this.sanitizer = sanitizer;
     } else {

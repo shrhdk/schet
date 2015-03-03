@@ -1,6 +1,6 @@
 'use strict';
 
-var assert = require('power-assert');
+var assert = require('assert');
 
 var whitespace = require('../../../src/util/form/constants').whitespace;
 var sanitizers = require('../../../src/util/form/sanitizers');

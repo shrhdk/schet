@@ -7,7 +7,7 @@ var util = require('util');
  * @param {!string} str
  * @returns {function(string):boolean}
  */
-exports.str = (str) => {
+exports.str = str => {
   if (!util.isString(str)) {
     throw new Error();
   }
@@ -26,7 +26,7 @@ exports.str = (str) => {
  * @param {!RegExp} regExp
  * @returns {function(string):boolean}
  */
-exports.re = (regExp) => {
+exports.re = regExp => {
   if (!util.isRegExp(regExp)) {
     throw new Error();
   }
@@ -45,12 +45,10 @@ exports.re = (regExp) => {
  * @param {!number} th
  * @returns {function(number):boolean}
  */
-exports.ge = (th) => {
+exports.ge = th => {
   if (!util.isNumber(th)) {
     throw new Error();
   }
 
-  return (value) => {
-    return th <= value;
-  };
+  return value => (th <= value);
 };

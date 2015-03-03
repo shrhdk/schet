@@ -1,6 +1,6 @@
 'use strict';
 
-var assert = require('power-assert');
+var assert = require('assert');
 
 var whitespace = require('../../../src/util/form/constants').whitespace;
 var def = require('../../../src/util/form/def');
@@ -11,7 +11,7 @@ describe('def', () => {
     let actual = given.matcher('foo');
     let expected = true;
 
-    assert(actual === expected);
+    assert.strictEqual(actual, expected);
   });
 
   it('(RegExp, *, *, *) make matcher by RegExp', () => {
@@ -19,6 +19,6 @@ describe('def', () => {
     let actual = given.matcher('foo');
     let expected = true;
 
-    assert(actual === expected);
+    assert.strictEqual(actual, expected);
   });
 });

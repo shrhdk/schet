@@ -9,7 +9,7 @@ const COLLECTION_NAME = 'events';
 
 // Helper Function
 
-var clean = (event) => {
+var clean = event => {
   delete event.terms.counter;
   delete event.participants.counter;
   delete event.comments.counter;

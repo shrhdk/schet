@@ -10,11 +10,11 @@ var stripRegExp = new RegExp('^[' + constants.whitespace + ']*(.*?)[' + constant
  * @param {string} str
  * @returns {string}
  */
-exports.strip = (str) => {
+exports.strip = str => {
   return str.replace(stripRegExp, '$1');
 };
 
-exports.toBoolean = (str) => {
+exports.toBoolean = str => {
   let stripped = str.replace(stripRegExp, '$1');
 
   if (stripped === 'true') {
@@ -31,6 +31,6 @@ exports.toBoolean = (str) => {
  * @param {string} str
  * @returns {number}
  */
-exports.toNumber = (str) => {
+exports.toNumber = str => {
   return Number(str);
 };

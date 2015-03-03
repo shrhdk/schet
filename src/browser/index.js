@@ -9,7 +9,7 @@ $(() => {
   const update = () => $('#create-event').prop('disabled', isEmpty());
 
   $title
-    .keypress((ev) => {
+    .keypress(ev => {
       if (ev.which !== 13 || isEmpty()) {
         return;
       }

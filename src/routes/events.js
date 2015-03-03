@@ -12,7 +12,7 @@ var validators = form.validators;
 
 var iso8601 = require('../util/iso8601.js');
 
-var sort = (terms) => {
+var sort = terms => {
   const array = [];
 
   for (let termID in terms) {
@@ -121,7 +121,7 @@ router.put('/:id(\\d+)', (req, res) => {
 router.delete('/:id(\\d+)', (req, res) => {
   const id = req.params.id;
 
-  events.delete(id, (err) => {
+  events.delete(id, err => {
     if (err === ERRORS.NOT_FOUND_ERROR) {
       return res.status(404).json(err.json);
     }

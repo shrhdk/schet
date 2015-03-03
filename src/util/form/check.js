@@ -21,9 +21,7 @@ module.exports = (target, definitions) => {
   let sanitized = {};
 
   /** @type {Array.<number>} */
-  let matchCountPerDef = definitions.map(() => {
-    return 0;
-  });
+  let matchCountPerDef = definitions.map(() => 0);
 
   for (let param in target) {
     /** @type {number} */

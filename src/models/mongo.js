@@ -13,7 +13,7 @@ var util = require('util');
  * @param {!Object} obj
  * @returns {Object}
  */
-var replaceID = (obj) => {
+var replaceID = obj => {
   obj.id = obj._id;
   delete obj._id;
 
@@ -24,7 +24,7 @@ var replaceID = (obj) => {
  * Open DB
  * @param {function(Error, Db)} cb
  */
-var openDB = (cb) => {
+var openDB = cb => {
   const server = new mongodb.Server(settings.mongo.host, settings.mongo.port);
   const db = new mongodb.Db(settings.mongo.db, server, {safe: true});
 
@@ -44,14 +44,10 @@ var openCollection = (collectionName, cb) => {
 
     return db.collection(collectionName, (err, collection) => {
       if (err) {
-        return db.close(() => {
-          return cb(err);
-        });
+        return db.close(() => cb(err));
       }
 
-      const close = (cb) => {
-        db.close(cb);
-      };
+      const close = cb => db.close(cb);
 
       return cb(null, collection, close);
     });
@@ -122,39 +118,33 @@ exports.init = (data, cb) => {
 
     const tasks = [];
 
-    tasks.push((next) => {
+    tasks.push(next => {
       db.dropDatabase((err, db) => {
         if (err) {
-          return db.close(() => {
-            return next(err);
-          });
+          return db.close(() => next(err));
         }
 
         return next(null, db);
       });
     });
 
-    Object.keys(data).forEach((collectionName) => {
-      tasks.push((next) => {
+    Object.keys(data).forEach(collectionName => {
+      tasks.push(next => {
         db.collection(collectionName, (err, collection) => {
           const docs = data[collectionName];
 
           if (err) {
-            return db.close(() => {
-              return next(err);
-            });
+            return db.close(() => next(err));
           }
 
-          docs.forEach((value) => {
+          docs.forEach(value => {
             value._id = value.id;
             delete value.id;
           });
 
           collection.insert(docs, (err, result) => {
             if (err) {
-              return db.close(() => {
-                return next(err);
-              });
+              return db.close(() => next(err));
             }
 
             return next(null, result);
@@ -163,7 +153,7 @@ exports.init = (data, cb) => {
       });
     });
 
-    return async.series(tasks, (err) => {
+    return async.series(tasks, err => {
       return db.close(() => {
         if (cb) {
           return cb(err);
@@ -282,8 +272,7 @@ exports.update = (collectionName, id, operator, data, cb) => {
 
       const query = {_id: id};
       const sort = [];
-      const update = {};
-      update[operator] = data;
+      const update = {[operator]: data};
       const opts = {new: true};
 
       return collection.findAndModify(query, sort, update, opts, (err, modified) => {
@@ -335,9 +324,7 @@ exports.unset = (collectionName, id, keys, cb) => {
   }
 
   const data = {};
-  keys.forEach((key) => {
-    data[key] = '';
-  });
+  keys.forEach(key => data[key] = '');
 
   return exports.update(collectionName, id, '$unset', data, cb);
 };
@@ -365,7 +352,7 @@ exports.delete = (collectionName, id, cb) => {
         return cb(err);
       }
 
-      return collection.remove({_id: id}, (err) => {
+      return collection.remove({_id: id}, err => {
         return close(() => {
           if (err) {
             return cb(err);

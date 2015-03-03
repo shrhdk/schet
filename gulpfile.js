@@ -33,7 +33,7 @@ gulp.task('build:sass', function () {
 });
 
 gulp.task('build:res', ['build:img', 'build:sass'], function () {
-  return gulp.src(['src/**/*.json', 'src/**/*.jade', 'src/**/*.svg'])
+  return gulp.src(['src/**/*.json', 'src/**/*.jade'])
     .pipe(gulp.dest('build/src/'));
 });
 

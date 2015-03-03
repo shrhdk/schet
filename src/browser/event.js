@@ -182,7 +182,7 @@ $(() => {
 
     // Send to Server
     schet.addTerm(term).then(() => location.reload())
-      .catch((err) => {
+      .catch(err => {
         // TODO Correct Error Handling
         switch (err.status) {
           case 400:
@@ -211,10 +211,7 @@ $(() => {
     let participantID = this.getAttribute('participant-id');
     let termID = this.getAttribute('term-id');
 
-    let data = {};
-    data[termID] = this.value;
-
-    schet.updateParticipant(participantID, data)
+    schet.updateParticipant(participantID, {[termID]: this.value})
       .catch(() => location.reload());
   });
 

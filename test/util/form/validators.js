@@ -1,67 +1,43 @@
 'use strict';
 
-var assert = require('power-assert');
+var assert = require('assert');
 
 var whitespace = require('../../../src/util/form/constants').whitespace;
+var GiveAndExpect = require('../../test-helper');
+
 var validators = require('../../../src/util/form/validators');
 
 describe('validators', () => {
   describe('isNotWhitespace', () => {
-    it('should return true when str is empty.', () => {
-      let actual = validators.isNotWhitespace('');
-      let expected = false;
+    let give = new GiveAndExpect(validators.isNotWhitespace);
 
-      assert(actual === expected);
-    });
+    it('should return true when str is empty.',
+      give('').expect(false));
 
-    it('should return true when str is whitespace.', () => {
-      let actual = validators.isNotWhitespace(whitespace);
-      let expected = false;
+    it('should return true when str is whitespace.',
+      give(whitespace).expect(false));
 
-      assert(actual === expected);
-    });
+    it('should return false when str includes non whitespace.',
+      give(whitespace + 'foo').expect(true));
 
-    it('should return false when str includes non whitespace.', () => {
-      let actual = validators.isNotWhitespace(whitespace + 'foo');
-      let expected = true;
-
-      assert(actual === expected);
-    });
-
-    it('should return false when str includes non whitespace.', () => {
-      let actual = validators.isNotWhitespace('foo' + whitespace);
-      let expected = true;
-
-      assert(actual === expected);
-    });
+    it('should return false when str includes non whitespace.',
+      give('foo' + whitespace).expect(true));
   });
 
   describe('isOneLine', () => {
-    it('should return false when str contains \\n', () => {
-      let actual = validators.isOneLine('hello\nworld');
-      let expected = false;
+    let give = new GiveAndExpect(validators.isOneLine);
 
-      assert(actual === expected);
-    });
-    it('should return false when str contains \\r', () => {
-      let actual = validators.isOneLine('hello\rworld');
-      let expected = false;
+    it('should return false when str contains \\n',
+      give('hello\nworld').expect(false));
 
-      assert(actual === expected);
-    });
-    it('should return false when str contains \\r\\n', () => {
-      let actual = validators.isOneLine('hello\r\nworld');
-      let expected = false;
+    it('should return false when str contains \\r',
+      give('hello\rworld').expect(false));
 
-      assert(actual === expected);
-    });
+    it('should return false when str contains \\r\\n',
+      give('hello\r\nworld').expect(false));
 
-    it('should return true when str does not contains new line', () => {
-      let actual = validators.isOneLine('hello world');
-      let expected = true;
-
-      assert(actual === expected);
-    });
+    it('should return true when str does not contains new line',
+      give('hello world').expect(true));
   });
 
   describe('list', () => {
@@ -72,10 +48,10 @@ describe('validators', () => {
     it('should return true when value is in list.', () => {
       let v = validators.list('foo', 'bar', 'baz');
 
-      assert(v('foo') === true);
-      assert(v('bar') === true);
-      assert(v('baz') === true);
-      assert(v('qux') === false);
+      assert.strictEqual(v('foo'), true);
+      assert.strictEqual(v('bar'), true);
+      assert.strictEqual(v('baz'), true);
+      assert.strictEqual(v('qux'), false);
     });
   });
 
@@ -83,27 +59,27 @@ describe('validators', () => {
     it('(-1) should return true when value is greater than or equal to -1.', () => {
       let v = validators.ge(-1);
 
-      assert(v(-2) === false);
-      assert(v(-1) === true);
-      assert(v(+0) === true);
-      assert(v(+1) === true);
+      assert.strictEqual(v(-2), false);
+      assert.strictEqual(v(-1), true);
+      assert.strictEqual(v(+0), true);
+      assert.strictEqual(v(+1), true);
     });
 
     it('(0) should return true when value is greater than or equal to 0.', () => {
       let v = validators.ge(0);
 
-      assert(v(-1) === false);
-      assert(v(+0) === true);
-      assert(v(+1) === true);
+      assert.strictEqual(v(-1), false);
+      assert.strictEqual(v(+0), true);
+      assert.strictEqual(v(+1), true);
     });
 
     it('(1) should return true when value is greater than or equal to 1.', () => {
       let v = validators.ge(1);
 
-      assert(v(-1) === false);
-      assert(v(+0) === false);
-      assert(v(+1) === true);
-      assert(v(+2) === true);
+      assert.strictEqual(v(-1), false);
+      assert.strictEqual(v(+0), false);
+      assert.strictEqual(v(+1), true);
+      assert.strictEqual(v(+2), true);
     });
   });
 
@@ -115,31 +91,31 @@ describe('validators', () => {
     it('(-2, -1) should return true when (-2 <= value <= -1).', () => {
       let v = validators.range(-2, -1);
 
-      assert(v(-3) === false);
-      assert(v(-2) === true);
-      assert(v(-1) === true);
-      assert(v(+0) === false);
-      assert(v(+1) === false);
+      assert.strictEqual(v(-3), false);
+      assert.strictEqual(v(-2), true);
+      assert.strictEqual(v(-1), true);
+      assert.strictEqual(v(+0), false);
+      assert.strictEqual(v(+1), false);
     });
 
     it('(-1, 1) should return true when (-1 <= value <= 1).', () => {
       let v = validators.range(-1, 1);
 
-      assert(v(-2) === false);
-      assert(v(-1) === true);
-      assert(v(+0) === true);
-      assert(v(+1) === true);
-      assert(v(+2) === false);
+      assert.strictEqual(v(-2), false);
+      assert.strictEqual(v(-1), true);
+      assert.strictEqual(v(+0), true);
+      assert.strictEqual(v(+1), true);
+      assert.strictEqual(v(+2), false);
     });
 
     it('(1, 2) should return true when (1 <= value <= 2).', () => {
       let v = validators.range(1, 2);
 
-      assert(v(-1) === false);
-      assert(v(+0) === false);
-      assert(v(+1) === true);
-      assert(v(+2) === true);
-      assert(v(+3) === false);
+      assert.strictEqual(v(-1), false);
+      assert.strictEqual(v(+0), false);
+      assert.strictEqual(v(+1), true);
+      assert.strictEqual(v(+2), true);
+      assert.strictEqual(v(+3), false);
     });
   });
 
@@ -155,501 +131,267 @@ describe('validators', () => {
     it('(0, 0) should return true when (value.length == 0).', () => {
       let v = validators.length(0, 0);
 
-      assert(v('') === true);
-      assert(v('1') === false);
+      assert.strictEqual(v(''), true);
+      assert.strictEqual(v('1'), false);
     });
 
     it('(0, 2) should return true when (0 <= value.length <= 2).', () => {
       let v = validators.length(0, 2);
 
-      assert(v('') === true);
-      assert(v('1') === true);
-      assert(v('12') === true);
-      assert(v('123') === false);
+      assert.strictEqual(v(''), true);
+      assert.strictEqual(v('1'), true);
+      assert.strictEqual(v('12'), true);
+      assert.strictEqual(v('123'), false);
     });
 
     it('(1, 2) should return true when (1 <= value.length <= 2).', () => {
       let v = validators.length(1, 2);
 
-      assert(v('') === false);
-      assert(v('1') === true);
-      assert(v('12') === true);
-      assert(v('123') === false);
+      assert.strictEqual(v(''), false);
+      assert.strictEqual(v('1'), true);
+      assert.strictEqual(v('12'), true);
+      assert.strictEqual(v('123'), false);
     });
   });
 
   describe('date', () => {
-    it('should return false when str is wrong format.', () => {
-      let actual = validators.isDateString('foo');
-      let expected = false;
+    let give = new GiveAndExpect(validators.isDateString);
 
-      assert(actual === expected);
+    context('should return false when there is wrong format in', ()=> {
+      it('all',
+        give('foo').expect(false));
+
+      it('year',
+        give('01234-01-01').expect(false));
+
+      it('month',
+        give('1970-012-01').expect(false));
+
+      it('date',
+        give('1970-01-012').expect(false));
     });
 
-    it('should return false when str is wrong year format.', () => {
-      let actual = validators.isDateString('01234-01-01');
-      let expected = false;
+    context('should return false when', () => {
+      it('month is 00',
+        give('1970-00-01').expect(false));
 
-      assert(actual === expected);
+      it('month is 13',
+        give('1970-13-01').expect(false));
+
+      it('date is 01/00',
+        give('1970-01-00').expect(false));
+
+      it('date is 02/30',
+        give('1970-02-30').expect(false));
     });
 
-    it('should return false when str is wrong month format.', () => {
-      let actual = validators.isDateString('1970-012-01');
-      let expected = false;
+    context('should return true when', () => {
+      it('all is correct',
+        give('1970-01-01').expect(true));
 
-      assert(actual === expected);
-    });
-
-    it('should return false when str is wrong date format.', () => {
-      let actual = validators.isDateString('1970-01-012');
-      let expected = false;
-
-      assert(actual === expected);
-    });
-
-    it('should return false when str is correct date format with incorrect month.', () => {
-      let actual = validators.isDateString('1970-00-01');
-      let expected = false;
-
-      assert(actual === expected);
-    });
-
-    it('should return false when str is correct date format with incorrect month.', () => {
-      let actual = validators.isDateString('1970-13-01');
-      let expected = false;
-
-      assert(actual === expected);
-    });
-
-    it('should return false when str is correct date format with incorrect date.', () => {
-      let actual = validators.isDateString('1970-01-00');
-      let expected = false;
-
-      assert(actual === expected);
-    });
-
-    it('should return false when str is correct date format with incorrect date.', () => {
-      let actual = validators.isDateString('1970-02-30');
-      let expected = false;
-
-      assert(actual === expected);
-    });
-
-    it('should return true when str is correct date format.', () => {
-      let actual = validators.isDateString('1970-01-01');
-      let expected = true;
-
-      assert(actual === expected);
-    });
-
-    it('should return true when str is correct date format.', () => {
-      let actual = validators.isDateString('1970-12-31');
-      let expected = true;
-
-      assert(actual === expected);
+      it('all is correct',
+        give('1970-12-31').expect(true));
     });
   });
 
   describe('date range', () => {
-    it('should return false when str is correct date range format with incorrect start month.', () => {
-      let actual = validators.isDateString('1970-00-01/1970-01-01');
-      let expected = false;
+    let give = new GiveAndExpect(validators.isDateString);
 
-      assert(actual === expected);
+    context('should return false when', () => {
+      it('start month is 00',
+        give('1970-00-01/1970-01-01').expect(false));
+
+      it('start date is 01/00',
+        give('1970-01-00/1970-03-01').expect(false));
+
+      it('start date is 02/30',
+        give('1970-02-30/1970-03-01').expect(false));
+
     });
 
-    it('should return false when str is correct date range format with incorrect start date.', () => {
-      let actual = validators.isDateString('1970-01-00/1970-03-01');
-      let expected = false;
+    context('should return false when', () => {
+      it('end month is 13',
+        give('1970-01-01/1970-13-01').expect(false));
 
-      assert(actual === expected);
+      it('end date is 02/00',
+        give('1970-01-01/1970-02-00').expect(false));
+
+      it('end date is 02/30',
+        give('1970-01-01/1970-02-30').expect(false));
     });
 
-    it('should return false when str is correct date range format with incorrect start date.', () => {
-      let actual = validators.isDateString('1970-02-30/1970-03-01');
-      let expected = false;
+    context('should return false when', () => {
+      it('end date equals to start date.',
+        give('1970-01-01/1970-01-01').expect(false));
 
-      assert(actual === expected);
+      it('end date earlier than start date.',
+        give('1970-01-02/1970-01-01').expect(false));
     });
 
-    it('should return false when str is correct date range format with incorrect end month.', () => {
-      let actual = validators.isDateString('1970-01-01/1970-13-01');
-      let expected = false;
+    context('should return true when', () => {
+      it('all is correct',
+        give('1970-01-01/1970-01-02').expect(true));
 
-      assert(actual === expected);
-    });
-
-    it('should return false when str is correct date range format with incorrect end date.', () => {
-      let actual = validators.isDateString('1970-01-01/1970-02-00');
-      let expected = false;
-
-      assert(actual === expected);
-    });
-
-    it('should return false when str is correct date range format with incorrect end date.', () => {
-      let actual = validators.isDateString('1970-01-01/1970-02-30');
-      let expected = false;
-
-      assert(actual === expected);
-    });
-
-    it('should return false when str is correct date range format but end date equals to start date.', () => {
-      let actual = validators.isDateString('1970-01-01/1970-01-01');
-      let expected = false;
-
-      assert(actual === expected);
-    });
-
-    it('should return false when str is correct date range format but end date earlier than start date.', () => {
-      let actual = validators.isDateString('1970-01-02/1970-01-01');
-      let expected = false;
-
-      assert(actual === expected);
-    });
-
-    it('should return true when str is correct date range format.', () => {
-      let actual = validators.isDateString('1970-01-01/1970-01-02');
-      let expected = true;
-
-      assert(actual === expected);
-    });
-
-    it('should return true when str is correct date range format.', () => {
-      let actual = validators.isDateString('0000-01-01/9999-12-31');
-      let expected = true;
-
-      assert(actual === expected);
+      it('all is correct',
+        give('0000-01-01/9999-12-31').expect(true));
     });
   });
 
   describe('date time', () => {
-    it('should return false when str is wrong date time format in year.', () => {
-      let actual = validators.isDateString('01234-01-01T00:00Z');
-      let expected = false;
+    let give = new GiveAndExpect(validators.isDateString);
 
-      assert(actual === expected);
+    context('should return false when there is wrong format in', () => {
+      it('year',
+        give('01234-01-01T00:00Z').expect(false));
+
+      it('month',
+        give('1970-012-01T00:00Z').expect(false));
+
+      it('date',
+        give('1970-01-012T00:00Z').expect(false));
+
+      it('hours',
+        give('1970-01-01T012:00Z').expect(false));
+
+      it('minutes',
+        give('1970-01-01T00:012Z').expect(false));
     });
 
-    it('should return false when str is wrong date time format in month.', () => {
-      let actual = validators.isDateString('1970-012-01T00:00Z');
-      let expected = false;
+    context('should return false when', () => {
+      it('month is 00',
+        give('1970-00-01T00:00Z').expect(false));
 
-      assert(actual === expected);
+      it('month is 13',
+        give('1970-13-01T00:00Z').expect(false));
+
+      it('date is 02/00',
+        give('1970-01-00T00:00Z').expect(false));
+
+      it('date is 02/30',
+        give('1970-02-30T00:00Z').expect(false));
+
+      it('hours is 25',
+        give('1970-01-01T25:00Z').expect(false));
+
+      it('minutes is 60',
+        give('1970-01-01T00:60Z').expect(false));
+
+      it('time is 24:01',
+        give('1970-01-01T24:01Z').expect(false));
     });
 
-    it('should return false when str is wrong date time format in date.', () => {
-      let actual = validators.isDateString('1970-01-012T00:00Z');
-      let expected = false;
+    context('should return true when', () => {
+      it('all is correct',
+        give('1970-01-01T00:00Z').expect(true));
 
-      assert(actual === expected);
-    });
+      it('all is correct',
+        give('1970-01-01T00:01Z').expect(true));
 
-    it('should return false when str is wrong date time format in hours.', () => {
-      let actual = validators.isDateString('1970-01-01T012:00Z');
-      let expected = false;
+      it('all is correct',
+        give('1970-01-01T23:59Z').expect(true));
 
-      assert(actual === expected);
-    });
-
-    it('should return false when str is wrong date time format in minutes.', () => {
-      let actual = validators.isDateString('1970-01-01T00:012Z');
-      let expected = false;
-
-      assert(actual === expected);
-    });
-
-    it('should return false when str is wrong date time format in minutes.', () => {
-      let actual = validators.isDateString('1970-01-01T00:012Z');
-      let expected = false;
-
-      assert(actual === expected);
-    });
-
-    it('should return false when str is correct date time format with incorrect month.', () => {
-      let actual = validators.isDateString('1970-00-01T00:00Z');
-      let expected = false;
-
-      assert(actual === expected);
-    });
-
-    it('should return false when str is correct date time format with incorrect month.', () => {
-      let actual = validators.isDateString('1970-13-01T00:00Z');
-      let expected = false;
-
-      assert(actual === expected);
-    });
-
-    it('should return false when str is correct date time format with incorrect date.', () => {
-      let actual = validators.isDateString('1970-01-00T00:00Z');
-      let expected = false;
-
-      assert(actual === expected);
-    });
-
-    it('should return false when str is correct date time format with incorrect date.', () => {
-      let actual = validators.isDateString('1970-02-30T00:00Z');
-      let expected = false;
-
-      assert(actual === expected);
-    });
-
-    it('should return false when str is correct date time format with incorrect hours.', () => {
-      let actual = validators.isDateString('1970-01-01T25:00Z');
-      let expected = false;
-
-      assert(actual === expected);
-    });
-
-    it('should return false when str is correct date time format with incorrect minutes.', () => {
-      let actual = validators.isDateString('1970-01-01T00:60Z');
-      let expected = false;
-
-      assert(actual === expected);
-    });
-
-    it('should return false when str is correct date time format with incorrect time.', () => {
-      let actual = validators.isDateString('1970-01-01T24:01Z');
-      let expected = false;
-
-      assert(actual === expected);
-    });
-
-    it('should return true when str is correct date time format.', () => {
-      let actual = validators.isDateString('1970-01-01T00:00Z');
-      let expected = true;
-
-      assert(actual === expected);
-    });
-
-    it('should return true when str is correct date time format.', () => {
-      let actual = validators.isDateString('1970-01-01T00:01Z');
-      let expected = true;
-
-      assert(actual === expected);
-    });
-
-    it('should return true when str is correct date time format.', () => {
-      let actual = validators.isDateString('1970-01-01T23:59Z');
-      let expected = true;
-
-      assert(actual === expected);
-    });
-
-    it('should return true when str is correct date time format.', () => {
-      let actual = validators.isDateString('1970-01-01T24:00Z');
-      let expected = true;
-
-      assert(actual === expected);
+      it('all is correct',
+        give('1970-01-01T24:00Z').expect(true));
     });
   });
 
   describe('date time range', () => {
-    // incorrect start format
+    let give = new GiveAndExpect(validators.isDateString);
 
-    it('should return false when str is wrong date time format in start year.', () => {
-      let actual = validators.isDateString('00000-01-01T00:00Z/0001-01-01T00:00Z');
-      let expected = false;
+    context('should return false when there is wrong format in', () => {
+      it('start year.',
+        give('00000-01-01T00:00Z/0001-01-01T00:00Z').expect(false));
 
-      assert(actual === expected);
+      it('start month.',
+        give('1970-001-01T00:00Z/1970-01-02T00:00Z').expect(false));
+
+      it('start date.',
+        give('1970-01-001T00:00Z/1970-01-02T00:00Z').expect(false));
+
+      it('start hours.',
+        give('1970-01-01T000:00Z/1970-01-01T00:01Z').expect(false));
+
+      it('start minutes.',
+        give('1970-01-01T00:001Z/1970-01-01T00:02Z').expect(false));
     });
 
-    it('should return false when str is wrong date time format in start month.', () => {
-      let actual = validators.isDateString('1970-001-01T00:00Z/1970-01-02T00:00Z');
-      let expected = false;
+    context('should return false when there is wrong format in', () => {
+      it('end year.',
+        give('0000-01-01T00:00Z/00001-01-01T00:00Z').expect(false));
 
-      assert(actual === expected);
+      it('end month.',
+        give('1970-01-01T00:00Z/1970-001-02T00:00Z').expect(false));
+
+      it('end date.',
+        give('1970-01-01T01:00Z/1970-01-002T00:00Z').expect(false));
+
+      it('end hours.',
+        give('1970-01-01T00:00Z/1970-01-01T001:00Z').expect(false));
+
+      it('end minutes.',
+        give('1970-01-01T00:00Z/1970-01-01T00:001Z').expect(false));
     });
 
-    it('should return false when str is wrong date time format in start date.', () => {
-      let actual = validators.isDateString('1970-01-001T00:00Z/1970-01-02T00:00Z');
-      let expected = false;
+    context('should return false when', () => {
+      it('start month is 00/01',
+        give('1970-00-01T00:00Z/1970-01-01T00:00Z').expect(false));
 
-      assert(actual === expected);
+      it('start date is 01/00',
+        give('1970-01-00T00:00Z/1970-01-01T00:00Z').expect(false));
+
+      it('start date is 02/30',
+        give('1970-02-30T00:00Z/1970-03-01T00:00Z').expect(false));
+
+      it('start hours is 25:00',
+        give('1970-01-01T25:00Z/1970-02-01T00:00Z').expect(false));
+
+      it('start minutes is 00:60',
+        give('1970-01-01T00:60Z/1970-01-02T00:00Z').expect(false));
+
+      it('start time is 24:01',
+        give('1970-01-01T24:01Z/1970-02-01T00:00Z').expect(false));
     });
 
-    it('should return false when str is wrong date time format in start hours.', () => {
-      let actual = validators.isDateString('1970-01-01T000:00Z/1970-01-01T00:01Z');
-      let expected = false;
+    context('should return false when', () => {
+      it('end month is 13/01',
+        give('1970-01-01T00:00Z/1970-13-01T00:00Z').expect(false));
 
-      assert(actual === expected);
+      it('end date is 02/00',
+        give('1970-01-01T00:00Z/1970-02-00T00:00Z').expect(false));
+
+      it('end date is 02/30',
+        give('1970-02-01T00:00Z/1970-02-30T00:00Z').expect(false));
+
+      it('end hours is 25:00',
+        give('1970-01-01T00:00Z/1970-02-01T25:00Z').expect(false));
+
+      it('end minutes is 00:60',
+        give('1970-01-01T00:00Z/1970-01-01T00:60Z').expect(false));
+
+      it('end time is 24:01',
+        give('1970-01-01T00:00Z/1970-01-01T24:01Z').expect(false));
     });
 
-    it('should return false when str is wrong date time format in start minutes.', () => {
-      let actual = validators.isDateString('1970-01-01T00:001Z/1970-01-01T00:02Z');
-      let expected = false;
+    context('should return false when', () => {
+      it('end time equals to start time.',
+        give('1970-01-01T00:00Z/1970-01-01T00:00Z').expect(false));
 
-      assert(actual === expected);
+      it('end time is earlier than start time.',
+        give('1970-01-01T00:01Z/1970-01-01T00:00Z').expect(false));
     });
 
-    // incorrect end format
+    context('should return true when', () => {
+      it('all is correct',
+        give('1970-01-01T00:00Z/1970-01-01T00:01Z').expect(true));
 
-    it('should return false when str is wrong date time format in end year.', () => {
-      let actual = validators.isDateString('0000-01-01T00:00Z/00001-01-01T00:00Z');
-      let expected = false;
+      it('all is  correct',
+        give('1970-01-01T00:00Z/1970-01-01T24:00Z').expect(true));
 
-      assert(actual === expected);
-    });
+      it('all is  correct',
+        give('1970-01-01T23:59Z/1970-01-01T24:00Z').expect(true));
 
-    it('should return false when str is wrong date time format in end month.', () => {
-      let actual = validators.isDateString('1970-01-01T00:00Z/1970-001-02T00:00Z');
-      let expected = false;
-
-      assert(actual === expected);
-    });
-
-    it('should return false when str is wrong date time format in end date.', () => {
-      let actual = validators.isDateString('1970-01-01T01:00Z/1970-01-002T00:00Z');
-      let expected = false;
-
-      assert(actual === expected);
-    });
-
-    it('should return false when str is wrong date time format in end hours.', () => {
-      let actual = validators.isDateString('1970-01-01T00:00Z/1970-01-01T001:00Z');
-      let expected = false;
-
-      assert(actual === expected);
-    });
-
-    it('should return false when str is wrong date time format in end minutes.', () => {
-      let actual = validators.isDateString('1970-01-01T00:00Z/1970-01-01T00:001Z');
-      let expected = false;
-
-      assert(actual === expected);
-    });
-
-    // incorrect start value
-
-    it('should return false when str is correct date time format with incorrect start month.', () => {
-      let actual = validators.isDateString('1970-00-01T00:00Z/1970-01-01T00:00Z');
-      let expected = false;
-
-      assert(actual === expected);
-    });
-
-    it('should return false when str is correct date time format with incorrect start date.', () => {
-      let actual = validators.isDateString('1970-01-00T00:00Z/1970-01-01T00:00Z');
-      let expected = false;
-
-      assert(actual === expected);
-    });
-
-    it('should return false when str is correct date time format with incorrect start date.', () => {
-      let actual = validators.isDateString('1970-02-30T00:00Z/1970-03-01T00:00Z');
-      let expected = false;
-
-      assert(actual === expected);
-    });
-
-    it('should return false when str is correct date time format with incorrect start hours.', () => {
-      let actual = validators.isDateString('1970-01-01T25:00Z/1970-02-01T00:00Z');
-      let expected = false;
-
-      assert(actual === expected);
-    });
-
-    it('should return false when str is correct date time format with incorrect start minutes.', () => {
-      let actual = validators.isDateString('1970-01-01T00:60Z/1970-01-02T00:00Z');
-      let expected = false;
-
-      assert(actual === expected);
-    });
-
-    it('should return false when str is correct date time format with incorrect start time.', () => {
-      let actual = validators.isDateString('1970-01-01T24:01Z/1970-02-01T00:00Z');
-      let expected = false;
-
-      assert(actual === expected);
-    });
-
-    // incorrect end value
-
-    it('should return false when str is correct date time format with incorrect end month.', () => {
-      let actual = validators.isDateString('1970-01-01T00:00Z/1970-13-01T00:00Z');
-      let expected = false;
-
-      assert(actual === expected);
-    });
-
-    it('should return false when str is correct date time format with incorrect end date.', () => {
-      let actual = validators.isDateString('1970-01-01T00:00Z/1970-02-00T00:00Z');
-      let expected = false;
-
-      assert(actual === expected);
-    });
-
-    it('should return false when str is correct date time format with incorrect end date.', () => {
-      let actual = validators.isDateString('1970-02-01T00:00Z/1970-02-30T00:00Z');
-      let expected = false;
-
-      assert(actual === expected);
-    });
-
-    it('should return false when str is correct date time format with incorrect end hours.', () => {
-      let actual = validators.isDateString('1970-01-01T00:00Z/1970-02-01T25:00Z');
-      let expected = false;
-
-      assert(actual === expected);
-    });
-
-    it('should return false when str is correct date time format with incorrect end minutes.', () => {
-      let actual = validators.isDateString('1970-01-01T00:00Z/1970-01-01T00:60Z');
-      let expected = false;
-
-      assert(actual === expected);
-    });
-
-    it('should return false when str is correct date time format with incorrect end time.', () => {
-      let actual = validators.isDateString('1970-01-01T00:00Z/1970-01-01T24:01Z');
-      let expected = false;
-
-      assert(actual === expected);
-    });
-
-    // incorrect value
-
-    it('should return false when end time equals to start time.', () => {
-      let actual = validators.isDateString('1970-01-01T00:00Z/1970-01-01T00:00Z');
-      let expected = false;
-
-      assert(actual === expected);
-    });
-
-    it('should return false when end time is earlier than start time.', () => {
-      let actual = validators.isDateString('1970-01-01T00:01Z/1970-01-01T00:00Z');
-      let expected = false;
-
-      assert(actual === expected);
-    });
-
-    // correct format and value
-
-    it('should return true when str is correct date time range format.', () => {
-      let actual = validators.isDateString('1970-01-01T00:00Z/1970-01-01T00:01Z');
-      let expected = true;
-
-      assert(actual === expected);
-    });
-
-    it('should return true when str is correct date time range format.', () => {
-      let actual = validators.isDateString('1970-01-01T00:00Z/1970-01-01T24:00Z');
-      let expected = true;
-
-      assert(actual === expected);
-    });
-
-    it('should return true when str is correct date time range format.', () => {
-      let actual = validators.isDateString('1970-01-01T23:59Z/1970-01-01T24:00Z');
-      let expected = true;
-
-      assert(actual === expected);
-    });
-
-    it('should return true when str is correct date time range format.', () => {
-      let actual = validators.isDateString('0000-01-01T00:00Z/9999-12-31T24:00Z');
-      let expected = true;
-
-      assert(actual === expected);
+      it('all is  correct',
+        give('0000-01-01T00:00Z/9999-12-31T24:00Z').expect(true));
     });
   });
 });
