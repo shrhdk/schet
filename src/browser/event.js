@@ -78,20 +78,25 @@ $(() => {
 
   // Edit Event Title
   $('#title').editable(false, (elem, back) => {
-    schet.update({title: elem.text()})
-      .catch(err => {
-        alert(err);
-        back();
-      });
+    let title = elem.text();
+    schet.update({title}).then(event => {
+      document.title = event.title;
+      elem.text(event.title);
+    }).catch(err => {
+      alert(err);
+      back();
+    });
   });
 
   // Edit Event Description
   $('#description').editable(true, (elem, back) => {
-    schet.update({description: elem.get(0).innerText})  // innerText retains whitespaces
-      .catch(err => {
-        alert(err);
-        back();
-      });
+    let description = elem.get(0).innerText; // innerText retains whitespaces
+    schet.update({description}).then(event => {
+      elem.text(event.description);
+    }).catch(err => {
+      alert(err);
+      back();
+    });
   });
 
   // Add Participant
@@ -122,13 +127,17 @@ $(() => {
   });
 
   // Edit Participant Name
-  $('.participant-name').editable(false, (elem, back) => {
-    let participantID = elem.attr('participant-id');
-    schet.updateParticipant(participantID, {name: elem.text()})
-      .catch(err => {
+  $('.participant-name').each(function () {
+    let participantID = this.getAttribute('participant-id');
+    $(this).editable(false, (elem, back) => {
+      let name = elem.text();
+      schet.updateParticipant(participantID, {name}).then(event => {
+        elem.text(event.participants[participantID]);
+      }).catch(err => {
         alert(err);
         back();
       });
+    });
   });
 
   $('.delete-participant').click(function () {
@@ -138,6 +147,12 @@ $(() => {
   });
 
   // Add Term
+  $('term-text').keypress(ev => {
+    if (ev.which === 13) {  // Enter
+      $('#add-term').click();
+    }
+  });
+
   $('#add-term').click(() => {
     let term;
     try {
@@ -217,20 +232,24 @@ $(() => {
 
     // Edit Comment Name
     $(this).find('.comment-name').editable(false, (elem, back)=> {
-      schet.updateComment(commentID, {name: elem.text()})
-        .catch(err => {
-          alert(err);
-          back();
-        });
+      let name = elem.text();
+      schet.updateComment(commentID, {name}).then(event => {
+        elem.text(event.comments[commentID].name);
+      }).catch(err => {
+        alert(err);
+        back();
+      });
     });
 
     // Edit Comment Body
     $(this).find('.comment-body').editable(false, (elem, back) => {
-      schet.updateComment(commentID, {body: elem.text()})
-        .catch(err => {
-          alert(err);
-          back();
-        });
+      let body = elem.text();
+      schet.updateComment(commentID, {body}).then(event => {
+        elem.text(event.comments[commentID].body);
+      }).catch(err => {
+        alert(err);
+        back();
+      });
     });
 
     // Delete Comment

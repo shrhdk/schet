@@ -9,7 +9,7 @@ mixin record(event)
         th
         th Term
         for name, id in event.participants
-          th: span.participant-name(participant-id=id)= name
+          th.participant-name(participant-id=id)= name
       for term in event.terms
         tr(class="is-#{event.fixed == term.id ? 'fixed' : 'unfixed'}")
           td
@@ -25,7 +25,7 @@ mixin record(event)
         th Term
         th: input#participant-name(type='text', placeholder='Name')
         for name, id in event.participants
-          th: span.participant-name(participant-id=id)= name
+          th.participant-name(participant-id=id)= name
       for term in event.terms
         tr.is-unfixed
           td
