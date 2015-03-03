@@ -27,6 +27,7 @@ $size: 30px;
 .text-with-button {
   @extend .text;
   border-right: none;
+  margin-right: 0;
 }
 
 .icon-button {

@@ -6,7 +6,7 @@ mixin record(event)
   table
     if event.fixed
       tr
-        th Fix
+        th
         th Term
         for name, id in event.participants
           th: span.participant-name(participant-id=id)= name
@@ -21,7 +21,7 @@ mixin record(event)
             td= presences[event.record[id][term.id]]
     else
       tr
-        th Fix
+        th
         th Term
         th: input#participant-name(type='text', placeholder='Name')
         for name, id in event.participants
@@ -47,7 +47,7 @@ mixin record(event)
       tr
         td
         td
-          input#term-text(type='text', placeholder='2000/01/01 09:00-17:30')
+          input#term-text(type='text', placeholder='2000/01/01 09:00-17:30', title='Supported Formats:\r\n\r\n2015/01/01\r\n2015/01/01 - 01/02\r\n2015/01/01 - 2016/01/02\r\n\r\n2015/01/01 10:00\r\n2015/01/01 10:00 - 11:00\r\n2015/01/01 10:00 - 01/02 11:00\r\n2015/01/01 10:00 - 2016/01/01 11:00')
           +icon_button#add-term(img='add', title='Add Term')
           td
             +icon_button#add-participant(img='add-participant', title='Add Participant')
