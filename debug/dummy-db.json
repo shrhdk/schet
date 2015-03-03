@@ -1,0 +1,46 @@
+{
+  "counters": [
+    {
+      "id": "events",
+      "seq": 1
+    }
+  ],
+  "events": [
+    {
+      "id": 1,
+      "title": "Yakiniku!",
+      "description": "Yakiniku Party",
+      "terms": {
+        "counter": 2,
+        "1": "2014-01-01",
+        "2": "2014-01-02"
+      },
+      "participants": {
+        "counter": "2",
+        "1": "shiro",
+        "2": "kenta"
+      },
+      "record": {
+        "1": {
+          "1": "absence",
+          "2": "presence"
+        },
+        "2": {
+          "1": "uncertain",
+          "2": "absence"
+        }
+      },
+      "comments": {
+        "counter": 2,
+        "1": {
+          "name": "hideki",
+          "body": "waaaaaai"
+        },
+        "2": {
+          "name": "kenta",
+          "body": "taberu"
+        }
+      }
+    }
+  ]
+}

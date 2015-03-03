@@ -1,24 +1,24 @@
-/*eslint strict:0*/
+'use strict';
 
 var assert = require('power-assert');
 
-var whitespace = require('../../../lib/util/form/constants').whitespace;
-var def = require('../../../lib/util/form/def');
+var whitespace = require('../../../src/util/form/constants').whitespace;
+var def = require('../../../src/util/form/def');
 
-describe('def', function () {
-    it('("foo", *, *, *) make matcher by string', function () {
-        var given = def('foo', true);
-        var actual = given.matcher('foo');
-        var expected = true;
+describe('def', () => {
+  it('("foo", *, *, *) make matcher by string', () => {
+    let given = def('foo', true);
+    let actual = given.matcher('foo');
+    let expected = true;
 
-        assert(actual === expected);
-    });
+    assert(actual === expected);
+  });
 
-    it('(RegExp, *, *, *) make matcher by RegExp', function () {
-        var given = def(/^[a-z]+$/, true);
-        var actual = given.matcher('foo');
-        var expected = true;
+  it('(RegExp, *, *, *) make matcher by RegExp', () => {
+    let given = def(/^[a-z]+$/, true);
+    let actual = given.matcher('foo');
+    let expected = true;
 
-        assert(actual === expected);
-    });
+    assert(actual === expected);
+  });
 });

@@ -1,0 +1,17 @@
+include record
+include comments
+
+doctype html
+html
+  head
+    include header
+    title= event.title
+    link(type='text/css', rel='stylesheet', href='/css/event.css')
+  body
+    div#app-name: a(href='/') Schet
+    h1#title= event.title
+    p#description= event.description
+    +record(event)
+    hr
+    +comments(event.comments)
+    script(type='text/javascript', src='/js/event.js')

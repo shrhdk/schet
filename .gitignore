@@ -134,5 +134,8 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 
-### My App ###
+### Debug ###
 .db/
+
+### Schet ###
+build/

@@ -1,0 +1,21 @@
+include module/widget
+
+doctype html
+html
+  head
+    include header
+    title Schet
+    link(type='text/css', rel='stylesheet', href='/css/index.css')
+  body
+    header
+      h1#app-name Schet
+    p#description Schet is a schedule coordination tool.
+    form#create-event-form(method='POST')
+      input#event-title(name='title', type='text', placeholder='Beer Party', autofocus)
+      +icon_button#create-event(img = 'create', title = 'Create New Event')
+    footer
+      ul#link
+        li: a(href='https://github.com/shrhdk/schet') GitHub
+        li: a(href='https://github.com/shrhdk/schet/blob/master/doc/API.md') API
+        li: a(href='https://github.com/shrhdk/schet/issues') Feedback
+    script(type='text/javascript', src='/js/index.js')

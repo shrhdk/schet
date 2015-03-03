@@ -1,0 +1,43 @@
+@import "common";
+@import "record";
+@import "comments";
+
+/* Layout */
+
+body {
+  padding: 1em;
+}
+
+#app-name {
+  font-size: 4em;
+}
+
+/* Title and Description */
+
+#title {
+  font-size: 1.6em;
+  min-height: 1em;
+}
+
+#description {
+  white-space: pre;
+  padding: 2px;
+  min-height: 1em;
+  border: 1px solid silver;
+}
+
+/* Comments */
+
+#comments {
+  padding: 0;
+  width: 800px;
+  .comment {
+    list-style-type: none;
+    padding: 0.2em;
+    margin: 0.2em;
+
+    * {
+      display: inline-block;
+    }
+  }
+}

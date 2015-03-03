@@ -1,0 +1,9 @@
+@import "module/widget";
+
+#comment-name {
+  @extend .text;
+}
+
+#comment-body {
+  @extend .text;
+}

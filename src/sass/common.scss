@@ -1,0 +1,30 @@
+* {
+  font-family: sans-serif;
+}
+
+#app-name, #app-name {
+  color: #2587d3;
+  font-family: serif;
+  font-weight: bold;
+
+  * {
+    color: #2587d3;
+    font-family: serif;
+    font-weight: bold;
+  }
+}
+
+a {
+  text-decoration: none;
+}
+
+table {
+  border: 1px solid black;
+  border-collapse: collapse;
+  text-align: center;
+
+  th, td {
+    padding: 0.3em;
+    border: 1px solid black;
+  }
+}
