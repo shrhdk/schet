@@ -2,15 +2,12 @@
 
 var util = require('util');
 
-/**
- * @constructor
- */
-var SchetError = function (name) {
-  Error.call(this);
-  this.name = name;
-  this.json = {error: this.name};
-};
-util.inherits(SchetError, Error);
+class SchetError {
+  constructor(name) {
+    this.name = name;
+    this.json = {error: this.name};
+  }
+}
 
 var ERRORS = {
   SERVER_SIDE_ERROR: new SchetError('ServerSideError'),
