@@ -1,5 +1,10 @@
 @import "module/widget";
 
+.delete-comment {
+  @extend .icon-button;
+  margin-right: 1ex;
+}
+
 #comment-name {
   @extend .text;
 }

@@ -20,10 +20,13 @@ body {
 }
 
 #description {
+  @extend .textarea;
   min-width: 100%;
+  margin-bottom: 1em;
   padding: 2px;
   min-height: 1em;
   border: 1px solid silver;
+  font-family: monospace, monaco;
 }
 
 /* Comments */

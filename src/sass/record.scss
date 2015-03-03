@@ -22,6 +22,7 @@ tr.is-fixed {
 
 .term-col {
   text-align: left;
+  position: relative;
 }
 
 .term {
@@ -31,7 +32,7 @@ tr.is-fixed {
 #term-text {
   @extend .text-with-button;
   min-width: 24ex;
-  font-family: monospace;
+  font-family: monospace, monaco;
 }
 
 #add-term {
@@ -40,6 +41,7 @@ tr.is-fixed {
 
 .delete-term {
   @extend .icon-button;
+  margin-right: 1ex;
 }
 
 // participant

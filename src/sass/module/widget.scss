@@ -14,6 +14,17 @@ $size: 30px;
   height: $size - (1 + 1) * 2px;
   padding: 1px 0.5em;
   font-size: 100%;
+  :focus {
+    outline: none;
+  }
+}
+
+.textarea {
+  @extend .widget;
+  font-size: 100%;
+  :focus {
+    outline: none;
+  }
 }
 
 .button {
