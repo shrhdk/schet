@@ -8,20 +8,27 @@ var request = require('request');
 
 const URL = `http://${settings.app.host}:${settings.app.port}`;
 
+class Expect {
+  constructor(fn, given) {
+    this.fn = fn;
+    this.given = given;
+  }
+
+  expect(expected) {
+    return () => {
+      let actual = this.fn(this.given);
+      assert.strictEqual(actual, expected);
+    };
+  }
+}
+
 export class GiveAndExpect {
   constructor(fn) {
     this.fn = fn;
   }
 
   give(given) {
-    return {
-      expect(expected) {
-        return () => {
-          let actual = fn(given);
-          assert.strictEqual(actual, expected);
-        };
-      }
-    }
+    return new Expect(this.fn, given);
   }
 }
 
