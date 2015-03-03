@@ -21,15 +21,16 @@ mixin record(event)
             td= presences[event.record[id][term.id]]
     else
       tr
-        th
+        if  1 <= event.terms.length
+          th
         th Term
         th: input#participant-name(type='text', placeholder='Name')
         for name, id in event.participants
           th.participant-name(participant-id=id)= name
       for term in event.terms
         tr.is-unfixed
-          td
-            input.fix-event(type='checkbox', term-id=term.id)
+          if  1 <= event.terms.length
+            td: input.fix-event(type='checkbox', term-id=term.id)
           td.term-col
             +icon_button.delete-term(img='delete', term-id=term.id, title='Delete this term')
             span.term= term.term
@@ -45,7 +46,8 @@ mixin record(event)
                 option(value='uncertain', selected=(event.record[id][term.id] === 'uncertain')) △
                 option(value='absence', selected=(event.record[id][term.id] === 'absence')) ×
       tr
-        td
+        if  1 <= event.terms.length
+          td
         td
           input#term-text(type='text', placeholder='2000/01/01 09:00-17:30', title='Supported Formats:\r\n\r\n2015/01/01\r\n2015/01/01 - 01/02\r\n2015/01/01 - 2016/01/02\r\n\r\n2015/01/01 10:00\r\n2015/01/01 10:00 - 11:00\r\n2015/01/01 10:00 - 01/02 11:00\r\n2015/01/01 10:00 - 2016/01/01 11:00')
           +icon_button#add-term(img='add', title='Add Term')
