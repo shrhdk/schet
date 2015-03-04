@@ -40,7 +40,7 @@ export class Req {
    * @param {!Object}params
    * @returns {{expect: Function}}
    */
-  constructor(method, path, params) {
+    constructor(method, path, params) {
     this.method = method;
     this.path = path;
     this.params = params;
@@ -70,16 +70,12 @@ exports.req = function (method, path, params) {
 };
 
 /**
+ * length = 3 -> 'aaa'
  *
  * @param {!number} length
  */
 module.exports.dummyString = function (length) {
   assert(1 <= length);
 
-  let dummy = '';
-  for (let i = 0; i < length; i++) {
-    dummy += 'a';
-  }
-
-  return dummy;
+  return new Array(length + 1).join('a').toString();
 };
