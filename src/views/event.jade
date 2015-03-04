@@ -10,7 +10,7 @@ html
   body
     div#app-name: a(href='/') Schet
     h1#title= event.title
-    textarea#description!= event.description
+    textarea#description(disabled=event.fixed)= event.description
     +record(event)
     hr
     +comments(event.comments)

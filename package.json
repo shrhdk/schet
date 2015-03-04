@@ -12,6 +12,7 @@
   "scripts": {
     "start": "bin/schet start",
     "stop": "bin/schet stop",
+    "bower": "bower install",
     "build": "gulp build",
     "clean": "gulp clean",
     "clean-all": "gulp clean:all",

@@ -4,6 +4,7 @@ node_js:
 services:
   - mongodb
 before_script:
+  - npm run bower
   - npm run build
   - $(npm bin)/forever start ./build/src/app.js
 after_script:

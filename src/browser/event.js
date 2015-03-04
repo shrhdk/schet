@@ -9,6 +9,22 @@ var iso8601 = require('../util/iso8601');
 $(() => {
   let eventID = location.pathname.substring(1);
   let schet = new Schet(eventID);
+  let isFixed = false;
+
+  // Workaround for Firefox cache.
+
+  $('input[type=checkbox]').each(function () {
+    let truth = $(this).attr('checked') === 'checked';
+    $(this).prop('checked', truth);
+  });
+
+  // isFixed
+
+  $('.fix-event').each(function () {
+    if ($(this).prop('checked')) {
+      isFixed = true;
+    }
+  });
 
   // Helper
 
@@ -76,43 +92,48 @@ $(() => {
   });
 
   // Edit Event Title
-  $('#title').editable((elem, back) => {
-    let title = elem.text();
-    schet.update({title}).then(event => {
-      document.title = event.title;
-      elem.text(event.title);
-    }).catch(err => {
-      alert(err);
-      back();
+  if (!isFixed) {
+    $('#title').editable((elem, back) => {
+      let title = elem.text();
+      schet.update({title}).then(event => {
+        document.title = event.title;
+        elem.text(event.title);
+      }).catch(err => {
+        alert(err);
+        back();
+      });
     });
-  });
+  }
 
   // Edit Event Description
 
   autosize(document.getElementById('description'));
-  $('#description').focus(function () {
-    let snapshot = this.value;
 
-    // Cancel (by ESC)
-    $(this).keydown(ev => {
-      if (ev.which !== 27) {  // !== Esc
-        return;
-      }
+  if (!isFixed) {
+    $('#description').focus(function () {
+      let snapshot = this.value;
 
-      this.value = snapshot;
-      this.blur();
-    });
+      // Cancel (by ESC)
+      $(this).keydown(ev => {
+        if (ev.which !== 27) {  // !== Esc
+          return;
+        }
 
-    // Fix (by Blur)
-    $(this).blur(() => {
-      let description = this.value;
-      schet.update({description}).then(event => {
-        this.value = event.description;
-      }).catch(err => {
-        alert(err);
+        this.value = snapshot;
+        this.blur();
+      });
+
+      // Fix (by Blur)
+      $(this).blur(() => {
+        let description = this.value;
+        schet.update({description}).then(event => {
+          this.value = event.description;
+        }).catch(err => {
+          alert(err);
+        });
       });
     });
-  });
+  }
 
   // Add Participant
   $('#add-participant').click(() => {
@@ -142,18 +163,20 @@ $(() => {
   });
 
   // Edit Participant Name
-  $('.participant-name').each(function () {
-    let participantID = this.getAttribute('participant-id');
-    $(this).editable((elem, back) => {
-      let name = elem.text();
-      schet.updateParticipant(participantID, {name}).then(event => {
-        elem.text(event.participants[participantID]);
-      }).catch(err => {
-        alert(err);
-        back();
+  if (!isFixed) {
+    $('.participant-name').each(function () {
+      let participantID = this.getAttribute('participant-id');
+      $(this).editable((elem, back) => {
+        let name = elem.text();
+        schet.updateParticipant(participantID, {name}).then(event => {
+          elem.text(event.participants[participantID]);
+        }).catch(err => {
+          alert(err);
+          back();
+        });
       });
     });
-  });
+  }
 
   $('.delete-participant').click(function () {
     let participantID = this.getAttribute('participant-id');
@@ -162,7 +185,7 @@ $(() => {
   });
 
   // Add Term
-  $('term-text').keypress(ev => {
+  $('#term-text').keypress(ev => {
     if (ev.which === 13) {  // Enter
       $('#add-term').click();
     }
