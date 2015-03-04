@@ -1,15 +1,13 @@
 'use strict';
 
+var util = require('util');
+
 var express = require('express');
 var router = express.Router();
 
 var ERRORS = require('../errors');
 var events = require('../models/events');
-
 var form = require('../util/form');
-var sanitizers = form.sanitizers;
-var validators = form.validators;
-
 var iso8601 = require('../util/iso8601.js');
 
 var sort = terms => {
@@ -26,19 +24,22 @@ var sort = terms => {
 };
 
 router.post('/', (req, res) => {
-  let sanitized;
-  try {
-    sanitized = form.check(req.body, [
-      form.def('title', true, sanitizers.strip, [validators.length(1, 255), validators.isOneLine]),
-      form.def('description', false, sanitizers.strip, validators.length(0, 2048))
-    ]);
-  } catch (e) {
+  // title
+  let title = req.body['title'];
+  title = title && title.trim();
+  if (!title || title.length < 1 || 255 < title.length || !form.isSingleLine(title)) {
     return res.status(400).json(ERRORS.INVALID_PARAMETER_ERROR.json);
   }
 
-  sanitized.description = sanitized.description || '';
+  // description
+  let description = req.body['description'];
+  description = description && description.trim();
+  description = description || '';
+  if (2048 < description.length) {
+    return res.status(400).json(ERRORS.INVALID_PARAMETER_ERROR.json);
+  }
 
-  events.create(sanitized.title, sanitized.description, (err, event) => {
+  events.create(title, description, (err, event) => {
     if (err || event === null) {
       return res.status(500).json(ERRORS.SERVER_SIDE_ERROR.json);
     }
@@ -80,20 +81,36 @@ router.get('/:id(\\d+)', (req, res) => {
 router.put('/:id(\\d+)', (req, res) => {
   const id = req.params.id;
 
-  const emptyOrNumber = v => validators.isEmpty(v) || validators.ge(1)(v);
-
-  let sanitized;
-  try {
-    sanitized = form.check(req.body, [
-      form.def('title', false, sanitizers.strip, [validators.length(1, 255), validators.isOneLine]),
-      form.def('description', false, sanitizers.strip, validators.length(0, 2048)),
-      form.def('fixed', false, sanitizers.strip, emptyOrNumber)
-    ]);
-  } catch (e) {
-    return res.status(400).json(ERRORS.INVALID_PARAMETER_ERROR.json);
+  // title
+  let title = req.body['title'];
+  if (!util.isUndefined(title)) {
+    title = title.trim();
+    if (title.length < 1 || 255 < title.length || !form.isSingleLine(title)) {
+      return res.status(400).json(ERRORS.INVALID_PARAMETER_ERROR.json);
+    }
   }
 
-  events.put(id, sanitized, (err, event) => {
+  // description
+  let description = req.body['description'];
+  if (!util.isUndefined(description)) {
+    description = description.trim();
+    if (2048 < description.length) {
+      return res.status(400).json(ERRORS.INVALID_PARAMETER_ERROR.json);
+    }
+  }
+
+  // fixed
+  let fixed = req.body['fixed'];
+  if (!util.isUndefined(fixed)) {
+    fixed = fixed.trim();
+    if (fixed.length === 0 || fixed < 1) {
+      return res.status(400).json(ERRORS.INVALID_PARAMETER_ERROR.json);
+    }
+  }
+
+  let params = form.cleanup({title, description, fixed});
+
+  events.put(id, params, (err, event) => {
     if (err === ERRORS.NOT_FOUND_ERROR) {
       return res.status(404).json(err.json);
     }

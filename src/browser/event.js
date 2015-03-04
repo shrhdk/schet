@@ -146,7 +146,7 @@ $(() => {
     });
 
     schet.addParticipant(name, schedule).then(() => location.reload())
-      .catch(function (err) {
+      .catch(err => {
         // TODO Correct Error Handling
         switch (err.status) {
           case 400:

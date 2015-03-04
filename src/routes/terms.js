@@ -7,22 +7,18 @@ var ERRORS = require('../errors');
 var events = require('../models/events');
 
 var form = require('../util/form');
-var sanitizers = form.sanitizers;
-var validators = form.validators;
 
 router.post('/:id(\\d+)/terms', (req, res) => {
   const id = req.params.id;
 
-  let sanitized;
-  try {
-    sanitized = form.check(req.body, [
-      form.def('term', true, sanitizers.strip, validators.isDateString)
-    ]);
-  } catch (e) {
+  // name
+  let term = req.body['term'];
+  term = term && term.trim();
+  if (!term || term.length < 1 || 255 < term.length || !form.isSingleLine(term)) {
     return res.status(400).json(ERRORS.INVALID_PARAMETER_ERROR.json);
   }
 
-  events.addTerm(id, sanitized.term, (err, event) => {
+  events.addTerm(id, term, (err, event) => {
     if (err === ERRORS.INVALID_PARAMETER_ERROR)
       return res.status(400).json(err.json);
 
@@ -54,16 +50,14 @@ router.put('/:id(\\d+)/terms/:termID(\\d+)', (req, res) => {
   const id = req.params.id;
   const termID = req.params.termID;
 
-  let sanitized;
-  try {
-    sanitized = form.check(req.body, [
-      form.def('term', true, sanitizers.strip, validators.isDateString)
-    ]);
-  } catch (e) {
+  // name
+  let term = req.body['term'];
+  term = term && term.trim();
+  if (!term || term.length < 1 || 255 < term.length || !form.isDateString(term)) {
     return res.status(400).json(ERRORS.INVALID_PARAMETER_ERROR.json);
   }
 
-  events.updateTerm(id, termID, sanitized.term, (err, event) => {
+  events.updateTerm(id, termID, term, (err, event) => {
     if (err === ERRORS.INVALID_PARAMETER_ERROR) {
       return res.status(400).json(err.json);
     }

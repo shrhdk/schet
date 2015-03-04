@@ -1,5 +1,7 @@
 'use strict';
 
+var util = require('util');
+
 var express = require('express');
 var router = express.Router();
 
@@ -7,23 +9,25 @@ var ERRORS = require('../errors');
 var events = require('../models/events');
 
 var form = require('../util/form');
-var sanitizers = form.sanitizers;
-var validators = form.validators;
 
 router.post('/:id(\\d+)/comments', (req, res) => {
   const id = req.params.id;
 
-  let sanitized;
-  try {
-    sanitized = form.check(req.body, [
-      form.def('name', true, sanitizers.strip, [validators.length(1, 255), validators.isOneLine]),
-      form.def('body', true, sanitizers.strip, validators.length(1, 2048))
-    ]);
-  } catch (e) {
+  // param name
+  let name = req.body['name'];
+  name = name && name.trim();
+  if (!name || name.length < 1 || 255 < name.length || !form.isSingleLine(name)) {
     return res.status(400).json(ERRORS.INVALID_PARAMETER_ERROR.json);
   }
 
-  events.addComment(id, sanitized.name, sanitized.body, (err, event) => {
+  // param body
+  let body = req.body['body'];
+  body = body && body.trim();
+  if (!body || body.length < 1 || 2048 < body.length) {
+    return res.status(400).json(ERRORS.INVALID_PARAMETER_ERROR.json);
+  }
+
+  events.addComment(id, name, body, (err, event) => {
     if (err === ERRORS.NOT_FOUND_ERROR) {
       return res.status(404).json(err.json);
     }
@@ -44,17 +48,27 @@ router.put('/:id(\\d+)/comments/:commentID(\\d+)', (req, res) => {
   const id = req.params.id;
   const commentID = req.params.commentID;
 
-  let sanitized;
-  try {
-    sanitized = form.check(req.body, [
-      form.def('name', false, sanitizers.strip, [validators.length(1, 255), validators.isOneLine]),
-      form.def('body', false, sanitizers.strip, validators.length(1, 2048))
-    ]);
-  } catch (e) {
-    return res.status(400).json(ERRORS.INVALID_PARAMETER_ERROR.json);
+  // param name
+  let name = req.body['name'];
+  if (!util.isUndefined(name)) {
+    name = name.trim();
+    if (!name || name.length < 1 || 255 < name.length || !form.isSingleLine(name)) {
+      return res.status(400).json(ERRORS.INVALID_PARAMETER_ERROR.json);
+    }
   }
 
-  events.updateComment(id, commentID, sanitized, (err, event) => {
+  // param body
+  let body = req.body['body'];
+  if (!util.isUndefined(body)) {
+    body = body.trim();
+    if (!body || body.length < 1 || 2048 < body.length) {
+      return res.status(400).json(ERRORS.INVALID_PARAMETER_ERROR.json);
+    }
+  }
+
+  let params = form.cleanup({name, body});
+
+  events.updateComment(id, commentID, params, (err, event) => {
     if (err === ERRORS.NOT_FOUND_ERROR) {
       return res.status(404).json(err.json);
     }
