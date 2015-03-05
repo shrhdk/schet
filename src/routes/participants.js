@@ -15,7 +15,7 @@ router.post('/:id(\\d+)/participants', (req, res) => {
 
   // name
   let name = req.body['name'];
-  name = name && name.trim();
+  name = name && form.strictTrim(name);
   if (!name || name.length < 1 || 255 < name.length || !form.isSingleLine(name)) {
     return res.status(400).json(ERRORS.INVALID_PARAMETER_ERROR.json);
   }
@@ -23,9 +23,9 @@ router.post('/:id(\\d+)/participants', (req, res) => {
   // Term ID and presence
   let data = {};
   for (let termID in req.body) {
-    if (1 < termID) {
-      data[termID] = req.body[termID].trim();
-      if (['presence', 'absence', 'uncertain'].indexOf(data[termID]) !== -1) {
+    if (1 <= termID) {
+      data[termID] = form.strictTrim(req.body[termID]);
+      if (['presence', 'absence', 'uncertain'].indexOf(data[termID]) === -1) {
         return res.status(400).json(ERRORS.INVALID_PARAMETER_ERROR.json);
       }
     }
@@ -63,18 +63,19 @@ router.put('/:id(\\d+)/participants/:participantID(\\d+)', (req, res) => {
   // name
   let name = req.body['name'];
   if (!util.isUndefined(name)) {
-    name = name.trim();
+    name = form.strictTrim(name);
     if (name.length < 1 || 255 < name.length || !form.isSingleLine(name)) {
       return res.status(400).json(ERRORS.INVALID_PARAMETER_ERROR.json);
     }
   }
 
-  // Term ID and presence
+  // schedules (Term ID and presence)
   let data = {name};
   for (let termID in req.body) {
-    if (1 < termID) {
-      data[termID] = req.body[termID].trim();
-      if (['presence', 'absence', 'uncertain'].indexOf(data[termID]) !== -1) {
+    if (1 <= termID) {
+      termID = Number(termID);
+      data[termID] = form.strictTrim(req.body[termID]);
+      if (['presence', 'absence', 'uncertain'].indexOf(data[termID]) === -1) {
         return res.status(400).json(ERRORS.INVALID_PARAMETER_ERROR.json);
       }
     }

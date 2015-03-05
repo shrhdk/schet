@@ -44,7 +44,7 @@ describe('Record', () => {
   });
 
   describe('Add Participant', () => {
-    it('Add Participant with no Term ID', function (done) {
+    it('with no Term ID', function (done) {
       req('POST', '/1/participants', {name: 'charlie'})
         .expect(201, {
           id: 1, title: 'first', description: 'first_desc',
@@ -75,7 +75,7 @@ describe('Record', () => {
         }, done);
     });
 
-    it('Add Participant with all Term ID', function (done) {
+    it('with all Term ID', function (done) {
       req('POST', '/1/participants', {name: 'charlie', 1: 'uncertain', 2: 'presence'})
         .expect(201, {
           id: 1, title: 'first', description: 'first_desc',
@@ -106,7 +106,7 @@ describe('Record', () => {
         }, done);
     });
 
-    it('Add Participant with Term ID', function (done) {
+    it('with Term ID', function (done) {
       req('POST', '/1/participants', {name: 'charlie', 1: 'uncertain'})
         .expect(201, {
           id: 1, title: 'first', description: 'first_desc',
@@ -137,7 +137,7 @@ describe('Record', () => {
         }, done);
     });
 
-    it('Add Participant with Term ID which does not exist.', function (done) {
+    it('with Term ID which does not exist.', function (done) {
       req('POST', '/1/participants', {name: 'charlie', 1: 'uncertain', 2: 'presence', 3: 'absence'})
         .expect(201, {
           id: 1, title: 'first', description: 'first_desc',
@@ -173,7 +173,7 @@ describe('Record', () => {
   });
 
   describe('Update Participant', () => {
-    it('Update Participant with no Term ID', function (done) {
+    it('with no Term ID', function (done) {
       req('PUT', '/1/participants/1', {name: 'modified'})
         .expect(200, {
           id: 1, title: 'first', description: 'first_desc',
@@ -199,7 +199,7 @@ describe('Record', () => {
         }, done);
     });
 
-    it('Update Participant without name', function (done) {
+    it('without name', function (done) {
       req('PUT', '/1/participants/1', {1: 'uncertain'})
         .expect(200, {
           id: 1, title: 'first', description: 'first_desc',
@@ -225,7 +225,7 @@ describe('Record', () => {
         }, done);
     });
 
-    it('Update Participant with all Term ID', function (done) {
+    it('with all Term ID', function (done) {
       req('PUT', '/1/participants/1', {name: 'modified', 1: 'uncertain', 2: 'presence'})
         .expect(200, {
           id: 1, title: 'first', description: 'first_desc',
@@ -251,7 +251,7 @@ describe('Record', () => {
         }, done);
     });
 
-    it('Update Participant with Term ID', function (done) {
+    it('with Term ID', function (done) {
       req('PUT', '/1/participants/1', {name: 'modified', 1: 'uncertain'})
         .expect(200, {
           id: 1, title: 'first', description: 'first_desc',
@@ -277,7 +277,7 @@ describe('Record', () => {
         }, done);
     });
 
-    it('Update Participant with Term ID which does not exist.', function (done) {
+    it('with Term ID which does not exist.', function (done) {
       req('PUT', '/1/participants/1', {name: 'modified', 1: 'uncertain', 2: 'presence', 3: 'absence'})
         .expect(200, {
           id: 1, title: 'first', description: 'first_desc',

@@ -85,7 +85,7 @@ describe('Event', () => {
       });
 
       it('/ with title consists of white space characters.', function (done) {
-        req('POST', '/', {title: form.whitespace})
+        req('POST', '/', {title: form.WHITE_SPACE})
           .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
@@ -376,7 +376,7 @@ describe('Event', () => {
       });
 
       it('/1 with title consists of white space characters.', function (done) {
-        req('PUT', '/1', {title: form.whitespace})
+        req('PUT', '/1', {title: form.WHITE_SPACE})
           .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
 
@@ -514,7 +514,7 @@ describe('Event', () => {
       });
 
       it('/5 with title consists of white space characters.', function (done) {
-        req('PUT', '/5', {title: form.whitespace})
+        req('PUT', '/5', {title: form.WHITE_SPACE})
           .expect(400, ERRORS.INVALID_PARAMETER_ERROR.json, done);
       });
     });

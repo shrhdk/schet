@@ -13,8 +13,8 @@ router.post('/:id(\\d+)/terms', (req, res) => {
 
   // name
   let term = req.body['term'];
-  term = term && term.trim();
-  if (!term || term.length < 1 || 255 < term.length || !form.isSingleLine(term)) {
+  term = term && form.strictTrim(term);
+  if (!term || term.length < 1 || 255 < term.length || !form.isDateString(term)) {
     return res.status(400).json(ERRORS.INVALID_PARAMETER_ERROR.json);
   }
 
@@ -52,7 +52,7 @@ router.put('/:id(\\d+)/terms/:termID(\\d+)', (req, res) => {
 
   // name
   let term = req.body['term'];
-  term = term && term.trim();
+  term = term && form.strictTrim(term);
   if (!term || term.length < 1 || 255 < term.length || !form.isDateString(term)) {
     return res.status(400).json(ERRORS.INVALID_PARAMETER_ERROR.json);
   }

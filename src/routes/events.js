@@ -26,14 +26,14 @@ var sort = terms => {
 router.post('/', (req, res) => {
   // title
   let title = req.body['title'];
-  title = title && title.trim();
+  title = title && form.strictTrim(title);
   if (!title || title.length < 1 || 255 < title.length || !form.isSingleLine(title)) {
     return res.status(400).json(ERRORS.INVALID_PARAMETER_ERROR.json);
   }
 
   // description
   let description = req.body['description'];
-  description = description && description.trim();
+  description = description && form.strictTrim(description);
   description = description || '';
   if (2048 < description.length) {
     return res.status(400).json(ERRORS.INVALID_PARAMETER_ERROR.json);
@@ -84,7 +84,7 @@ router.put('/:id(\\d+)', (req, res) => {
   // title
   let title = req.body['title'];
   if (!util.isUndefined(title)) {
-    title = title.trim();
+    title = form.strictTrim(title);
     if (title.length < 1 || 255 < title.length || !form.isSingleLine(title)) {
       return res.status(400).json(ERRORS.INVALID_PARAMETER_ERROR.json);
     }
@@ -93,7 +93,7 @@ router.put('/:id(\\d+)', (req, res) => {
   // description
   let description = req.body['description'];
   if (!util.isUndefined(description)) {
-    description = description.trim();
+    description = form.strictTrim(description);
     if (2048 < description.length) {
       return res.status(400).json(ERRORS.INVALID_PARAMETER_ERROR.json);
     }
@@ -102,8 +102,8 @@ router.put('/:id(\\d+)', (req, res) => {
   // fixed
   let fixed = req.body['fixed'];
   if (!util.isUndefined(fixed)) {
-    fixed = fixed.trim();
-    if (fixed.length === 0 || fixed < 1) {
+    fixed = form.strictTrim(fixed);
+    if (fixed !== '' && fixed < 1) {  // '' means unfix
       return res.status(400).json(ERRORS.INVALID_PARAMETER_ERROR.json);
     }
   }

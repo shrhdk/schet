@@ -15,14 +15,14 @@ router.post('/:id(\\d+)/comments', (req, res) => {
 
   // param name
   let name = req.body['name'];
-  name = name && name.trim();
+  name = name && form.strictTrim(name);
   if (!name || name.length < 1 || 255 < name.length || !form.isSingleLine(name)) {
     return res.status(400).json(ERRORS.INVALID_PARAMETER_ERROR.json);
   }
 
   // param body
   let body = req.body['body'];
-  body = body && body.trim();
+  body = body && form.strictTrim(body);
   if (!body || body.length < 1 || 2048 < body.length) {
     return res.status(400).json(ERRORS.INVALID_PARAMETER_ERROR.json);
   }
@@ -51,7 +51,7 @@ router.put('/:id(\\d+)/comments/:commentID(\\d+)', (req, res) => {
   // param name
   let name = req.body['name'];
   if (!util.isUndefined(name)) {
-    name = name.trim();
+    name = form.strictTrim(name);
     if (!name || name.length < 1 || 255 < name.length || !form.isSingleLine(name)) {
       return res.status(400).json(ERRORS.INVALID_PARAMETER_ERROR.json);
     }
@@ -60,7 +60,7 @@ router.put('/:id(\\d+)/comments/:commentID(\\d+)', (req, res) => {
   // param body
   let body = req.body['body'];
   if (!util.isUndefined(body)) {
-    body = body.trim();
+    body = form.strictTrim(body);
     if (!body || body.length < 1 || 2048 < body.length) {
       return res.status(400).json(ERRORS.INVALID_PARAMETER_ERROR.json);
     }
