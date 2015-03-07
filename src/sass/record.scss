@@ -19,15 +19,20 @@ table {
 // record
 
 select {
-  background-color: transparent;
+  cursor: pointer;
+  background: none;
   text-align: center;
   margin: 0 auto;
-  .existing {
-    appearance: none;
-    border: none;
-    margin: 0 auto;
-    display: table-cell;
-  }
+}
+
+.record {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;;
+  display: table-cell;
+  margin: 0 auto;
+  background: none;
+  border: none;
 }
 
 tr.is-fixed {

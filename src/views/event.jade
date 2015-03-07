@@ -12,6 +12,5 @@ html
     h1#title= event.title
     textarea#description(disabled=event.fixed)= event.description
     +record(event)
-    hr
     +comments(event.comments)
     script(type='text/javascript', src='/js/event.js')
