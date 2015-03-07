@@ -3,13 +3,16 @@
 var $ = require('jquery');
 var autosize = require('autosize');
 var moment = require('moment');
+
+$.fn.editable = require('./editable');
+var ERRORS = require('../errors');
 var Schet = require('./schet').Schet;
 var iso8601 = require('../util/iso8601');
 
 $(() => {
   let eventID = location.pathname.substring(1);
   let schet = new Schet(eventID);
-  let isFixed = false;
+  let isFixed = $('.fix-event[checked=checked]').size();
 
   // Workaround for Firefox cache.
 
@@ -17,59 +20,6 @@ $(() => {
     let truth = $(this).attr('checked') === 'checked';
     $(this).prop('checked', truth);
   });
-
-  // isFixed
-
-  $('.fix-event').each(function () {
-    if ($(this).prop('checked')) {
-      isFixed = true;
-    }
-  });
-
-  // Helper
-
-  $.fn.editable = function (cb) {
-    let snapshot = this.text();
-
-    // Back function for fall back
-    let back = () => {
-      this.text(snapshot);
-      this.prop('contentEditable', true);
-      this.focus();
-    };
-
-    // Start Edit
-    this.click(() => {
-      this.prop('contentEditable', true);
-      this.focus();
-    });
-
-    // Cancel (by ESC)
-    this.keydown(ev => {
-      if (ev.which !== 27) {  // !== Esc
-        return;
-      }
-
-      this.text(snapshot);
-      this.prop('contentEditable', false);
-      this.blur();
-    });
-
-    // Fix (by Blur)
-    this.blur(() => {
-      this.prop('contentEditable', false);
-      cb(this, back);
-    });
-
-    // Fix (by Enter)
-    this.keypress(ev => {
-      if (ev.which === 13) {  // Enter
-        this.blur();
-      }
-    });
-
-    return this;
-  };
 
   // Simplify Terms
 
@@ -91,49 +41,75 @@ $(() => {
     }
   });
 
-  // Edit Event Title
-  if (!isFixed) {
-    $('#title').editable((elem, back) => {
-      let title = elem.text();
-      schet.update({title}).then(event => {
-        document.title = event.title;
-        elem.text(event.title);
-      }).catch(err => {
-        alert(err);
-        back();
-      });
-    });
+  // The following code make page modifiable.
+  // So, skip the followings when the event is fixed.
+  if (isFixed) {
+    return;
   }
+
+  // Edit Event Title
+  $('#title').editable((elem, fallback, abort) => {
+    let title = elem.text();
+    schet.update({title}).then(event => {
+      document.title = event.title;
+      elem.text(event.title);
+    }).catch(err => {
+      switch (err.status) {
+        case 400:
+          alert('Bad Title.');
+          return fallback();
+        case 409:
+          alert('Event is already fixed.');
+          break;
+      }
+      location.reload();
+    });
+  });
 
   // Edit Event Description
 
   autosize(document.getElementById('description'));
 
-  if (!isFixed) {
-    $('#description').focus(function () {
-      let snapshot = this.value;
+  $('#description').focus(function () {
+    let snapshot = this.value;
 
-      // Cancel (by ESC)
-      $(this).keydown(ev => {
-        if (ev.which !== 27) {  // !== Esc
-          return;
+    const fallback = () => {
+      this.value = snapshot;
+      this.focus();
+    };
+
+    const cancel = () => {
+      this.value = snapshot;
+      this.blur();
+    };
+
+    // Cancel (by ESC)
+    $(this).keydown(ev => {
+      if (ev.which !== 27) {  // !== Esc
+        return;
+      }
+
+      cancel();
+    });
+
+    // Fix (by Blur)
+    $(this).blur(() => {
+      let description = this.value;
+      schet.update({description}).then(event => {
+        this.value = event.description;
+      }).catch(err => {
+        switch (err.status) {
+          case 400:
+            alert('Bad Description.');
+            return fallback();
+          case 409:
+            alert('Event is already fixed.');
+            break;
         }
-
-        this.value = snapshot;
-        this.blur();
-      });
-
-      // Fix (by Blur)
-      $(this).blur(() => {
-        let description = this.value;
-        schet.update({description}).then(event => {
-          this.value = event.description;
-        }).catch(err => {
-          alert(err);
-        });
+        location.reload();
       });
     });
-  }
+  });
 
   // Add Participant
   $('#add-participant').click(() => {
@@ -147,36 +123,36 @@ $(() => {
 
     schet.addParticipant(name, schedule).then(() => location.reload())
       .catch(err => {
-        // TODO Correct Error Handling
         switch (err.status) {
           case 400:
-            alert(err.message);
-            break;
-          case 404:
-            alert(err.message);
-            location.reload();
-            break;
-          default:
-            location.reload();
+            return alert('Bad Name.');
+          case 409:
+            return alert('Duplicated Name');
         }
+        location.reload();
       });
   });
 
   // Edit Participant Name
-  if (!isFixed) {
-    $('.participant-name').each(function () {
-      let participantID = this.getAttribute('participant-id');
-      $(this).editable((elem, back) => {
-        let name = elem.text();
-        schet.updateParticipant(participantID, {name}).then(event => {
-          elem.text(event.participants[participantID]);
-        }).catch(err => {
-          alert(err);
-          back();
-        });
+  $('.participant-name').each(function () {
+    let participantID = this.getAttribute('participant-id');
+    $(this).editable((elem, fallback) => {
+      let name = elem.text();
+      schet.updateParticipant(participantID, {name}).then(event => {
+        elem.text(event.participants[participantID]);
+      }).catch(err => {
+        switch (err.status) {
+          case 400:
+            alert('Bad Name.');
+            return fallback();
+          case 409:
+            alert('Duplicated Name');
+            return fallback();
+        }
+        location.reload();
       });
     });
-  }
+  });
 
   $('.delete-participant').click(function () {
     let participantID = this.getAttribute('participant-id');
@@ -206,19 +182,13 @@ $(() => {
     // Send to Server
     schet.addTerm(term).then(() => location.reload())
       .catch(err => {
-        // TODO Correct Error Handling
         switch (err.status) {
           case 400:
-            alert(err.reason);
-            location.reload();
-            break;
-          case 404:
-            alert(err.reason);
-            location.reload();
-            break;
-          default:
-            location.reload();
+            return alert('Bad Term Format.');
+          case 409:
+            return alert('Duplicated Term');
         }
+        location.reload();
       });
   });
 
@@ -266,24 +236,24 @@ $(() => {
     let commentID = this.getAttribute('comment-id');
 
     // Edit Comment Name
-    $(this).find('.comment-name').editable((elem, back)=> {
+    $(this).find('.comment-name').editable((elem, fallback)=> {
       let name = elem.text();
       schet.updateComment(commentID, {name}).then(event => {
         elem.text(event.comments[commentID].name);
       }).catch(err => {
         alert(err);
-        back();
+        fallback();
       });
     });
 
     // Edit Comment Body
-    $(this).find('.comment-body').editable((elem, back) => {
+    $(this).find('.comment-body').editable((elem, fallback) => {
       let body = elem.text();
       schet.updateComment(commentID, {body}).then(event => {
         elem.text(event.comments[commentID].body);
       }).catch(err => {
         alert(err);
-        back();
+        fallback();
       });
     });
 
