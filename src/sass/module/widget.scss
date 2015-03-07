@@ -1,6 +1,6 @@
-$size: 30px;
+$default-size: 24px;
 
-.widget {
+@mixin widget {
   border: solid silver 1px;
   & {
     vertical-align: middle;
@@ -9,40 +9,33 @@ $size: 30px;
 
 // Basic Widgets
 
-.text {
-  @extend .widget;
+@mixin text($size: $default-size) {
+  @include widget;
   height: $size - (1 + 1) * 2px;
   padding: 1px 0.5em;
-  font-size: 100%;
-  :focus {
-    outline: none;
-  }
 }
 
-.textarea {
-  @extend .widget;
+@mixin textarea {
+  @include widget;
   font-size: 100%;
-  :focus {
-    outline: none;
-  }
 }
 
-.button {
-  @extend .widget;
+@mixin button($size: $default-size) {
+  @include widget;
   height: $size;
   cursor: pointer;
 }
 
 // Special Widgets
 
-.text-with-button {
-  @extend .text;
+@mixin text-with-button($size: $default-size) {
+  @include text($size);
   border-right: none;
   margin-right: 0;
 }
 
-.icon-button {
-  @extend .button;
+@mixin icon-button($size: $default-size) {
+  @include button($size);
   width: $size;
   padding: 2px;
   background-color: white;

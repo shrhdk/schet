@@ -1,5 +1,21 @@
 @import "module/widget";
 
+$padding: 3px;
+
+// table
+
+table {
+  border: 1px solid black;
+  border-collapse: collapse;
+  text-align: center;
+
+  th, td {
+    padding: $padding;
+    border: 1px solid black;
+    overflow: auto;
+  }
+}
+
 // record
 
 select {
@@ -23,38 +39,47 @@ tr.is-fixed {
 .term-col {
   text-align: left;
   position: relative;
+  overflow: hidden;
 }
 
 .term {
+  font-size: 100%;
   font-family: monospace;
 }
 
 #term-text {
-  @extend .text-with-button;
+  @include text-with-button;
   min-width: 24ex;
   font-family: monospace, monaco;
 }
 
 #add-term {
-  @extend .icon-button;
+  @include icon-button;
 }
 
 .delete-term {
-  @extend .icon-button;
-  margin-right: 1ex;
+  @include icon-button;
+  position: absolute;
+  right: $padding;
+  margin-bottom: $padding;
+  opacity: 0;
+}
+
+.term-col:hover .delete-term {
+  opacity: 1;
 }
 
 // participant
 
 #participant-name {
-  @extend .text;
+  @include text;
   width: 5em;
 }
 
 #add-participant {
-  @extend .icon-button;
+  @include icon-button;
 }
 
 .delete-participant {
-  @extend .icon-button;
+  @include icon-button;
 }

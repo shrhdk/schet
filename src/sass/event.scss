@@ -20,7 +20,7 @@ body {
 }
 
 #description {
-  @extend .textarea;
+  @include textarea;
   min-width: 100%;
   margin-bottom: 1em;
   padding: 2px;

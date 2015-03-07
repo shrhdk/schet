@@ -1,6 +1,8 @@
 @import "common";
 @import "module/widget";
 
+$widget-size: 32px;
+
 html {
   display: table;
   width: 100%;
@@ -19,13 +21,14 @@ body {
 }
 
 #event-title {
-  @extend .text-with-button;
+  @include text-with-button($widget-size);
   width: 20em;
   max-width: 70%;
+  font-size: 100%;
 }
 
 #create-event {
-  @extend .icon-button;
+  @include icon-button($widget-size);
 }
 
 #link {

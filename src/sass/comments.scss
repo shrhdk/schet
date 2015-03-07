@@ -1,14 +1,18 @@
 @import "module/widget";
 
 .delete-comment {
-  @extend .icon-button;
+  @include icon-button;
   margin-right: 1ex;
 }
 
 #comment-name {
-  @extend .text;
+  @include text;
 }
 
 #comment-body {
-  @extend .text;
+  @include text;
+}
+
+#add-comment {
+  @include icon-button;
 }
