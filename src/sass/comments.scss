@@ -1,16 +1,48 @@
 @import "module/widget";
 
+$margin: 0.3em;
+
+// Comment List
+
+#comments {
+  padding: 0;
+  width: 800px;
+  .comment {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+    * {
+      display: inline-block;
+    }
+  }
+}
+
 .delete-comment {
   @include icon-button;
-  margin-right: 1ex;
+  margin-right: $margin;
 }
+
+.comment-name {
+  margin-right: $margin;
+}
+
+.comment-body {
+  margin-left: $margin;
+}
+
+// form
 
 #comment-name {
   @include text;
+  width: 10em;
+  margin-right: $margin;
 }
 
 #comment-body {
   @include text;
+  width: 30em;
+  margin-right: $margin;
 }
 
 #add-comment {

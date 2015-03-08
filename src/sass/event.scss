@@ -31,18 +31,3 @@ body {
   font-family: monospace, monaco;
 }
 
-/* Comments */
-
-#comments {
-  padding: 0;
-  width: 800px;
-  .comment {
-    list-style-type: none;
-    padding: 0.2em;
-    margin: 0.2em;
-
-    * {
-      display: inline-block;
-    }
-  }
-}

@@ -7,7 +7,7 @@ mixin comments(comments)
         div
           +icon_button.delete-comment(img='delete', title='Delete this comment')
         div.comment-name= comment.name
-        div.comment-separator &nbsp;-&nbsp;
+        div.comment-separator -
         div.comment-body= comment.body
   form#comment-form(method='POST', action='/#{event.id}/comments')
     input#comment-name(name='name', type='text', placeholder='Name')
