@@ -8,7 +8,7 @@ html
     title= event.title
     link(type='text/css', rel='stylesheet', href='/css/event.css')
   body
-    div#app-name: a(href='/') Schet
+    div: a#app-name(href='/') Schet
     h1#title= event.title
     textarea#description(disabled=event.fixed)= event.description
     +record(event)
