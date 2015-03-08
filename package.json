@@ -1,37 +1,50 @@
 {
   "name": "schet",
+  "version": "0.0.12",
   "description": "Schet is a schedule coordination tool.",
-  "version": "0.0.7",
-  "main": "bin/schet",
+  "keywords": [],
+  "homepage": "http://github.com/shrhdk/schet",
+  "bugs": {
+    "url": "http://github.com/shrhdk/schet/issues"
+  },
+  "license": "MIT",
+  "files": [
+    ".eslintrc",
+    ".gitignore",
+    ".travis.yml",
+    "CHANGELOG.md",
+    "README.md",
+    "bower.json",
+    "bower_components",
+    "package.json",
+    "node_modules",
+    "gulpfile.js",
+    "doc",
+    "bin",
+    "build",
+    "src",
+    "test",
+    "debug"
+  ],
+  "main": "build/src/app.js",
   "bin": {
     "schet": "bin/schet"
   },
   "directories": {
     "test": "test/"
   },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/shrhdk/schet.git"
+  },
   "scripts": {
-    "start": "bin/schet start",
-    "stop": "bin/schet stop",
+    "start": "node build/src/app",
     "bower": "bower install",
     "build": "gulp build",
     "clean": "gulp clean",
     "clean-all": "gulp clean:all",
     "lint": "gulp lint",
     "test": "gulp test"
-  },
-  "homepage": "http://github.com/shrhdk/schet",
-  "bugs": {
-    "url": "http://github.com/shrhdk/schet/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/shrhdk/schet.git"
-  },
-  "license": "MIT",
-  "browserify": {
-    "transform": [
-      "debowerify"
-    ]
   },
   "dependencies": {
     "async": "0.9.0",
@@ -56,5 +69,10 @@
     "mocha": "2.1.0",
     "request": "2.47.0",
     "vinyl-source-stream": "*"
+  },
+  "browserify": {
+    "transform": [
+      "debowerify"
+    ]
   }
 }

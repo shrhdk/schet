@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - "0.12"
+  - '0.12'
 services:
   - mongodb
 before_script:
@@ -9,3 +9,11 @@ before_script:
   - $(npm bin)/forever start ./build/src/app.js
 after_script:
   - $(npm bin)/forever stop ./build/src/app.js
+deploy:
+  provider: npm
+  email: hideki@shiro.be
+  api_key:
+    secure: dcFa+u+9gCye+83wllUmiHLwuBQjGKYj3LqKUdXGRxWq7PlIR/ika8HJuMz8jb7ROWBhPQs55EhP7VsypniabqsYRShNCtggF9TKHJUzxztW++GglgZzzJL+mj21oSbhFXEsUn4n4/RgEPSQ59PFXQvSNv2XLAw93TQxMZKRlpA=
+  on:
+    tags: true
+    all_branches: true
