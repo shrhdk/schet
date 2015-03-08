@@ -2,6 +2,11 @@ include module/widget
 
 - var presences = {'presence': '○', 'uncertain': '△', 'absence': '×'}
 
+mixin presence(val)
+  select&attributes(attributes)
+    for label, presence in presences
+      option(value=presence, selected=(presence === val))= label
+
 mixin record(event)
   table
     if event.fixed
@@ -15,8 +20,7 @@ mixin record(event)
           td
             if event.fixed === term.id
               input.fix-event(type='checkbox', term-id=term.id, checked=true)
-          td.term-col
-            span.term= term.term
+          td.term.term-col= term.term
           for name, id in event.participants
             td= presences[event.record[id][term.id]]
     else
@@ -34,25 +38,15 @@ mixin record(event)
           td.term-col
             +icon_button.delete-term(img='delete', term-id=term.id, title='Delete this term')
             span.term= term.term
-          td
-            select.new-record(term-id=term.id)
-              option(value='presence') ○
-              option(value='uncertain') △
-              option(value='absence') ×
+          td: +presence(class='new-record', term-id=term.id)
           for name, id in event.participants
-            td
-              select.record(participant-id=id, term-id=term.id)
-                option(value='presence', selected=(event.record[id][term.id] === 'presence')) ○
-                option(value='uncertain', selected=(event.record[id][term.id] === 'uncertain')) △
-                option(value='absence', selected=(event.record[id][term.id] === 'absence')) ×
+            td: +presence(event.record[id][term.id])(class= 'record', participant-id=id, term-id=term.id)
       tr
         if  1 <= event.terms.length
           td
         td
           input#term-text(type='text', placeholder='2000/01/01 09:00-17:30', title='Supported Formats:\r\n\r\n2015/01/01\r\n2015/01/01 - 01/02\r\n2015/01/01 - 2016/01/02\r\n\r\n2015/01/01 10:00\r\n2015/01/01 10:00 - 11:00\r\n2015/01/01 10:00 - 01/02 11:00\r\n2015/01/01 10:00 - 2016/01/01 11:00')
           +icon_button#add-term(img='add', title='Add Term')
-        td
-          +icon_button#add-participant(img='add-participant', title='Add Participant')
+        td: +icon_button#add-participant(img='add-participant', title='Add Participant')
         for name, id in event.participants
-          td
-            +icon_button.delete-participant(img='delete', participant-id=id, title='Delete this participant')
+          td: +icon_button.delete-participant(img='delete', participant-id=id, title='Delete this participant')
