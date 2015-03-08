@@ -2,11 +2,12 @@
 
 'use strict';
 
-var settings = require('../settings');
 var ERRORS = require('../errors');
 var async = require('async');
 var mongodb = require('mongodb');
 var util = require('util');
+
+const MONGODB = process.env.MONGODB || 'mongodb://127.0.0.1:27017/schet';
 
 /**
  * obj.id = obj._id; delete obj._id; return obj;
@@ -24,12 +25,7 @@ var replaceID = obj => {
  * Open DB
  * @param {function(Error, Db)} cb
  */
-var openDB = cb => {
-  const server = new mongodb.Server(settings.mongo.host, settings.mongo.port);
-  const db = new mongodb.Db(settings.mongo.db, server, {safe: true});
-
-  return db.open(cb);
-};
+var openDB = cb => mongodb.Db.connect(MONGODB, cb);
 
 /**
  * Open Collection

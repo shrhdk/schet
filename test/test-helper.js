@@ -1,12 +1,10 @@
 'use strict';
 
-var settings = require('../src/settings');
-
 var assert = require('assert');
 var util = require('util');
 var request = require('request');
 
-const URL = `http://${settings.app.host}:${settings.app.port}`;
+const URL = `http://127.0.0.1:${process.env.PORT || 3000}`;
 
 class Expect {
   constructor(fn, given) {
@@ -40,7 +38,7 @@ export class Req {
    * @param {!Object}params
    * @returns {{expect: Function}}
    */
-    constructor(method, path, params) {
+  constructor(method, path, params) {
     this.method = method;
     this.path = path;
     this.params = params;

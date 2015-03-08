@@ -39,6 +39,13 @@ $ schet
 
 See [http://127.0.0.1:3000/](http://127.0.0.1:3000/).
 
+## Default Settings
+
+```
+$ export PORT=3000
+$ export MONGODB=mongodb://127.0.0.1:27017/schet
+```
+
 ## API
 
 Schet has a Web API. See [API Document](doc/API.md).

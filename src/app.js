@@ -5,8 +5,6 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 
-var settings = require('./settings');
-
 var app = express();
 
 // View Engine
@@ -36,7 +34,7 @@ app.use('/', require('./routes/comments'));
 
 // Start
 console.log('Starting Server...');
-var server = app.listen(settings.app.port, () => {
+var server = app.listen(process.env.PORT || 3000, () => {
   let host = server.address().address;
   let port = server.address().port;
 
