@@ -11,13 +11,13 @@ This document describe the Web API of Schet.
 
 Schet Web API term string format is based on ISO 8601 extended format.
 
-Only the following format is allowed. All times are normalize to UTC.
+The following formats are allowed. All times are in UTC.
 
 ```
 YYYY-MM-DD                              # date only
 YYYY-MM-DD/YYYY-MM-DD                   # start/end
-YYYY-MM-DDThh:mmZ                       # with time
-YYYY-MM-DDThh:mmZ/YYYY-MM-DDThh:mmZ     # start/end
+YYYY-MM-DDThh:mmZ                       # date and time
+YYYY-MM-DDThh:mmZ/YYYY-MM-DDThh:mmZ     # start/end with time
 ```
 
 Examples
