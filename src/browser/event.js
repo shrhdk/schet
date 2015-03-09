@@ -149,7 +149,9 @@ $(() => {
         this.value = event.description;
 
         // Update Textarea Size
-        this.dispatchEvent(document.createEvent('Event').initEvent('autosize.update', true, false));
+        let evt = document.createEvent('Event');
+        evt.initEvent('autosize.update', true, false);
+        this.dispatchEvent(evt);
       }).catch(err => {
         switch (err.status) {
           case 409:
