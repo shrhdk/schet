@@ -1,5 +1,18 @@
 # Change Log
 
+## 0.0.14
+
+### Feature
+
+ - #24 Show a day of the week.
+ - use web font
+ - add favicon
+ - fix up design
+
+### Bugfix
+
+ - #25 fix cache problem on FireFox
+
 ## 0.0.13
 
 ### Bugfix
