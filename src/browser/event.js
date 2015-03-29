@@ -14,13 +14,6 @@ $(() => {
   let schet = new Schet(eventID);
   let isFixed = $('.fix-event[checked=checked]').size();
 
-  // Workaround for Firefox cache.
-
-  $('input[type=checkbox]').each(function () {
-    let truth = $(this).attr('checked') === 'checked';
-    $(this).prop('checked', truth);
-  });
-
   // Simplify Terms
 
   $('.term').each(function () {

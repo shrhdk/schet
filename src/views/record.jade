@@ -3,7 +3,7 @@ include module/widget
 - var presences = {'presence': '○', 'uncertain': '△', 'absence': '×'}
 
 mixin presence(val)
-  select&attributes(attributes)
+  select(autocomplete='off')&attributes(attributes)
     for label, presence in presences
       option(value=presence, selected=(presence === val))= label
 
