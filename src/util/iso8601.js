@@ -3,6 +3,7 @@
 var util = require('util');
 var assert = require('assert');
 var moment = require('moment');
+var lang = require('env-lang');
 
 // Formats
 
@@ -14,10 +15,10 @@ const RE_ISO_DATE_RANGE = /^\d{4}-\d{2}-\d{2}\/\d{4}-\d{2}-\d{2}$/;             
 const RE_ISO_DATE_TIME = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}Z$/;                                        // 1936-02-06T00:00Z
 const RE_ISO_DATE_TIME_RANGE = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}Z\/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}Z$/;  // 1936-02-06T00:00Z/1936-02-06T00:01Z
 
-const PRETTY_DATE = 'YYYY/MM/DD';
-const PRETTY_DATE_OMIT_YEAR = 'MM/DD';
-const PRETTY_DATE_TIME = 'YYYY/MM/DD HH:mm';
-const PRETTY_DATE_TIME_OMIT_YEAR = 'MM/DD HH:mm';
+const PRETTY_DATE = 'YYYY/MM/DD(ddd)';
+const PRETTY_DATE_OMIT_YEAR = 'MM/DD(ddd)';
+const PRETTY_DATE_TIME = 'YYYY/MM/DD(ddd) HH:mm';
+const PRETTY_DATE_TIME_OMIT_YEAR = 'MM/DD(ddd) HH:mm';
 const PRETTY_DATE_TIME_OMIT_DATE = 'HH:mm';
 
 const RE_PRETTY_DATE = /^\d{4}\/\d{2}\/\d{2}$/;                                 // 1999/01/01
@@ -27,6 +28,16 @@ const RE_PRETTY_DATE_TIME = /^\d{4}\/\d{2}\/\d{2} \d{2}:\d{2}$/;                
 const RE_PRETTY_DATE_TIME_RANGE = /^\d{4}\/\d{2}\/\d{2} \d{2}:\d{2} - \d{4}\/\d{2}\/\d{2} \d{2}:\d{2}$/;  // 1999/01/01 09:00 - 2000/12/31 10:00
 const RE_PRETTY_DATE_TIME_RANGE_OMIT_DATE = /^\d{4}\/\d{2}\/\d{2} \d{2}:\d{2} - \d{2}:\d{2}$/; // 2000/01/01 09:00 - 10:00
 const RE_PRETTY_DATE_TIME_RANGE_OMIT_YEAR = /^\d{4}\/\d{2}\/\d{2} \d{2}:\d{2} - \d{2}\/\d{2} \d{2}:\d{2}$/; // 2000/01/01 09:00 - 12/31 10:00
+
+// Set up Lang
+
+switch (lang) {
+  case 'ja':
+    moment.locale('ja', {
+      weekdays: ["日曜日", "月曜日", "火曜日", "水曜日", "木曜日", "金曜日", "土曜日"],
+      weekdaysShort: ["日", "月", "火", "水", "木", "金", "土"]
+    });
+}
 
 // Utility
 var split = (str, splitter) => {
