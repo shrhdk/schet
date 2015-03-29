@@ -1,4 +1,5 @@
-@import "module/widget";
+@import url(http://fonts.googleapis.com/css?family=Inconsolata);
+@import 'module/widget';
 
 $padding: 3px;
 
@@ -33,6 +34,9 @@ select {
   margin: 0 auto;
   background: none;
   border: none;
+  &::-ms-expand {
+    display: none;
+  }
 }
 
 tr.is-fixed {
@@ -49,13 +53,17 @@ tr.is-fixed {
 
 .term {
   font-size: 100%;
-  font-family: monospace;
+  font-family: 'Inconsolata', monospace;
 }
 
 #term-text {
   @include text-with-button;
-  min-width: 24ex;
-  font-family: monospace, monaco;
+  min-width: 25ex;
+  font-size: 100%;
+  font-family: 'Inconsolata', monospace;
+  &::-ms-clear {
+    display: none;
+  }
 }
 
 #add-term {
