@@ -1,5 +1,7 @@
 'use strict';
 
+var Promise = require('ypromise');
+
 export class Schet {
   constructor(eventID) {
     this.eventID = eventID;

@@ -10,6 +10,7 @@
   ],
   "dependencies": {
     "jquery": "~2.1.1",
-    "autosize": "~2.0.0"
+    "autosize": "~2.0.0",
+    "ypromise": "~0.3.0"
   }
 }
