@@ -1,6 +1,6 @@
 # Schet
 
-[![NPM version][npm-image]][npm-url] [![Build Status](https://travis-ci.org/shrhdk/schet.svg?branch=master)](travis-url)
+[![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url]
 
 Schet is a web application for schedule coordination.
 
@@ -61,3 +61,4 @@ MIT
 [npm-url]: https://npmjs.org/package/schet
 [npm-image]: https://badge.fury.io/js/schet.svg
 [travis-url]: https://travis-ci.org/shrhdk/schet
+[travis-image]: https://travis-ci.org/shrhdk/schet.svg?branch=master
