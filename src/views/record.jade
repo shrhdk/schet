@@ -19,7 +19,7 @@ mixin record(event)
         tr(class="is-#{event.fixed == term.id ? 'fixed' : 'unfixed'}")
           td
             if event.fixed === term.id
-              input.fix-event(type='checkbox', term-id=term.id, checked=true)
+              input.fix-event(type='checkbox', autocomplete='off', term-id=term.id, checked=true)
           td.term.term-col= term.term
           for name, id in event.participants
             td= presences[event.record[id][term.id]]
@@ -34,7 +34,7 @@ mixin record(event)
       for term in event.terms
         tr.is-unfixed
           if  1 <= event.terms.length
-            td: input.fix-event(type='checkbox', term-id=term.id)
+            td: input.fix-event(type='checkbox', autocomplete='off', term-id=term.id)
           td.term-col
             +icon_button.delete-term(img='delete', term-id=term.id, title='Delete this term')
             span.term= term.term
