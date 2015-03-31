@@ -2,6 +2,7 @@
 
 var assert = require('assert');
 
+var GiveAndExpect = require('../test-helper').GiveAndExpect;
 var iso8601 = require('../../src/util/iso8601.js');
 
 describe('iso8601', () => {
@@ -48,19 +49,10 @@ describe('iso8601', () => {
       };
     };
 
-    let give = (given, offset = 0) => {
-      return {
-        expect(expected) {
-          return () => {
-            let actual = iso8601.normalize(given, offset);
-            assert.strictEqual(actual, expected);
-          };
-        }
-      }
-    };
+    let test = new GiveAndExpect(iso8601.normalize);
 
     describe('date', () => {
-      it('correct', give('2000/01/02').expect('2000-01-02'));
+      it('correct', test.give('2000/01/02').expect('2000-01-02'));
 
       it('incorrect month', normalize('2000/13/01'));
 
@@ -69,7 +61,7 @@ describe('iso8601', () => {
 
     describe('date range', () => {
       describe('full', () => {
-        it('correct', give('2000/01/01 - 2000/01/02').expect('2000-01-01/2000-01-02'));
+        it('correct', test.give('2000/01/01 - 2000/01/02').expect('2000-01-01/2000-01-02'));
 
         it('start equals end', normalize('2000/01/01 - 2000/01/01'));
 
@@ -89,7 +81,7 @@ describe('iso8601', () => {
       });
 
       describe('omit year', () => {
-        it('correct', give('2000/01/01 - 01/02').expect('2000-01-01/2000-01-02'));
+        it('correct', test.give('2000/01/01 - 01/02').expect('2000-01-01/2000-01-02'));
 
         it('start equals end', normalize('2000/01/01 - 01/01'));
 
@@ -110,9 +102,9 @@ describe('iso8601', () => {
     });
 
     describe('date time', () => {
-      it('correct', give('2000/01/01 09:30').expect('2000-01-01T09:30Z'));
+      it('correct', test.give('2000/01/01 09:30').expect('2000-01-01T09:30Z'));
 
-      it('with offset', give('2000/01/01 09:30', 9 * 60).expect('2000-01-01T00:30Z'));
+      it('with offset', test.give('2000/01/01 09:30', 9 * 60).expect('2000-01-01T00:30Z'));
 
       it('incorrect month', normalize('2000/13/01 00:00'));
 
@@ -125,7 +117,7 @@ describe('iso8601', () => {
 
     describe('date time range', () => {
       describe('full', () => {
-        it('correct', give('2000/01/01 00:00 - 2000/01/01 00:01').expect('2000-01-01T00:00Z/2000-01-01T00:01Z'));
+        it('correct', test.give('2000/01/01 00:00 - 2000/01/01 00:01').expect('2000-01-01T00:00Z/2000-01-01T00:01Z'));
 
         it('start equals end', normalize('2000/01/01 00:00 - 2000/01/01 00:00'));
 
@@ -153,7 +145,7 @@ describe('iso8601', () => {
       });
 
       describe('omit date', () => {
-        it('correct', give('2000/01/01 00:00 - 00:01').expect('2000-01-01T00:00Z/2000-01-01T00:01Z'));
+        it('correct', test.give('2000/01/01 00:00 - 00:01').expect('2000-01-01T00:00Z/2000-01-01T00:01Z'));
 
         it('start equals end', normalize('2000/01/01 00:00 - 00:00'));
 
@@ -175,7 +167,7 @@ describe('iso8601', () => {
       });
 
       describe('omit year', () => {
-        it('correct', give('2000/01/01 00:00 - 01/01 00:01').expect('2000-01-01T00:00Z/2000-01-01T00:01Z'));
+        it('correct', test.give('2000/01/01 00:00 - 01/01 00:01').expect('2000-01-01T00:00Z/2000-01-01T00:01Z'));
 
         it('start equals end', normalize('2000/01/01 00:00 - 01/01 00:00'));
 
@@ -205,17 +197,8 @@ describe('iso8601', () => {
   });
 
   describe('prettify', () => {
-    let give = (given, offset = 0) => {
-      return {
-        expect(expected) {
-          return () => {
-            let actual = iso8601.prettify(given, offset);
-            assert.strictEqual(actual, expected);
-          };
-        }
-      }
-    };
+    let test = new GiveAndExpect(iso8601.prettify);
 
-    it('omit date', give('2015-01-01T00:00Z/2015-01-01T01:00Z').expect('2015/01/01(Thu) 00:00 - 01:00'));
+    it('omit date', test.give('2015-01-01T00:00Z/2015-01-01T01:00Z').expect('2015/01/01(Thu) 00:00 - 01:00'));
   });
 });

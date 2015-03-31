@@ -7,15 +7,13 @@ var request = require('request');
 const URL = `http://127.0.0.1:${process.env.PORT || 3000}`;
 
 class Expect {
-  constructor(fn, given) {
-    this.fn = fn;
-    this.given = given;
+  constructor(actual) {
+    this.actual = actual;
   }
 
   expect(expected) {
     return () => {
-      let actual = this.fn(this.given);
-      assert.strictEqual(actual, expected);
+      assert.strictEqual(this.actual, expected);
     };
   }
 }
@@ -25,8 +23,8 @@ export class GiveAndExpect {
     this.fn = fn;
   }
 
-  give(given) {
-    return new Expect(this.fn, given);
+  give() {
+    return new Expect(this.fn.apply(this, arguments));
   }
 }
 
