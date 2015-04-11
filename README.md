@@ -4,6 +4,12 @@
 
 Schet is a web application for schedule coordination.
 
+## Screenshot
+
+- [Index](doc/screenshot/index.png)
+- [Schedule Coordination](doc/screenshot/event.png)
+- [Fixed Schedule](doc/screenshot/fixed_event.png)
+
 ## Requirements
 
 - Node.js v0.12.0
